@@ -1,0 +1,177 @@
+{
+  "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945",
+  "$description": "Text styles from Figma Text Styles (Website). 样式层：class 引用 typography 语义变量（--typography-*-size/weight/line-height）。",
+  "styles": [
+    {
+      "title": "Display/Large",
+      "className": "typography-display-large",
+      "properties": {
+        "font-size": "var(--typography-display-large-size)",
+        "font-weight": "var(--typography-display-large-weight)",
+        "line-height": "var(--typography-display-large-line-height)"
+      }
+    },
+    {
+      "title": "Display/Medium",
+      "className": "typography-display-medium",
+      "properties": {
+        "font-size": "var(--typography-display-medium-size)",
+        "font-weight": "var(--typography-display-medium-weight)",
+        "line-height": "var(--typography-display-medium-line-height)"
+      }
+    },
+    {
+      "title": "Display/Small",
+      "className": "typography-display-small",
+      "properties": {
+        "font-size": "var(--typography-display-small-size)",
+        "font-weight": "var(--typography-display-small-weight)",
+        "line-height": "var(--typography-display-small-line-height)"
+      }
+    },
+    {
+      "title": "Headline/Large",
+      "className": "typography-headline-large",
+      "properties": {
+        "font-size": "var(--typography-headline-large-size)",
+        "font-weight": "var(--typography-headline-large-weight)",
+        "line-height": "var(--typography-headline-large-line-height)"
+      }
+    },
+    {
+      "title": "Headline/Medium",
+      "className": "typography-headline-medium",
+      "properties": {
+        "font-size": "var(--typography-headline-medium-size)",
+        "font-weight": "var(--typography-headline-medium-weight)",
+        "line-height": "var(--typography-headline-medium-line-height)"
+      }
+    },
+    {
+      "title": "Headline/Small",
+      "className": "typography-headline-small",
+      "properties": {
+        "font-size": "var(--typography-headline-small-size)",
+        "font-weight": "var(--typography-headline-small-weight)",
+        "line-height": "var(--typography-headline-small-line-height)"
+      }
+    },
+    {
+      "title": "Title/Large",
+      "className": "typography-title-large",
+      "properties": {
+        "font-size": "var(--typography-title-large-size)",
+        "font-weight": "var(--typography-title-large-weight)",
+        "line-height": "var(--typography-title-large-line-height)"
+      }
+    },
+    {
+      "title": "Title/Medium",
+      "className": "typography-title-medium",
+      "properties": {
+        "font-size": "var(--typography-title-medium-size)",
+        "font-weight": "var(--typography-title-medium-weight)",
+        "line-height": "var(--typography-title-medium-line-height)"
+      }
+    },
+    {
+      "title": "Title/Small",
+      "className": "typography-title-small",
+      "properties": {
+        "font-size": "var(--typography-title-small-size)",
+        "font-weight": "var(--typography-title-small-weight)",
+        "line-height": "var(--typography-title-small-line-height)"
+      }
+    },
+    {
+      "title": "Body/Large",
+      "className": "typography-body-large",
+      "properties": {
+        "font-size": "var(--typography-body-large-size)",
+        "font-weight": "var(--typography-body-large-weight)",
+        "line-height": "var(--typography-body-large-line-height)"
+      }
+    },
+    {
+      "title": "Body/Large Strong",
+      "className": "typography-body-large-strong",
+      "properties": {
+        "font-size": "var(--typography-body-large-strong-size)",
+        "font-weight": "var(--typography-body-large-strong-weight)",
+        "line-height": "var(--typography-body-large-strong-line-height)"
+      }
+    },
+    {
+      "title": "Body/Medium",
+      "className": "typography-body-medium",
+      "properties": {
+        "font-size": "var(--typography-body-medium-size)",
+        "font-weight": "var(--typography-body-medium-weight)",
+        "line-height": "var(--typography-body-medium-line-height)"
+      }
+    },
+    {
+      "title": "Body/Medium Strong",
+      "className": "typography-body-medium-strong",
+      "properties": {
+        "font-size": "var(--typography-body-medium-strong-size)",
+        "font-weight": "var(--typography-body-medium-strong-weight)",
+        "line-height": "var(--typography-body-medium-strong-line-height)"
+      }
+    },
+    {
+      "title": "Body/Small",
+      "className": "typography-body-small",
+      "properties": {
+        "font-size": "var(--typography-body-small-size)",
+        "font-weight": "var(--typography-body-small-weight)",
+        "line-height": "var(--typography-body-small-line-height)"
+      }
+    },
+    {
+      "title": "Body/Small Strong",
+      "className": "typography-body-small-strong",
+      "properties": {
+        "font-size": "var(--typography-body-small-strong-size)",
+        "font-weight": "var(--typography-body-small-strong-weight)",
+        "line-height": "var(--typography-body-small-strong-line-height)"
+      }
+    },
+    {
+      "title": "Footnote/Large",
+      "className": "typography-footnote-large",
+      "properties": {
+        "font-size": "var(--typography-footnote-large-size)",
+        "font-weight": "var(--typography-footnote-large-weight)",
+        "line-height": "var(--typography-footnote-large-line-height)"
+      }
+    },
+    {
+      "title": "Footnote/Large Strong",
+      "className": "typography-footnote-large-strong",
+      "properties": {
+        "font-size": "var(--typography-footnote-large-strong-size)",
+        "font-weight": "var(--typography-footnote-large-strong-weight)",
+        "line-height": "var(--typography-footnote-large-strong-line-height)"
+      }
+    },
+    {
+      "title": "Footnote/Medium",
+      "className": "typography-footnote-medium",
+      "properties": {
+        "font-size": "var(--typography-footnote-medium-size)",
+        "font-weight": "var(--typography-footnote-medium-weight)",
+        "line-height": "var(--typography-footnote-medium-line-height)"
+      }
+    },
+    {
+      "title": "Footnote/Medium Strong",
+      "className": "typography-footnote-medium-strong",
+      "properties": {
+        "font-size": "var(--typography-footnote-medium-strong-size)",
+        "font-weight": "var(--typography-footnote-medium-strong-weight)",
+        "line-height": "var(--typography-footnote-medium-strong-line-height)"
+      }
+    }
+  ]
+}

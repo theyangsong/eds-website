@@ -1,0 +1,13 @@
+node_modules/
+dist/
+storybook-static/
+.tmp-video-frames/
+package-lock.json
+*.local
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+.turbo/
+.build/

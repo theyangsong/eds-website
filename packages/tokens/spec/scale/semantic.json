@@ -1,0 +1,94 @@
+{
+  "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945",
+  "$description": "Scale System semantic mappings (语义尺度 → scale 基数). scaleBase = 8px.",
+  "groups": [
+    {
+      "comment": "间距（Spacing）",
+      "tokens": [
+        { "name": "spacing-0", "value": "var(--scale-0)" },
+        { "name": "spacing-05", "value": "var(--scale-05)" },
+        { "name": "spacing-1", "value": "var(--scale-1)" },
+        { "name": "spacing-1-5", "value": "var(--scale-1-5)" },
+        { "name": "spacing-2", "value": "var(--scale-2)" },
+        { "name": "spacing-2-5", "value": "var(--scale-2-5)", "comment": "20px" },
+        { "name": "spacing-3", "value": "var(--scale-3)" },
+        { "name": "spacing-4", "value": "var(--scale-4)" },
+        { "name": "spacing-5", "value": "var(--scale-5)" },
+        { "name": "spacing-6", "value": "var(--scale-6)" },
+        { "name": "spacing-7", "value": "var(--scale-7)" },
+        { "name": "spacing-8", "value": "var(--scale-8)" },
+        { "name": "spacing-9", "value": "var(--scale-9)" },
+        { "name": "spacing-10", "value": "var(--scale-10)" },
+        { "name": "spacing-12", "value": "var(--scale-12)" },
+        { "name": "spacing-14", "value": "var(--scale-14)" },
+        { "name": "spacing-16", "value": "var(--scale-16)" },
+        { "name": "spacing-18", "value": "var(--scale-18)" },
+        { "name": "spacing-20", "value": "var(--scale-20)" },
+        { "name": "spacing-30", "value": "var(--scale-30)" },
+        { "name": "spacing-40", "value": "var(--scale-40)" },
+        { "name": "spacing-50", "value": "var(--scale-50)" }
+      ]
+    },
+    {
+      "comment": "圆角（Radius）",
+      "tokens": [
+        { "name": "radius-0", "value": "var(--scale-0)" },
+        { "name": "radius-sm", "value": "var(--scale-1)", "comment": "8px" },
+        { "name": "radius-md", "value": "var(--scale-2)", "comment": "16px" },
+        { "name": "radius-lg", "value": "var(--scale-3)", "comment": "24px" },
+        { "name": "radius-full", "value": "var(--scale-full)", "comment": "888px" }
+      ]
+    },
+    {
+      "comment": "平滑圆角（Corner Smoothing）— Figma/iOS squircle，0–1 对应 0%–100%",
+      "tokens": [
+        { "name": "corner-smoothing", "value": "0.6", "comment": "60% — iOS 风格平滑圆角" }
+      ]
+    },
+    {
+      "comment": "模糊（Blur）",
+      "tokens": [
+        { "name": "blur-subtle", "value": "var(--scale-2)", "comment": "16px" },
+        { "name": "blur-shallow", "value": "var(--scale-6)", "comment": "48px" },
+        { "name": "blur-deep", "value": "var(--scale-10)", "comment": "80px" }
+      ]
+    },
+    {
+      "comment": "层级（Depth / Elevation）",
+      "tokens": [
+        { "name": "depth-subtle", "value": "var(--scale-05)", "comment": "4px" },
+        { "name": "depth-shallow", "value": "var(--scale-1)", "comment": "8px" },
+        { "name": "depth-deep", "value": "var(--scale-3)", "comment": "24px" }
+      ]
+    },
+    {
+      "comment": "图标尺寸（Icon Size）",
+      "tokens": [
+        { "name": "icon-sm", "value": "var(--scale-1-5)", "comment": "12px" },
+        { "name": "icon-md", "value": "var(--scale-2)", "comment": "16px" },
+        { "name": "icon-lg", "value": "var(--scale-2-5)", "comment": "20px" },
+        { "name": "icon-xl", "value": "var(--scale-3)", "comment": "24px" }
+      ]
+    },
+    {
+      "comment": "控件按钮（Control Button）",
+      "tokens": [
+        { "name": "control-button-xs", "value": "var(--scale-4)", "comment": "32px" },
+        { "name": "control-button-sm", "value": "var(--scale-5)", "comment": "40px" },
+        { "name": "control-button-md", "value": "var(--scale-6)", "comment": "48px" },
+        { "name": "control-button-lg", "value": "var(--scale-7)", "comment": "56px" },
+        { "name": "control-button-xl", "value": "var(--scale-7-5)", "comment": "60px" }
+      ]
+    },
+    {
+      "comment": "控件图标容器（Control Icon）",
+      "tokens": [
+        { "name": "control-icon-xs", "value": "var(--scale-4-5)", "comment": "36px" },
+        { "name": "control-icon-sm", "value": "var(--scale-5)", "comment": "40px" },
+        { "name": "control-icon-md", "value": "var(--scale-6)", "comment": "48px" },
+        { "name": "control-icon-lg", "value": "var(--scale-6-5)", "comment": "52px" },
+        { "name": "control-icon-xl", "value": "var(--scale-7)", "comment": "56px" }
+      ]
+    }
+  ]
+}

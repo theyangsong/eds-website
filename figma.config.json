@@ -1,0 +1,29 @@
+{
+  "$schema": "./packages/tokens/schemas/figma.config.schema.json",
+  "fileKey": "RSjA0dgInAwyPjE1MIinH7",
+  "fileName": "EverGreen Design System (WebSite)",
+  "fileUrl": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-",
+  "libraryKey": "",
+  "variableCollections": [
+    {
+      "name": "Color System",
+      "variableSetKey": "",
+      "categories": ["Text", "Stroke", "Material", "Event", "Box", "Effect", "Data Table"]
+    },
+    {
+      "name": "Scale System",
+      "variableSetKey": "",
+      "categories": ["Primitives"]
+    },
+    {
+      "name": "Typography",
+      "variableSetKey": "",
+      "categories": ["Display", "Headline", "Title", "Body", "Footnote"]
+    }
+  ],
+  "tokensStudio": {
+    "exportPath": "packages/tokens/spec",
+    "syncDirection": "figma-to-repo"
+  },
+  "notes": "Source of truth: packages/tokens/spec/*.json. Color synced from Figma node 2:22945; typography from textStyles.json export."
+}

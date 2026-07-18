@@ -1,0 +1,329 @@
+{
+  "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945",
+  "$description": "Typography semantic tokens — 将 base 基元组合为可引用的排印角色，供 Text Styles 使用。",
+  "groups": [
+    {
+      "comment": "Display/Large",
+      "tokens": [
+        {
+          "name": "typography-display-large-size",
+          "value": "var(--size-display-large)"
+        },
+        {
+          "name": "typography-display-large-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-display-large-line-height",
+          "value": "var(--line-height-display-large)"
+        }
+      ]
+    },
+    {
+      "comment": "Display/Medium",
+      "tokens": [
+        {
+          "name": "typography-display-medium-size",
+          "value": "var(--size-display-medium)"
+        },
+        {
+          "name": "typography-display-medium-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-display-medium-line-height",
+          "value": "var(--line-height-display-medium)"
+        }
+      ]
+    },
+    {
+      "comment": "Display/Small",
+      "tokens": [
+        {
+          "name": "typography-display-small-size",
+          "value": "var(--size-display-small)"
+        },
+        {
+          "name": "typography-display-small-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-display-small-line-height",
+          "value": "var(--line-height-display-small)"
+        }
+      ]
+    },
+    {
+      "comment": "Headline/Large",
+      "tokens": [
+        {
+          "name": "typography-headline-large-size",
+          "value": "var(--size-headline-large)"
+        },
+        {
+          "name": "typography-headline-large-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-headline-large-line-height",
+          "value": "var(--line-height-headline-large)"
+        }
+      ]
+    },
+    {
+      "comment": "Headline/Medium",
+      "tokens": [
+        {
+          "name": "typography-headline-medium-size",
+          "value": "var(--size-headline-medium)"
+        },
+        {
+          "name": "typography-headline-medium-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-headline-medium-line-height",
+          "value": "var(--line-height-headline-medium)"
+        }
+      ]
+    },
+    {
+      "comment": "Headline/Small",
+      "tokens": [
+        {
+          "name": "typography-headline-small-size",
+          "value": "var(--size-headline-small)"
+        },
+        {
+          "name": "typography-headline-small-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-headline-small-line-height",
+          "value": "var(--line-height-headline-small)"
+        }
+      ]
+    },
+    {
+      "comment": "Title/Large",
+      "tokens": [
+        {
+          "name": "typography-title-large-size",
+          "value": "var(--size-title-large)"
+        },
+        {
+          "name": "typography-title-large-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-title-large-line-height",
+          "value": "var(--line-height-title-large)"
+        }
+      ]
+    },
+    {
+      "comment": "Title/Medium",
+      "tokens": [
+        {
+          "name": "typography-title-medium-size",
+          "value": "var(--size-title-medium)"
+        },
+        {
+          "name": "typography-title-medium-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-title-medium-line-height",
+          "value": "var(--line-height-title-medium)"
+        }
+      ]
+    },
+    {
+      "comment": "Title/Small",
+      "tokens": [
+        {
+          "name": "typography-title-small-size",
+          "value": "var(--size-title-small)"
+        },
+        {
+          "name": "typography-title-small-weight",
+          "value": "var(--weight-bold)"
+        },
+        {
+          "name": "typography-title-small-line-height",
+          "value": "var(--line-height-title-small)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Large",
+      "tokens": [
+        {
+          "name": "typography-body-large-size",
+          "value": "var(--size-body-large)"
+        },
+        {
+          "name": "typography-body-large-weight",
+          "value": "var(--weight-regular)"
+        },
+        {
+          "name": "typography-body-large-line-height",
+          "value": "var(--line-height-body-large)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Large Strong",
+      "tokens": [
+        {
+          "name": "typography-body-large-strong-size",
+          "value": "var(--size-body-large-strong)"
+        },
+        {
+          "name": "typography-body-large-strong-weight",
+          "value": "var(--weight-medium)"
+        },
+        {
+          "name": "typography-body-large-strong-line-height",
+          "value": "var(--line-height-body-large-strong)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Medium",
+      "tokens": [
+        {
+          "name": "typography-body-medium-size",
+          "value": "var(--size-body-medium)"
+        },
+        {
+          "name": "typography-body-medium-weight",
+          "value": "var(--weight-regular)"
+        },
+        {
+          "name": "typography-body-medium-line-height",
+          "value": "var(--line-height-body-medium)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Medium Strong",
+      "tokens": [
+        {
+          "name": "typography-body-medium-strong-size",
+          "value": "var(--size-body-medium-strong)"
+        },
+        {
+          "name": "typography-body-medium-strong-weight",
+          "value": "var(--weight-medium)"
+        },
+        {
+          "name": "typography-body-medium-strong-line-height",
+          "value": "var(--line-height-body-medium-strong)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Small",
+      "tokens": [
+        {
+          "name": "typography-body-small-size",
+          "value": "var(--size-body-small)"
+        },
+        {
+          "name": "typography-body-small-weight",
+          "value": "var(--weight-regular)"
+        },
+        {
+          "name": "typography-body-small-line-height",
+          "value": "var(--line-height-body-small)"
+        }
+      ]
+    },
+    {
+      "comment": "Body/Small Strong",
+      "tokens": [
+        {
+          "name": "typography-body-small-strong-size",
+          "value": "var(--size-body-small-strong)"
+        },
+        {
+          "name": "typography-body-small-strong-weight",
+          "value": "var(--weight-medium)"
+        },
+        {
+          "name": "typography-body-small-strong-line-height",
+          "value": "var(--line-height-body-small-strong)"
+        }
+      ]
+    },
+    {
+      "comment": "Footnote/Large",
+      "tokens": [
+        {
+          "name": "typography-footnote-large-size",
+          "value": "var(--size-footnote-large)"
+        },
+        {
+          "name": "typography-footnote-large-weight",
+          "value": "var(--weight-regular)"
+        },
+        {
+          "name": "typography-footnote-large-line-height",
+          "value": "var(--line-height-footnote-large)"
+        }
+      ]
+    },
+    {
+      "comment": "Footnote/Large Strong",
+      "tokens": [
+        {
+          "name": "typography-footnote-large-strong-size",
+          "value": "var(--size-footnote-large-strong)"
+        },
+        {
+          "name": "typography-footnote-large-strong-weight",
+          "value": "var(--weight-medium)"
+        },
+        {
+          "name": "typography-footnote-large-strong-line-height",
+          "value": "var(--line-height-footnote-large-strong)"
+        }
+      ]
+    },
+    {
+      "comment": "Footnote/Medium",
+      "tokens": [
+        {
+          "name": "typography-footnote-medium-size",
+          "value": "var(--size-footnote-medium)"
+        },
+        {
+          "name": "typography-footnote-medium-weight",
+          "value": "var(--weight-regular)"
+        },
+        {
+          "name": "typography-footnote-medium-line-height",
+          "value": "var(--line-height-footnote-medium)"
+        }
+      ]
+    },
+    {
+      "comment": "Footnote/Medium Strong",
+      "tokens": [
+        {
+          "name": "typography-footnote-medium-strong-size",
+          "value": "var(--size-footnote-medium-strong)"
+        },
+        {
+          "name": "typography-footnote-medium-strong-weight",
+          "value": "var(--weight-medium)"
+        },
+        {
+          "name": "typography-footnote-medium-strong-line-height",
+          "value": "var(--line-height-footnote-medium-strong)"
+        }
+      ]
+    }
+  ]
+}
