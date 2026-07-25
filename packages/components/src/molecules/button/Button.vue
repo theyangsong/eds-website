@@ -1,31 +1,99 @@
 <script setup lang="ts">
+import { computed, useSlots } from 'vue';
 import styles from './Button.module.css';
+import { buttonVariantName } from '../../utils/edsVariantName';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+/** Figma Style */
+export type ButtonVariant = 'solid' | 'outline' | 'text';
+/** Figma tone sets (Brand / Danger / Decor / Subtle / Same White) */
+export type ButtonTone = 'brand' | 'danger' | 'decor' | 'subtle' | 'sameWhite';
+export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
-withDefaults(
+/** @deprecated Use `solid` */
+export type LegacyButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonVariantInput = ButtonVariant | LegacyButtonVariant;
+
+const props = withDefaults(
   defineProps<{
-    variant?: ButtonVariant;
+    tone?: ButtonTone;
+    variant?: ButtonVariantInput;
     size?: ButtonSize;
     disabled?: boolean;
+    loading?: boolean;
     type?: 'button' | 'submit' | 'reset';
   }>(),
   {
-    variant: 'primary',
-    size: 'md',
+    tone: 'brand',
+    variant: 'solid',
+    size: 'lg',
     disabled: false,
+    loading: false,
     type: 'button',
   },
+);
+
+const slots = useSlots();
+
+const resolvedVariant = computed<ButtonVariant>(() => {
+  switch (props.variant) {
+    case 'primary':
+      return 'solid';
+    case 'secondary':
+      return 'outline';
+    case 'ghost':
+      return 'text';
+    default:
+      return props.variant;
+  }
+});
+
+const isDisabled = computed(() => props.disabled || props.loading);
+
+const variantName = computed(() =>
+  buttonVariantName(props.tone, resolvedVariant.value, props.size, {
+    disable: props.disabled,
+    loading: props.loading,
+  }),
 );
 </script>
 
 <template>
   <button
-    :class="[styles.button, styles[variant], styles[size]]"
-    :disabled="disabled"
+    :class="[variantName, styles.button]"
+    :data-tone="tone"
+    :data-variant="resolvedVariant"
+    :data-size="size"
+    :data-loading="loading ? true : undefined"
+    :disabled="isDisabled"
     :type="type"
+    :aria-busy="loading || undefined"
   >
-    <slot />
+    <span v-if="loading" :class="styles.spinner" aria-hidden="true">
+      <svg
+        :class="styles.spinnerIcon"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="8"
+          cy="8"
+          r="6"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-dasharray="9 28"
+        />
+      </svg>
+    </span>
+
+    <template v-else>
+      <span v-if="slots.icon" :class="styles.icon">
+        <slot name="icon" />
+      </span>
+      <span :class="styles.label">
+        <slot />
+      </span>
+    </template>
   </button>
 </template>

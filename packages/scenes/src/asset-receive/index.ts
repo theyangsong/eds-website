@@ -1,0 +1,2 @@
+/** Scene — asset-receive。 */
+export {};

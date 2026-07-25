@@ -1,0 +1,8 @@
+.previewLabel {
+  margin: 0;
+  color: var(--text-base-secondary);
+  font-family: var(--font-family-text);
+  font-size: var(--typography-footnote-large-size);
+  font-weight: var(--weight-medium);
+  line-height: var(--typography-footnote-large-line-height);
+}

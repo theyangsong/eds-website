@@ -3,7 +3,7 @@
  * Uses figma-squircle (MIT © Tien Pham).
  *
  * Usage:
- *   import { initCornerSmoothing, attachCornerSmoothing, rescanCornerSmoothing } from '@evergreen/tokens/corner-smoothing';
+ *   import { initCornerSmoothing, attachCornerSmoothing, rescanCornerSmoothing } from '@eds/website-tokens/corner-smoothing';
  *   initCornerSmoothing(); // auto-bind elements with non-zero border-radius
  *   attachCornerSmoothing(element);
  *   rescanCornerSmoothing(popoverRoot); // after Teleport / v-if mount
@@ -15,6 +15,11 @@
 import { getSvgPath } from 'figma-squircle';
 
 const OPT_OUT_ATTR = 'data-no-corner-smoothing';
+const CLIP_CLASS = 'eds-corner-smoothed';
+const CLIP_VAR = '--eds-cs';
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const STYLE_ID = 'eds-corner-smoothing-style';
+const DEFS_ID = 'eds-corner-defs';
 const EFFECT_LAYER_PATTERN = /^effect-(flotation|popup)-box__/;
 const SKIP_TAGS = new Set([
   'SVG',
@@ -179,6 +184,87 @@ function buildSquirclePath(element, radii, cornerSmoothing) {
   });
 }
 
+let defsRoot = null;
+let clipIdCounter = 0;
+const clipRegistry = new WeakMap();
+
+function ensureCornerSmoothingStyles() {
+  if (document.getElementById(STYLE_ID)) {
+    return;
+  }
+
+  const style = document.createElement('style');
+  style.id = STYLE_ID;
+  style.textContent = `
+.${CLIP_CLASS} {
+  clip-path: var(${CLIP_VAR});
+  -webkit-clip-path: var(${CLIP_VAR});
+}
+`.trim();
+  document.head.appendChild(style);
+}
+
+function ensureClipDefsRoot() {
+  if (defsRoot?.isConnected) {
+    return defsRoot;
+  }
+
+  const existing = document.getElementById(DEFS_ID);
+  if (existing instanceof SVGDefsElement) {
+    defsRoot = existing;
+    return defsRoot;
+  }
+
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('width', '0');
+  svg.setAttribute('height', '0');
+  svg.style.cssText = 'position:absolute;overflow:hidden;pointer-events:none';
+
+  const defs = document.createElementNS(SVG_NS, 'defs');
+  defs.id = DEFS_ID;
+  svg.appendChild(defs);
+  document.body.appendChild(svg);
+  defsRoot = defs;
+  return defsRoot;
+}
+
+function mountClipPath(element, pathData) {
+  ensureCornerSmoothingStyles();
+  const defs = ensureClipDefsRoot();
+
+  let entry = clipRegistry.get(element);
+  if (!entry) {
+    const id = `eds-cs-${++clipIdCounter}`;
+    const clipPath = document.createElementNS(SVG_NS, 'clipPath');
+    clipPath.id = id;
+    clipPath.setAttribute('clipPathUnits', 'userSpaceOnUse');
+
+    const path = document.createElementNS(SVG_NS, 'path');
+    clipPath.appendChild(path);
+    defs.appendChild(clipPath);
+
+    entry = { clipPath, path, id };
+    clipRegistry.set(element, entry);
+    element.classList.add(CLIP_CLASS);
+    element.style.setProperty(CLIP_VAR, `url(#${id})`);
+  }
+
+  entry.path.setAttribute('d', pathData);
+}
+
+function unmountClipPath(element) {
+  const entry = clipRegistry.get(element);
+  if (!entry) {
+    return;
+  }
+
+  entry.clipPath.remove();
+  clipRegistry.delete(element);
+  element.classList.remove(CLIP_CLASS);
+  element.style.removeProperty(CLIP_VAR);
+}
+
 function applyCornerSmoothing(element) {
   const cornerSmoothing = readCornerSmoothing();
   if (cornerSmoothing <= 0) {
@@ -192,21 +278,11 @@ function applyCornerSmoothing(element) {
     return;
   }
 
-  const path = buildSquirclePath(element, radii, cornerSmoothing);
-  const clipPath = `path('${path}')`;
-  element.style.clipPath = clipPath;
-  element.style.webkitClipPath = clipPath;
-  element.dataset.cornerSmoothingBound = 'true';
+  mountClipPath(element, buildSquirclePath(element, radii, cornerSmoothing));
 }
 
 function clearCornerSmoothing(element) {
-  if (element.dataset.cornerSmoothingBound !== 'true') {
-    return;
-  }
-
-  element.style.clipPath = '';
-  element.style.webkitClipPath = '';
-  delete element.dataset.cornerSmoothingBound;
+  unmountClipPath(element);
 }
 
 function renderCornerSmoothing(element) {
@@ -236,7 +312,6 @@ class CornerSmoothingSurface {
   destroy() {
     this.resizeObserver.disconnect();
     clearCornerSmoothing(this.element);
-    delete this.element.dataset.cornerSmoothingBound;
   }
 }
 

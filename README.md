@@ -13,12 +13,17 @@ Vue 3 design system for marketing sites and web products — CSS Modules and Fig
 pnpm install
 pnpm build:tokens
 pnpm build:components
+pnpm dev:showcase    # gallery app → http://localhost:5175
+pnpm dev:storybook   # component docs → http://localhost:6007
 ```
 
 ## Project structure
 
 ```
-evergreen-design-system-website/
+eds-website/
+├── apps/
+│   ├── showcase/        # Website token & component gallery
+│   └── storybook/       # Website component documentation
 ├── packages/
 │   ├── tokens/          # L1 全局变量（基数 → 语义）
 │   ├── components/      # L2 组件（atoms → molecules → organisms）
@@ -26,7 +31,7 @@ evergreen-design-system-website/
 └── figma.config.json
 ```
 
-### 组件分层（`@evergreen/components`）
+### 组件分层（`@eds/website-components`）
 
 ```
 src/
@@ -45,7 +50,7 @@ src/
 └── styles/
 ```
 
-### 场景化（`@evergreen/scenes`）
+### 场景化（`@eds/website-scenes`）
 
 ```
 src/
@@ -60,23 +65,25 @@ src/
 | `pnpm build:tokens` | Build CSS variables from tokens |
 | `pnpm build:components` | Build Vue component library |
 | `pnpm build:scenes` | Build website scene library |
+| `pnpm dev` | Start showcase gallery (http://localhost:5175) |
+| `pnpm dev:showcase` | Start showcase gallery (http://localhost:5175) |
+| `pnpm dev:storybook` | Start Storybook (http://localhost:6007) |
 | `pnpm sync:tokens` | Figma token sync helper |
 | `pnpm typecheck` | Type-check all packages |
 
 ## Figma integration
 
-Figma file is not linked yet. When ready:
+Figma file: [EverGreen Design System (WebSite)](https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-)
 
-1. Update `figma.config.json` with `fileKey` and `fileUrl`
-2. Compare Figma variables with `packages/tokens/spec/*.json`
-3. Update the relevant spec files
-4. Run `pnpm build:tokens` to regenerate CSS variables
+1. Compare Figma variables with `packages/tokens/spec/*.json`
+2. Update the relevant spec files
+3. Run `pnpm build:tokens` to regenerate CSS variables
 
 Check sync status: `pnpm sync:tokens`
 
 ## Related
 
-- [EverGreen Design System (Desktop)](../evergreen-design-system-desktop) — independent sibling repo for desktop/admin UI
+- [EverGreen Design System (Desktop)](../eds-desktop) — independent sibling repo for desktop/admin UI
 
 ## License
 

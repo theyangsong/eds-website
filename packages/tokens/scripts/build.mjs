@@ -39,6 +39,7 @@ function appendCssCommentBlock(lines, commentLines, indent = '  ') {
 const COLOR_SEMANTIC_GROUP_ORDER = [
   { prefix: 'box', comment: 'Box（容器 / 背景）' },
   { prefix: 'event', comment: 'Event（交互状态）' },
+  { prefix: 'status', comment: 'Status' },
   { prefix: 'stroke', comment: 'Stroke（描边 / 分割线）' },
   { prefix: 'text', comment: 'Text（文本色）' },
   { prefix: 'material', comment: 'Material（材质 / 填充）' },

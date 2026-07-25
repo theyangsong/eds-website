@@ -1,0 +1,25 @@
+.previewStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.stateRow {
+  display: grid;
+  grid-template-columns: 256px auto;
+  gap: var(--spacing-4);
+  align-items: center;
+}
+
+.switchRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.sizeLabel {
+  min-width: 0;
+  font-size: var(--typography-body-small-size);
+  line-height: var(--typography-body-small-line-height);
+  color: var(--text-base-secondary);
+}

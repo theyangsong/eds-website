@@ -19,7 +19,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue', '@evergreen/components'],
+      external: ['vue', '@eds/website-components'],
       output: {
         globals: {
           vue: 'Vue',

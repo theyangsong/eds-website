@@ -33,7 +33,7 @@
       "comment": "圆角（Radius）",
       "tokens": [
         { "name": "radius-0", "value": "var(--scale-0)" },
-        { "name": "radius-sm", "value": "var(--scale-1)", "comment": "8px" },
+        { "name": "radius-sm", "value": "var(--scale-0-75)", "comment": "6px" },
         { "name": "radius-md", "value": "var(--scale-2)", "comment": "16px" },
         { "name": "radius-lg", "value": "var(--scale-3)", "comment": "24px" },
         { "name": "radius-full", "value": "var(--scale-full)", "comment": "888px" }
@@ -88,6 +88,14 @@
         { "name": "control-icon-md", "value": "var(--scale-6)", "comment": "48px" },
         { "name": "control-icon-lg", "value": "var(--scale-6-5)", "comment": "52px" },
         { "name": "control-icon-xl", "value": "var(--scale-7)", "comment": "56px" }
+      ]
+    },
+    {
+      "comment": "控件输入框（Control Input）",
+      "tokens": [
+        { "name": "control-input-sm", "value": "var(--scale-4-5)", "comment": "36px" },
+        { "name": "control-input-md", "value": "var(--scale-5-5)", "comment": "44px" },
+        { "name": "control-input-lg", "value": "var(--scale-6-5)", "comment": "52px" }
       ]
     }
   ]

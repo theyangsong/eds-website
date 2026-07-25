@@ -324,6 +324,23 @@
           "value": "var(--line-height-footnote-medium-strong)"
         }
       ]
+    },
+    {
+      "comment": "Footnote Strong (desktop alias)",
+      "tokens": [
+        {
+          "name": "typography-footnote-strong-size",
+          "value": "var(--typography-footnote-medium-strong-size)"
+        },
+        {
+          "name": "typography-footnote-strong-weight",
+          "value": "var(--typography-footnote-medium-strong-weight)"
+        },
+        {
+          "name": "typography-footnote-strong-line-height",
+          "value": "var(--typography-footnote-medium-strong-line-height)"
+        }
+      ]
     }
   ]
 }

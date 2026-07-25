@@ -1,0 +1,48 @@
+---
+description: Website Figma variant class names + DOM placement (Button / Input / Toggle)
+globs: "{packages/components/**,apps/showcase/**}"
+alwaysApply: true
+---
+
+# Component variant naming (EverGreen Website)
+
+**Always follow this without being asked again.** Helpers: `packages/components/src/utils/edsVariantName.ts`, `toggleVariantName.ts`.
+
+## Variant string
+
+Lowercase segments joined by `_`: **`名称_样式_尺寸_其他属性`**
+
+- No extra segments: not `primary`, `default`, **`control`**, `boxChecked`, `checkbox`, `switchOn`, etc.
+- Omit **尺寸** when Figma has no size variant.
+- **其他属性** only when applicable: `disable`, `loading`, `readonly`, `invalid`, `full`, `off`/`on`, `unchecked`/`checked`, …
+
+## Where classes go (critical)
+
+| Component | Figma visual root gets **variantName + one module class** | Wrapper gets **module only + data-\*** |
+|-----------|-----------------------------------------------------------|----------------------------------------|
+| Button | `<button>` → `button_brand_solid_lg` + `button` | — |
+| Input | `<div>` field → `input_standard_lg` + `field` (+ optional `eds-corner-smoothed`) | — |
+| Toggle (Switch / Checkbox / Radio / Decide) | `<span>` box/track → `toggle_checkbox_lg_unchecked` + **`surface`** | `<label>` → **`root`** only; `data-size`, `data-disabled` |
+
+DevTools on the **20×20 box** must show `toggle_checkbox_*`, not only a hashed module name.
+
+Inner structure: module names only (`surface`, `knob`, `icon`, `label`, `input`) — never duplicate variant segments as extra module classes.
+
+`eds-corner-smoothed` is from `@eds/website-tokens/corner-smoothing`; **not** a variant name.
+
+## Toggle prefix (showcase: one `/components/toggle` page)
+
+`toggle_{switch|checkbox|radio|decide}_{lg|md|sm}_{state…}[_disable]`
+
+Examples: `toggle_switch_lg_off`, `toggle_checkbox_md_checked_indeterminate`, `toggle_radio_sm_unchecked_disable`.
+
+Checkbox / Radio / Decide box sizes: **lg 20px**, **md 18px**, **sm 16px** (use `var(--scale-2-5)`, `18px`, `var(--scale-2)` — **not** `--scale-20` / `--scale-18`; those multiply by 8px grid).
+
+## Showcase
+
+- Single catalog entry **Toggle**; anchors Switch / Checkbox / Radio / Decide — **do not** split into `/components/checkbox` routes unless explicitly requested.
+- Preview labels: size rows **大 lg / 中 md / 小 sm**; state labels use variant segments (e.g. `checked_indeterminate`).
+
+## CSS
+
+Style via `:global(.toggle_checkbox_lg_checked)` on **`.surface`**, or `.root[data-size='md'] .surface:global([class*='toggle_checkbox_'])`. Do not reintroduce legacy `checkbox_unchecked` / `switch_off_lg` without `toggle_` prefix.

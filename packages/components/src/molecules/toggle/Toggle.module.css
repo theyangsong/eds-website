@@ -1,0 +1,214 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.rootDisabled {
+  cursor: not-allowed;
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.input:focus-visible + .control {
+  outline: var(--stroke-sm) solid var(--stroke-color-brand);
+  outline-offset: 2px;
+}
+
+/* —— Switch (Figma Switch) —— */
+.switch {
+  box-sizing: border-box;
+  padding: var(--spacing-05);
+  border-radius: var(--radius-full);
+  background-color: var(--material-card-deep);
+  justify-content: flex-start;
+}
+
+.switchOn {
+  background-color: var(--material-brand-primary);
+  justify-content: flex-end;
+}
+
+.switchDisabled {
+  opacity: 0.5;
+}
+
+.switchKnob {
+  border-radius: var(--radius-full);
+  background-color: var(--material-same-white-primary);
+  flex-shrink: 0;
+}
+
+.switchLg {
+  width: 44px;
+  min-width: 44px;
+  height: 24px;
+}
+
+.switchLg .switchKnob {
+  width: 16px;
+  height: 16px;
+}
+
+.switchMd {
+  width: 40px;
+  min-width: 40px;
+  height: 20px;
+}
+
+.switchMd .switchKnob {
+  width: 12px;
+  height: 12px;
+}
+
+.switchSm {
+  width: 28px;
+  min-width: 28px;
+  height: 16px;
+}
+
+.switchSm .switchKnob {
+  width: 8px;
+  height: 8px;
+}
+
+/* —— Checkbox / Radio / Decide (20×20) —— */
+.box {
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  border: var(--stroke-md) solid var(--stroke-base-quaternary);
+  background-color: transparent;
+}
+
+.boxChecked {
+  border-color: transparent;
+  background-color: var(--material-brand-primary);
+}
+
+.boxDisabledUnchecked {
+  border-color: var(--stroke-base-quaternary);
+}
+
+.boxDisabledUnchecked.checkbox {
+  background-color: var(--material-card-deep);
+}
+
+.boxDisabledUnchecked.radio,
+.boxDisabledUnchecked.decide {
+  background-color: var(--material-card-moderate);
+}
+
+.boxDisabledChecked {
+  border-color: transparent;
+  background-color: var(--material-brand-tertiary);
+}
+
+.checkbox {
+  border-radius: var(--radius-sm);
+}
+
+.radio,
+.decide {
+  border-radius: var(--radius-full);
+}
+
+.icon {
+  display: block;
+  color: var(--material-same-white-primary);
+}
+
+.hoverCheckIcon {
+  width: 12px;
+  height: 12px;
+  color: var(--stroke-base-quaternary);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .control .hoverCheckIcon {
+  opacity: 1;
+}
+
+.checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.indeterminateIcon {
+  width: 10px;
+  height: 2px;
+}
+
+.radioDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--material-same-white-primary);
+}
+
+.radioHoverDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--stroke-base-quaternary);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .control .radioHoverDot {
+  opacity: 1;
+}
+
+.label {
+  color: var(--text-base-primary);
+  font-family: var(--font-family-text);
+}
+
+.labelBodyMedium {
+  font-size: var(--typography-body-medium-size);
+  line-height: var(--typography-body-medium-line-height);
+}
+
+.labelBodySmall {
+  font-size: var(--typography-body-small-size);
+  line-height: var(--typography-body-small-line-height);
+}
+
+.labelFootnoteLarge {
+  font-size: var(--typography-footnote-large-size);
+  line-height: var(--typography-footnote-large-line-height);
+}
+
+.labelFootnoteMedium {
+  font-size: var(--typography-footnote-medium-size);
+  line-height: var(--typography-footnote-medium-line-height);
+}
+
+.rootDisabled .label {
+  color: var(--text-base-quaternary);
+}

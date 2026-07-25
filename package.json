@@ -1,14 +1,17 @@
 {
-  "name": "evergreen-design-system-website",
+  "name": "eds-website",
   "version": "0.1.0",
   "private": true,
   "description": "EverGreen Design System (Website) — Vue 3 component library with Figma-synced tokens",
   "scripts": {
     "build": "pnpm -r build",
-    "build:tokens": "pnpm --filter @evergreen/tokens build",
-    "build:components": "pnpm --filter @evergreen/components build",
-    "build:scenes": "pnpm --filter @evergreen/scenes build",
-    "sync:tokens": "pnpm --filter @evergreen/tokens sync:figma",
+    "build:tokens": "pnpm --filter @eds/website-tokens build",
+    "build:components": "pnpm --filter @eds/website-components build",
+    "build:scenes": "pnpm --filter @eds/website-scenes build",
+    "dev": "pnpm --filter @eds/website-showcase dev",
+    "dev:showcase": "pnpm --filter @eds/website-showcase dev",
+    "dev:storybook": "pnpm --filter @eds/website-storybook dev",
+    "sync:tokens": "pnpm --filter @eds/website-tokens sync:figma",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"
   },

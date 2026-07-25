@@ -8,6 +8,8 @@ const specDir = join(__dirname, '../spec');
 const FIGMA_URL =
   'https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945';
 
+/** Color base/semantic: edit spec/color/*.json (aligned with Desktop Color System). This script’s embedded color arrays are legacy; do not overwrite spec without syncing Desktop. */
+
 function p3ToHex([r, g, b]) {
   const to255 = (v) => Math.round(Math.max(0, Math.min(1, v)) * 255);
   const hex = (n) => n.toString(16).padStart(2, '0');
@@ -136,7 +138,7 @@ const semanticNames = [
   'event-focus',
   'event-focus-brand',
   'event-disable-base',
-  'event-disable-base-waken',
+  'event-disable-base-weaken',
   'stroke-hide',
   'stroke-base-primary',
   'stroke-base-secondary',
@@ -182,6 +184,7 @@ const semanticNames = [
   'text-face-secondary',
   'text-face-tertiary',
   'text-face-quaternary',
+  'text-hide',
   'material-hide',
   'material-brand-primary',
   'material-brand-tertiary',
@@ -233,7 +236,7 @@ const semanticNames = [
 const semanticLight = [
   'color(var(--eds-container) / .6)',
   'color(var(--eds-menu) / 1)',
-  'color(var(--eds-face) / 1)',
+  'color(var(--eds-page) / 1)',
   'color(var(--eds-flotation) / 1)',
   'color(var(--eds-base) / .05)',
   'color(var(--eds-brand) / 1)',
@@ -298,6 +301,7 @@ const semanticLight = [
   'color(var(--eds-face) / .4)',
   'color(var(--eds-face) / .2)',
   'color(var(--eds-base) / 0)',
+  'color(var(--eds-base) / 0)',
   'color(var(--eds-brand) / 1)',
   'color(var(--eds-brand) / .4)',
   'color(var(--eds-brand) / .2)',
@@ -348,7 +352,7 @@ const semanticLight = [
 const semanticDark = [
   'color(var(--eds-container) / .6)',
   'color(var(--eds-menu) / 1)',
-  'color(var(--eds-face) / 1)',
+  'color(var(--eds-page) / 1)',
   'color(var(--eds-flotation) / 1)',
   'color(var(--eds-base) / .07)',
   'color(var(--eds-brand) / 1)',
@@ -413,6 +417,7 @@ const semanticDark = [
   'color(var(--eds-face) / .4)',
   'color(var(--eds-face) / .2)',
   'color(var(--eds-base) / 0)',
+  'color(var(--eds-base) / 0)',
   'color(var(--eds-brand) / 1)',
   'color(var(--eds-brand) / .4)',
   'color(var(--eds-brand) / .2)',
@@ -461,23 +466,23 @@ const semanticDark = [
 ];
 
 const textStyles = [
-  { name: 'Display/Large', size: 88, lineHeight: 96, weight: '700' },
-  { name: 'Display/Medium', size: 80, lineHeight: 88, weight: '700' },
-  { name: 'Display/Small', size: 72, lineHeight: 80, weight: '700' },
-  { name: 'Headline/Large', size: 64, lineHeight: 72, weight: '700' },
-  { name: 'Headline/Medium', size: 56, lineHeight: 64, weight: '700' },
-  { name: 'Headline/Small', size: 48, lineHeight: 56, weight: '700' },
-  { name: 'Title/Large', size: 40, lineHeight: 48, weight: '700' },
+  { name: 'Display/Large', size: 88, lineHeight: 110, weight: '700' },
+  { name: 'Display/Medium', size: 80, lineHeight: 100, weight: '700' },
+  { name: 'Display/Small', size: 72, lineHeight: 90, weight: '700' },
+  { name: 'Headline/Large', size: 64, lineHeight: 80, weight: '700' },
+  { name: 'Headline/Medium', size: 56, lineHeight: 70, weight: '700' },
+  { name: 'Headline/Small', size: 48, lineHeight: 60, weight: '700' },
+  { name: 'Title/Large', size: 40, lineHeight: 50, weight: '700' },
   { name: 'Title/Medium', size: 32, lineHeight: 40, weight: '700' },
-  { name: 'Title/Small', size: 24, lineHeight: 32, weight: '700' },
-  { name: 'Body/Large', size: 20, lineHeight: 28, weight: '400' },
-  { name: 'Body/Large Strong', size: 20, lineHeight: 28, weight: '500' },
-  { name: 'Body/Medium', size: 18, lineHeight: 26, weight: '400' },
-  { name: 'Body/Medium Strong', size: 18, lineHeight: 26, weight: '500' },
-  { name: 'Body/Small', size: 16, lineHeight: 24, weight: '400' },
-  { name: 'Body/Small Strong', size: 16, lineHeight: 24, weight: '500' },
-  { name: 'Footnote/Large', size: 14, lineHeight: 20, weight: '400' },
-  { name: 'Footnote/Large Strong', size: 14, lineHeight: 20, weight: '500' },
+  { name: 'Title/Small', size: 24, lineHeight: 30, weight: '700' },
+  { name: 'Body/Large', size: 20, lineHeight: 26, weight: '400' },
+  { name: 'Body/Large Strong', size: 20, lineHeight: 26, weight: '500' },
+  { name: 'Body/Medium', size: 18, lineHeight: 24, weight: '400' },
+  { name: 'Body/Medium Strong', size: 18, lineHeight: 24, weight: '500' },
+  { name: 'Body/Small', size: 16, lineHeight: 20, weight: '400' },
+  { name: 'Body/Small Strong', size: 16, lineHeight: 20, weight: '500' },
+  { name: 'Footnote/Large', size: 14, lineHeight: 18, weight: '400' },
+  { name: 'Footnote/Large Strong', size: 14, lineHeight: 18, weight: '500' },
   { name: 'Footnote/Medium', size: 12, lineHeight: 16, weight: '400' },
   { name: 'Footnote/Medium Strong', size: 12, lineHeight: 16, weight: '500' },
 ];

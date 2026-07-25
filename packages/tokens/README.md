@@ -1,4 +1,4 @@
-# @evergreen/tokens
+# @eds/website-tokens
 
 ## Liquid Glass
 
@@ -10,8 +10,8 @@ under the MIT License.
 Import the token CSS once, then initialize semantic glass layers:
 
 ```ts
-import '@evergreen/tokens';
-import { initLiquidGlass } from '@evergreen/tokens/liquid-glass';
+import '@eds/website-tokens';
+import { initLiquidGlass } from '@eds/website-tokens/liquid-glass';
 
 initLiquidGlass();
 ```
@@ -27,7 +27,7 @@ import {
   attachLiquidGlass,
   detachLiquidGlass,
   refreshLiquidGlass,
-} from '@evergreen/tokens/liquid-glass';
+} from '@eds/website-tokens/liquid-glass';
 
 const element = document.querySelector<HTMLElement>('.my-glass');
 if (!element) throw new Error('Missing .my-glass surface');

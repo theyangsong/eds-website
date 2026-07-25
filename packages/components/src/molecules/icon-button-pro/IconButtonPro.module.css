@@ -1,0 +1,93 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: var(--scale-11);
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.root:disabled {
+  cursor: not-allowed;
+}
+
+.iconWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--material-hide);
+  transition: background-color var(--eds-motion-control-duration) var(--eds-motion-ease-in-out);
+}
+
+.root:hover:not(:disabled) .iconWrap,
+.root:active:not(:disabled) .iconWrap,
+.root:focus-visible:not(:disabled) .iconWrap {
+  background-color: var(--event-hover);
+}
+
+.icon {
+  display: inline-flex;
+  width: var(--icon-md);
+  height: var(--icon-md);
+  align-items: center;
+  justify-content: center;
+  color: var(--text-base-primary);
+}
+
+.icon :global(svg) {
+  width: 100%;
+  height: 100%;
+}
+
+.root:disabled .icon {
+  color: var(--text-base-quaternary);
+}
+
+.label {
+  margin-top: var(--spacing-05);
+  font-family: var(--font-family-text);
+  font-size: var(--typography-bar-size);
+  font-weight: var(--typography-bar-weight);
+  line-height: var(--typography-bar-line-height);
+  color: var(--text-base-secondary);
+  text-align: center;
+}
+
+.root:disabled .label {
+  color: var(--text-base-quaternary);
+}
+
+.badge {
+  position: absolute;
+  top: -3px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--scale-4);
+  padding: var(--spacing-025) var(--spacing-1);
+  border-radius: var(--radius-full);
+  background-color: var(--material-brand-primary);
+  color: var(--text-same-white-primary);
+  font-family: var(--font-family-text);
+  font-size: var(--typography-bar-size);
+  font-weight: var(--typography-bar-weight);
+  line-height: var(--typography-bar-line-height);
+}
+
+.reddot {
+  position: absolute;
+  top: 2px;
+  left: 28px;
+  width: var(--scale-2);
+  height: var(--scale-2);
+  border-radius: var(--radius-md);
+  background-color: var(--status-danger);
+}

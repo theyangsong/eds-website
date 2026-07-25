@@ -1,0 +1,413 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Figma component visual root — variant class lives here (e.g. toggle_checkbox_lg_unchecked). */
+.surface {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  box-sizing: border-box;
+  transition:
+    background-color var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out),
+    border-color var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out),
+    opacity var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out);
+}
+
+.surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out);
+}
+
+.root:hover .input:not(:disabled) + .surface::before {
+  opacity: 1;
+}
+
+.input:focus-visible + .surface {
+  outline: var(--stroke-sm) solid var(--stroke-color-brand);
+  outline-offset: 2px;
+}
+
+.icon,
+.knob {
+  position: relative;
+  z-index: 1;
+}
+
+.label {
+  color: var(--text-base-primary);
+  font-family: var(--font-family-text);
+  font-size: var(--typography-body-small-size);
+  line-height: var(--typography-body-small-line-height);
+}
+
+.root[data-disabled] .label {
+  color: var(--text-base-quaternary);
+}
+
+/* —— Switch: toggle_switch_{lg|md|sm}_{on|off}[_disable] —— */
+
+.surface:global([class*='toggle_switch_']) {
+  padding: var(--spacing-05);
+  border-radius: var(--radius-full);
+  background-color: var(--material-card-deep);
+  justify-content: flex-start;
+  --eds-switch-motion-duration: 0.2s;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_switch_']) {
+  width: 44px;
+  min-width: 44px;
+  height: 24px;
+  --eds-switch-travel: 20px;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_switch_']) .knob {
+  width: 16px;
+  height: 16px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_switch_']) {
+  width: 40px;
+  min-width: 40px;
+  height: 20px;
+  --eds-switch-travel: 20px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_switch_']) .knob {
+  width: 12px;
+  height: 12px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_switch_']) {
+  width: 28px;
+  min-width: 28px;
+  height: 16px;
+  --eds-switch-travel: 12px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_switch_']) .knob {
+  width: 8px;
+  height: 8px;
+}
+
+.knob {
+  border-radius: var(--radius-full);
+  background-color: var(--material-same-white-primary);
+  flex-shrink: 0;
+  transform: translateX(0);
+  transition: transform var(--eds-switch-motion-duration, 0.2s) var(--eds-motion-ease-in-out);
+}
+
+.surface:global(.toggle_switch_lg_on) .knob,
+.surface:global(.toggle_switch_md_on) .knob,
+.surface:global(.toggle_switch_sm_on) .knob {
+  transform: translateX(var(--eds-switch-travel, 0));
+}
+
+.surface:global(.toggle_switch_lg_on),
+.surface:global(.toggle_switch_md_on),
+.surface:global(.toggle_switch_sm_on) {
+  background-color: var(--material-brand-primary);
+}
+
+.root[data-disabled] .surface:global([class*='toggle_switch_']) {
+  opacity: 0.5;
+}
+
+/* —— Checkbox: toggle_checkbox_{lg|md|sm}_{state}[_disable] —— */
+
+.surface:global([class*='toggle_checkbox_']) {
+  border: var(--stroke-md) solid var(--stroke-base-quaternary);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_checkbox_']) {
+  width: var(--scale-2-5);
+  height: var(--scale-2-5);
+  max-width: var(--scale-2-5);
+  max-height: var(--scale-2-5);
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_checkbox_']) {
+  width: 18px;
+  height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_checkbox_']) {
+  width: var(--scale-2);
+  height: var(--scale-2);
+  max-width: var(--scale-2);
+  max-height: var(--scale-2);
+}
+
+.surface:global(.toggle_checkbox_lg_checked),
+.surface:global(.toggle_checkbox_md_checked),
+.surface:global(.toggle_checkbox_sm_checked),
+.surface:global(.toggle_checkbox_lg_checked_indeterminate),
+.surface:global(.toggle_checkbox_md_checked_indeterminate),
+.surface:global(.toggle_checkbox_sm_checked_indeterminate) {
+  border-color: transparent;
+  background-color: var(--material-brand-primary);
+}
+
+.surface:global(.toggle_checkbox_lg_unchecked_disable),
+.surface:global(.toggle_checkbox_md_unchecked_disable),
+.surface:global(.toggle_checkbox_sm_unchecked_disable) {
+  background-color: var(--material-card-deep);
+}
+
+.surface:global(.toggle_checkbox_lg_checked_disable),
+.surface:global(.toggle_checkbox_md_checked_disable),
+.surface:global(.toggle_checkbox_sm_checked_disable),
+.surface:global(.toggle_checkbox_lg_checked_indeterminate_disable),
+.surface:global(.toggle_checkbox_md_checked_indeterminate_disable),
+.surface:global(.toggle_checkbox_sm_checked_indeterminate_disable) {
+  border-color: transparent;
+  background-color: var(--material-brand-tertiary);
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .surface::before {
+  background-color: color(var(--eds-base) / 0.06);
+}
+
+.root:hover .input:checked:not(:disabled) + .surface::before {
+  background: color-mix(
+    in srgb,
+    var(--material-same-white-primary) 14%,
+    transparent
+  );
+}
+
+.icon {
+  display: block;
+  color: var(--material-same-white-primary);
+}
+
+.hoverCheckIcon {
+  color: var(--stroke-base-quaternary);
+  opacity: 0;
+  transition: opacity var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out);
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_checkbox_']) .hoverCheckIcon,
+.root[data-size='lg'] .surface:global([class*='toggle_checkbox_']) .checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_checkbox_']) .hoverCheckIcon,
+.root[data-size='md'] .surface:global([class*='toggle_checkbox_']) .checkIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_checkbox_']) .hoverCheckIcon,
+.root[data-size='sm'] .surface:global([class*='toggle_checkbox_']) .checkIcon {
+  width: 10px;
+  height: 10px;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_checkbox_']) .indeterminateIcon {
+  width: 10px;
+  height: 2px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_checkbox_']) .indeterminateIcon {
+  width: 8px;
+  height: 2px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_checkbox_']) .indeterminateIcon {
+  width: 6px;
+  height: 2px;
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .surface .hoverCheckIcon {
+  opacity: 1;
+}
+
+.surface:global([class*='toggle_decide_']) .hoverCheckIcon,
+.surface:global([class*='toggle_decide_']) .checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_decide_']) .hoverCheckIcon,
+.root[data-size='md'] .surface:global([class*='toggle_decide_']) .checkIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_decide_']) .hoverCheckIcon,
+.root[data-size='sm'] .surface:global([class*='toggle_decide_']) .checkIcon {
+  width: 10px;
+  height: 10px;
+}
+
+/* —— Radio: toggle_radio_{lg|md|sm}_{unchecked|checked}[_disable] —— */
+
+.surface:global([class*='toggle_radio_']) {
+  border: var(--stroke-md) solid var(--stroke-base-quaternary);
+  border-radius: var(--radius-full);
+  background-color: transparent;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_radio_']) {
+  width: var(--scale-2-5);
+  height: var(--scale-2-5);
+  max-width: var(--scale-2-5);
+  max-height: var(--scale-2-5);
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_radio_']) {
+  width: 18px;
+  height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_radio_']) {
+  width: var(--scale-2);
+  height: var(--scale-2);
+  max-width: var(--scale-2);
+  max-height: var(--scale-2);
+}
+
+.surface:global(.toggle_radio_lg_checked),
+.surface:global(.toggle_radio_md_checked),
+.surface:global(.toggle_radio_sm_checked) {
+  border-color: transparent;
+  background-color: var(--material-brand-primary);
+}
+
+.surface:global(.toggle_radio_lg_unchecked_disable),
+.surface:global(.toggle_radio_md_unchecked_disable),
+.surface:global(.toggle_radio_sm_unchecked_disable) {
+  background-color: var(--material-card-moderate);
+}
+
+.surface:global(.toggle_radio_lg_checked_disable),
+.surface:global(.toggle_radio_md_checked_disable),
+.surface:global(.toggle_radio_sm_checked_disable) {
+  border-color: transparent;
+  background-color: var(--material-brand-tertiary);
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_radio_']) .radioDot,
+.root[data-size='lg'] .surface:global([class*='toggle_radio_']) .radioHoverDot {
+  width: 8px;
+  height: 8px;
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_radio_']) .radioDot,
+.root[data-size='md'] .surface:global([class*='toggle_radio_']) .radioHoverDot {
+  width: 7px;
+  height: 7px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_radio_']) .radioDot,
+.root[data-size='sm'] .surface:global([class*='toggle_radio_']) .radioHoverDot {
+  width: 6px;
+  height: 6px;
+}
+
+.radioDot,
+.radioHoverDot {
+  border-radius: var(--radius-full);
+}
+
+.radioDot {
+  background-color: var(--material-same-white-primary);
+}
+
+.radioHoverDot {
+  background-color: var(--stroke-base-quaternary);
+  opacity: 0;
+  transition: opacity var(--eds-motion-hover-duration) var(--eds-motion-ease-in-out);
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .surface .radioHoverDot {
+  opacity: 1;
+}
+
+/* —— Decide: toggle_decide_{lg|md|sm}_{undecided|decided}[_disable] —— */
+
+.surface:global([class*='toggle_decide_']) {
+  border: var(--stroke-md) solid var(--stroke-base-quaternary);
+  border-radius: var(--radius-full);
+  background-color: transparent;
+}
+
+.root[data-size='lg'] .surface:global([class*='toggle_decide_']) {
+  width: var(--scale-2-5);
+  height: var(--scale-2-5);
+  max-width: var(--scale-2-5);
+  max-height: var(--scale-2-5);
+}
+
+.root[data-size='md'] .surface:global([class*='toggle_decide_']) {
+  width: 18px;
+  height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+}
+
+.root[data-size='sm'] .surface:global([class*='toggle_decide_']) {
+  width: var(--scale-2);
+  height: var(--scale-2);
+  max-width: var(--scale-2);
+  max-height: var(--scale-2);
+}
+
+.surface:global(.toggle_decide_lg_decided),
+.surface:global(.toggle_decide_md_decided),
+.surface:global(.toggle_decide_sm_decided) {
+  border-color: transparent;
+  background-color: var(--material-brand-primary);
+}
+
+.surface:global(.toggle_decide_lg_undecided_disable),
+.surface:global(.toggle_decide_md_undecided_disable),
+.surface:global(.toggle_decide_sm_undecided_disable) {
+  background-color: var(--material-card-moderate);
+}
+
+.surface:global(.toggle_decide_lg_decided_disable),
+.surface:global(.toggle_decide_md_decided_disable),
+.surface:global(.toggle_decide_sm_decided_disable) {
+  border-color: transparent;
+  background-color: var(--material-brand-tertiary);
+}

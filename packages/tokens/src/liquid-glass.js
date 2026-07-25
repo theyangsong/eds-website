@@ -8,7 +8,7 @@
  *     attachLiquidGlass,
  *     detachLiquidGlass,
  *     refreshLiquidGlass,
- *   } from '@evergreen/tokens/liquid-glass';
+ *   } from '@eds/website-tokens/liquid-glass';
  *   initLiquidGlass(); // auto-bind .effect-flotation-box__glass, .effect-popup-box__glass
  *   const surface = attachLiquidGlass(element, { varPrefix: '--effect-glass-bg' });
  *   surface.refresh();

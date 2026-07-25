@@ -1,5 +1,5 @@
 {
-  "name": "@evergreen/components",
+  "name": "@eds/website-components",
   "version": "0.1.0",
   "description": "Vue 3 components for EverGreen Design System (Website)",
   "type": "module",
@@ -25,7 +25,7 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@evergreen/tokens": "workspace:*",
+    "@eds/website-tokens": "workspace:*",
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.7.3",
     "vite": "^6.0.7",

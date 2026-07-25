@@ -1,6 +1,6 @@
 {
-  "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945&node-id=2536-5814",
-  "$description": "Color System semantic colors (语义色). Website event tokens expanded for web interactions.",
+  "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2536-5814",
+  "$description": "Color System semantic colors (语义色). Aligned with Desktop Color System: box-flotation → eds-popup; box-page → eds-page; Status/Event/Text/Material/Stroke migrations applied.",
   "tokens": [
     {
       "name": "box-container",
@@ -14,18 +14,23 @@
     },
     {
       "name": "box-page",
-      "light": "color(var(--eds-face) / 1)",
-      "dark": "color(var(--eds-face) / 1)"
+      "light": "color(var(--eds-page) / 1)",
+      "dark": "color(var(--eds-page) / 1)"
     },
     {
       "name": "box-flotation",
-      "light": "color(var(--eds-flotation) / 1)",
-      "dark": "color(var(--eds-flotation) / 1)"
+      "light": "color(var(--eds-popup) / 1)",
+      "dark": "color(var(--eds-popup) / 1)"
     },
     {
       "name": "event-hover",
       "light": "color(var(--eds-base) / .05)",
       "dark": "color(var(--eds-base) / .07)"
+    },
+    {
+      "name": "event-hover-light",
+      "light": "color(var(--eds-same-white) / .15)",
+      "dark": "color(var(--eds-same-white) / .15)"
     },
     {
       "name": "event-hover-brand",
@@ -56,6 +61,11 @@
       "name": "event-hover-same-white",
       "light": "color(var(--eds-same-white) / 1)",
       "dark": "color(var(--eds-same-white) / 1)"
+    },
+    {
+      "name": "event-active-dark",
+      "light": "color(var(--eds-base) / .2)",
+      "dark": "color(var(--eds-base) / .2)"
     },
     {
       "name": "event-active-brand",
@@ -98,14 +108,64 @@
       "dark": "color(var(--eds-brand) / 1)"
     },
     {
-      "name": "event-disable-base",
+      "name": "event-focus-brand-weaken",
+      "light": "color(var(--eds-brand) / .2)",
+      "dark": "color(var(--eds-brand) / .2)"
+    },
+    {
+      "name": "status-disable-base",
       "light": "color(var(--eds-base) / .2)",
       "dark": "color(var(--eds-base) / .2)"
     },
     {
-      "name": "event-disable-base-waken",
+      "name": "status-disable-base-weaken",
       "light": "color(var(--eds-base) / .05)",
       "dark": "color(var(--eds-base) / .07)"
+    },
+    {
+      "name": "status-disable-brand",
+      "light": "color(var(--eds-brand) / .4)",
+      "dark": "color(var(--eds-brand) / .4)"
+    },
+    {
+      "name": "status-disable-brand-weaken",
+      "light": "color(var(--eds-brand) / .2)",
+      "dark": "color(var(--eds-brand) / .2)"
+    },
+    {
+      "name": "status-disable-same-white",
+      "light": "color(var(--eds-same-white) / 1)",
+      "dark": "color(var(--eds-same-white) / .2)"
+    },
+    {
+      "name": "status-success",
+      "light": "color(var(--eds-success) / 1)",
+      "dark": "color(var(--eds-success) / 1)"
+    },
+    {
+      "name": "status-success-weaken",
+      "light": "color(var(--eds-success) / .2)",
+      "dark": "color(var(--eds-success) / .2)"
+    },
+    {
+      "name": "status-danger",
+      "light": "color(var(--eds-danger) / 1)",
+      "dark": "color(var(--eds-danger) / 1)"
+    },
+    {
+      "name": "status-danger-weaken",
+      "light": "color(var(--eds-danger) / .2)",
+      "dark": "color(var(--eds-danger) / .2)"
+    },
+    {
+      "name": "status-warning",
+      "light": "color(var(--eds-warning) / 1)",
+      "dark": "color(var(--eds-warning) / 1)"
+    },
+    {
+      "name": "status-warning-weaken",
+      "light": "color(var(--eds-warning) / .2)",
+      "dark": "color(var(--eds-warning) / .2)"
     },
     {
       "name": "stroke-hide",
@@ -160,7 +220,7 @@
     {
       "name": "stroke-outline-shallow",
       "light": "color(var(--eds-base) / .12)",
-      "dark": "color(var(--eds-base) / .14)"
+      "dark": "color(var(--eds-base) / .12)"
     },
     {
       "name": "stroke-outline-deep",
@@ -178,16 +238,6 @@
       "dark": "color(var(--eds-brand) / 1)"
     },
     {
-      "name": "stroke-color-brand-active",
-      "light": "color(var(--eds-brand) / .6)",
-      "dark": "color(var(--eds-brand) / .6)"
-    },
-    {
-      "name": "stroke-color-table-hover",
-      "light": "color(var(--eds-brand) / .4)",
-      "dark": "color(var(--eds-brand) / .4)"
-    },
-    {
       "name": "stroke-color-success",
       "light": "color(var(--eds-success) / 1)",
       "dark": "color(var(--eds-success) / 1)"
@@ -201,11 +251,6 @@
       "name": "stroke-color-danger",
       "light": "color(var(--eds-danger) / 1)",
       "dark": "color(var(--eds-danger) / 1)"
-    },
-    {
-      "name": "stroke-color-danger-active",
-      "light": "color(var(--eds-danger) / .6)",
-      "dark": "color(var(--eds-danger) / .6)"
     },
     {
       "name": "stroke-same-white-primary",
@@ -228,69 +273,9 @@
       "dark": "color(var(--eds-same-black) / .6)"
     },
     {
-      "name": "text-brand-primary",
-      "light": "color(var(--eds-brand) / 1)",
-      "dark": "color(var(--eds-brand) / 1)"
-    },
-    {
-      "name": "text-brand-secondary",
-      "light": "color(var(--eds-brand) / .6)",
-      "dark": "color(var(--eds-brand) / .6)"
-    },
-    {
-      "name": "text-brand-tertiary",
-      "light": "color(var(--eds-brand) / .4)",
-      "dark": "color(var(--eds-brand) / .4)"
-    },
-    {
-      "name": "text-brand-quaternary",
-      "light": "color(var(--eds-brand) / .2)",
-      "dark": "color(var(--eds-brand) / .2)"
-    },
-    {
-      "name": "text-match",
-      "light": "color(var(--eds-match) / 1)",
-      "dark": "color(var(--eds-match) / 1)"
-    },
-    {
-      "name": "text-success",
-      "light": "color(var(--eds-success) / 1)",
-      "dark": "color(var(--eds-success) / 1)"
-    },
-    {
-      "name": "text-danger-primary",
-      "light": "color(var(--eds-danger) / 1)",
-      "dark": "color(var(--eds-danger) / 1)"
-    },
-    {
-      "name": "text-danger-secondary",
-      "light": "color(var(--eds-danger) / .6)",
-      "dark": "color(var(--eds-danger) / .6)"
-    },
-    {
-      "name": "text-warning",
-      "light": "color(var(--eds-warning) / 1)",
-      "dark": "color(var(--eds-warning) / 1)"
-    },
-    {
-      "name": "text-same-black-primary",
-      "light": "color(var(--eds-same-black) / 1)",
-      "dark": "color(var(--eds-same-black) / 1)"
-    },
-    {
-      "name": "text-same-black-secondary",
-      "light": "color(var(--eds-same-black) / .6)",
-      "dark": "color(var(--eds-same-black) / .6)"
-    },
-    {
-      "name": "text-same-white-primary",
-      "light": "color(var(--eds-same-white) / 1)",
-      "dark": "color(var(--eds-same-white) / 1)"
-    },
-    {
-      "name": "text-same-white-secondary",
-      "light": "color(var(--eds-same-white) / .6)",
-      "dark": "color(var(--eds-same-white) / .6)"
+      "name": "text-hide",
+      "light": "color(var(--eds-base) / 0)",
+      "dark": "color(var(--eds-base) / 0)"
     },
     {
       "name": "text-base-primary",
@@ -311,6 +296,46 @@
       "name": "text-base-quaternary",
       "light": "color(var(--eds-base) / .2)",
       "dark": "color(var(--eds-base) / .2)"
+    },
+    {
+      "name": "text-brand-primary",
+      "light": "color(var(--eds-brand) / 1)",
+      "dark": "color(var(--eds-brand) / 1)"
+    },
+    {
+      "name": "text-brand-secondary",
+      "light": "color(var(--eds-brand) / .6)",
+      "dark": "color(var(--eds-brand) / .6)"
+    },
+    {
+      "name": "text-brand-tertiary",
+      "light": "color(var(--eds-brand) / .4)",
+      "dark": "color(var(--eds-brand) / .4)"
+    },
+    {
+      "name": "text-brand-quaternary",
+      "light": "color(var(--eds-brand) / .2)",
+      "dark": "color(var(--eds-brand) / .2)"
+    },
+    {
+      "name": "text-same-black-primary",
+      "light": "color(var(--eds-same-black) / 1)",
+      "dark": "color(var(--eds-same-black) / 1)"
+    },
+    {
+      "name": "text-same-black-secondary",
+      "light": "color(var(--eds-same-black) / .6)",
+      "dark": "color(var(--eds-same-black) / .6)"
+    },
+    {
+      "name": "text-same-white-primary",
+      "light": "color(var(--eds-same-white) / 1)",
+      "dark": "color(var(--eds-same-white) / 1)"
+    },
+    {
+      "name": "text-same-white-secondary",
+      "light": "color(var(--eds-same-white) / .6)",
+      "dark": "color(var(--eds-same-white) / .6)"
     },
     {
       "name": "text-face-primary",
@@ -338,99 +363,24 @@
       "dark": "color(var(--eds-base) / 0)"
     },
     {
-      "name": "material-brand-primary",
-      "light": "color(var(--eds-brand) / 1)",
-      "dark": "color(var(--eds-brand) / 1)"
+      "name": "material-base-primary",
+      "light": "color(var(--eds-base) / 1)",
+      "dark": "color(var(--eds-base) / 1)"
     },
     {
-      "name": "material-brand-tertiary",
-      "light": "color(var(--eds-brand) / .4)",
-      "dark": "color(var(--eds-brand) / .4)"
+      "name": "material-base-secondary",
+      "light": "color(var(--eds-base) / .6)",
+      "dark": "color(var(--eds-base) / .6)"
     },
     {
-      "name": "material-brand-quaternary",
-      "light": "color(var(--eds-brand) / .2)",
-      "dark": "color(var(--eds-brand) / .2)"
+      "name": "material-base-tertiary",
+      "light": "color(var(--eds-base) / .4)",
+      "dark": "color(var(--eds-base) / .4)"
     },
     {
-      "name": "material-brand-quinary",
-      "light": "color(var(--eds-brand) / .1)",
-      "dark": "color(var(--eds-brand) / .1)"
-    },
-    {
-      "name": "material-match-primary",
-      "light": "color(var(--eds-match) / 1)",
-      "dark": "color(var(--eds-match) / 1)"
-    },
-    {
-      "name": "material-match-quaternary",
-      "light": "color(var(--eds-match) / .2)",
-      "dark": "color(var(--eds-match) / .2)"
-    },
-    {
-      "name": "material-decor-primary",
-      "light": "color(var(--eds-decor) / 1)",
-      "dark": "color(var(--eds-decor) / 1)"
-    },
-    {
-      "name": "material-decor-quaternary",
-      "light": "color(var(--eds-decor) / .2)",
-      "dark": "color(var(--eds-decor) / .2)"
-    },
-    {
-      "name": "material-success-primary",
-      "light": "color(var(--eds-success) / 1)",
-      "dark": "color(var(--eds-success) / 1)"
-    },
-    {
-      "name": "material-success-quaternary",
-      "light": "color(var(--eds-success) / .2)",
-      "dark": "color(var(--eds-success) / .2)"
-    },
-    {
-      "name": "material-danger-primary",
-      "light": "color(var(--eds-danger) / 1)",
-      "dark": "color(var(--eds-danger) / 1)"
-    },
-    {
-      "name": "material-danger-quaternary",
-      "light": "color(var(--eds-danger) / .2)",
-      "dark": "color(var(--eds-danger) / .2)"
-    },
-    {
-      "name": "material-warning-primary",
-      "light": "color(var(--eds-warning) / 1)",
-      "dark": "color(var(--eds-warning) / 1)"
-    },
-    {
-      "name": "material-warning-quaternary",
-      "light": "color(var(--eds-warning) / .2)",
-      "dark": "color(var(--eds-warning) / .2)"
-    },
-    {
-      "name": "material-same-black",
-      "light": "color(var(--eds-same-black) / 1)",
-      "dark": "color(var(--eds-same-black) / 1)"
-    },
-    {
-      "name": "material-same-white-primary",
-      "light": "color(var(--eds-same-white) / 1)",
-      "dark": "color(var(--eds-same-white) / 1)"
-    },
-    {
-      "name": "material-same-white-secondary",
-      "light": "color(var(--eds-same-white) / .6)",
-      "dark": "color(var(--eds-same-white) / .6)"
-    },
-    {
-      "name": "material-same-white-tertiary",
-      "light": "color(var(--eds-same-white) / .8)",
-      "dark": "color(var(--eds-same-white) / .2)"
-    },
-    {
-      "name": "material-same-white-quaternary",
-      "light": "color(var(--eds-same-white) / .1)",
-      "dark": "color(var(--eds-same-white) / .04)"
+      "name": "material-base-quaternary",
+      "light": "color(var(--eds-base) / .2)",
+      "dark": "color(var(--eds-base) / .2)"
     },
     {
       "name": "material-card-shallow",
@@ -453,24 +403,69 @@
       "dark": "color(var(--eds-base) / .1)"
     },
     {
-      "name": "material-base-primary",
-      "light": "color(var(--eds-base) / 1)",
-      "dark": "color(var(--eds-base) / 1)"
+      "name": "material-same-black",
+      "light": "color(var(--eds-same-black) / 1)",
+      "dark": "color(var(--eds-same-black) / 1)"
     },
     {
-      "name": "material-base-secondary",
-      "light": "color(var(--eds-base) / .6)",
-      "dark": "color(var(--eds-base) / .6)"
+      "name": "material-same-white-primary",
+      "light": "color(var(--eds-same-white) / 1)",
+      "dark": "color(var(--eds-same-white) / 1)"
     },
     {
-      "name": "material-base-tertiary",
-      "light": "color(var(--eds-base) / .4)",
-      "dark": "color(var(--eds-base) / .4)"
+      "name": "material-same-white-secondary",
+      "light": "color(var(--eds-same-white) / .6)",
+      "dark": "color(var(--eds-same-white) / .6)"
     },
     {
-      "name": "material-base-quaternary",
-      "light": "color(var(--eds-base) / .2)",
-      "dark": "color(var(--eds-base) / .2)"
+      "name": "material-same-white-tertiary",
+      "light": "color(var(--eds-same-white) / 1)",
+      "dark": "color(var(--eds-same-white) / .2)"
+    },
+    {
+      "name": "material-same-white-quaternary",
+      "light": "color(var(--eds-same-white) / .4)",
+      "dark": "color(var(--eds-same-white) / .04)"
+    },
+    {
+      "name": "material-brand-primary",
+      "light": "color(var(--eds-brand) / 1)",
+      "dark": "color(var(--eds-brand) / 1)"
+    },
+    {
+      "name": "material-brand-tertiary",
+      "light": "color(var(--eds-brand) / .4)",
+      "dark": "color(var(--eds-brand) / .4)"
+    },
+    {
+      "name": "material-brand-quaternary",
+      "light": "color(var(--eds-brand) / .2)",
+      "dark": "color(var(--eds-brand) / .2)"
+    },
+    {
+      "name": "material-brand-quinary",
+      "light": "color(var(--eds-brand) / .12)",
+      "dark": "color(var(--eds-brand) / .12)"
+    },
+    {
+      "name": "material-match-primary",
+      "light": "color(var(--eds-match) / 1)",
+      "dark": "color(var(--eds-match) / 1)"
+    },
+    {
+      "name": "material-match-quaternary",
+      "light": "color(var(--eds-match) / .2)",
+      "dark": "color(var(--eds-match) / .2)"
+    },
+    {
+      "name": "material-decor-primary",
+      "light": "color(var(--eds-decor) / 1)",
+      "dark": "color(var(--eds-decor) / 1)"
+    },
+    {
+      "name": "material-decor-quaternary",
+      "light": "color(var(--eds-decor) / .2)",
+      "dark": "color(var(--eds-decor) / .2)"
     },
     {
       "name": "material-face-primary",
@@ -514,13 +509,13 @@
     },
     {
       "name": "effect-vulvar-shadow",
-      "light": "color(var(--eds-same-black) / .2)",
+      "light": "color(var(--eds-same-black) / .25)",
       "dark": "color(var(--eds-same-black) / .6)"
     },
     {
       "name": "effect-vulvar-shadow-subtle",
       "light": "color(var(--eds-same-black) / .03)",
-      "dark": "color(var(--eds-same-black) / .06)"
+      "dark": "color(var(--eds-same-black) / .2)"
     },
     {
       "name": "effect-vulvar-shadow-glow",

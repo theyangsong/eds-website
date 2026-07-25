@@ -1,0 +1,38 @@
+---
+description: Website design system default typography is Body/Small
+globs: "{packages/components/**,apps/showcase/**,packages/tokens/**}"
+alwaysApply: true
+---
+
+# Default typography — Body/Small
+
+For **EverGreen Website** (`@eds/website-*`), treat **Body/Small** as the default text size unless Figma explicitly specifies another Text Style.
+
+## Tokens
+
+- Regular: `--typography-body-small-size`, `--typography-body-small-weight`, `--typography-body-small-line-height`
+- Emphasis (500): `--typography-body-small-strong-*`
+- CSS class: `.typography-body-small` / `.typography-body-small-strong`
+
+Body/Small is **16px** with the Website line-height token (not Desktop body-medium).
+
+## When implementing components
+
+- Default control copy (Input value, Button Lg–Sm labels, labels, table cells, nav): **body-small** or **body-small-strong**
+- Use **body-medium** or larger only when the spec names a different style (e.g. section titles, display text)
+- Do not default `body` / root to `body-medium` in Website apps or `@eds/website-components`
+
+## Examples
+
+```css
+/* ✅ default control text */
+font-size: var(--typography-body-small-size);
+font-weight: var(--typography-body-small-weight);
+line-height: var(--typography-body-small-line-height);
+
+/* ✅ default emphasis (e.g. button label) */
+font-weight: var(--typography-body-small-strong-weight);
+
+/* ❌ avoid as unnamed default */
+font-size: var(--typography-body-medium-size);
+```

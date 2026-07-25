@@ -1,0 +1,22 @@
+/** Website @eds/website-tokens text style class order (spec/text/styles.json). */
+export const textStyleOrder = [
+  'typography-display-large',
+  'typography-display-medium',
+  'typography-display-small',
+  'typography-headline-large',
+  'typography-headline-medium',
+  'typography-headline-small',
+  'typography-title-large',
+  'typography-title-medium',
+  'typography-title-small',
+  'typography-body-large',
+  'typography-body-large-strong',
+  'typography-body-medium',
+  'typography-body-medium-strong',
+  'typography-body-small',
+  'typography-body-small-strong',
+  'typography-footnote-large',
+  'typography-footnote-large-strong',
+  'typography-footnote-medium',
+  'typography-footnote-medium-strong',
+] as const;

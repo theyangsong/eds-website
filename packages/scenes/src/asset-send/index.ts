@@ -1,0 +1,2 @@
+/** Scene — asset-send。 */
+export {};

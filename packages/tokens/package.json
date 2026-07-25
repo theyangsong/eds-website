@@ -1,5 +1,5 @@
 {
-  "name": "@evergreen/tokens",
+  "name": "@eds/website-tokens",
   "version": "0.1.0",
   "description": "Design tokens for EverGreen Design System (Website)",
   "type": "module",

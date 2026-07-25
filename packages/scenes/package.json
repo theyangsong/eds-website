@@ -1,7 +1,7 @@
 {
-  "name": "@evergreen/scenes",
+  "name": "@eds/website-scenes",
   "version": "0.1.0",
-  "description": "Website business scenes for EverGreen Design System — composed from @evergreen/components",
+  "description": "Website business scenes for EverGreen Design System \u2014 composed from @eds/website-components",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,7 +25,7 @@
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "@evergreen/components": "workspace:*"
+    "@eds/website-components": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

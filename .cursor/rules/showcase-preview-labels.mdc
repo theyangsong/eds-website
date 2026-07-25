@@ -1,0 +1,30 @@
+---
+description: Showcase preview row labels — 中文 + API key
+globs: "apps/showcase/**"
+alwaysApply: true
+---
+
+# Showcase preview labels
+
+In **component preview** rows (size / tone / variant / state labels beside specimens), use:
+
+**`中文 key`**
+
+- **key** must be the exact prop or variant segment used in code (`lg`, `brand`, `solid`, `theme`, `disable`, …).
+- Do **not** use English marketing names alone (`Large`, `Medium`, `Theme`, `Brand` without key).
+- Do **not** paraphrase keys (`same_white` in CSS vs `sameWhite` in props — show the **prop/API** spelling).
+
+## Examples
+
+| ✅ | ❌ |
+|----|-----|
+| 大 lg | Large |
+| 中 md | Medium |
+| 品牌 brand | Brand |
+| 主题 theme | Theme |
+| 禁用 disable | Disabled |
+| 实心 solid | Solid |
+
+Use helpers in `apps/showcase/src/utils/previewLabel.ts` (`previewSizeLabel`, `previewLinkToneLabel`, …) so Button / Link / Input previews stay consistent.
+
+Section **titles** (h2) may stay English (`Size`, `Tone`) unless product asks otherwise; **row labels** next to components follow this rule.
