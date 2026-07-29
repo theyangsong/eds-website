@@ -6,7 +6,7 @@
   border: 0;
   border-radius: var(--radius-sm);
   background-color: var(--material-card-moderate);
-  font-family: var(--font-family-text);
+  font-family: var(--eds-family-sans);
   cursor: text;
   box-shadow: inset 0 0 0 var(--stroke-lg) transparent;
   transition:
@@ -44,7 +44,7 @@
 }
 
 .lg {
-  max-height: var(--control-input-lg);
+  max-height: var(--scale-6-5);
   gap: var(--spacing-1-5);
   padding: var(--spacing-2);
 }
@@ -56,7 +56,7 @@
 }
 
 .md {
-  max-height: var(--control-input-md);
+  max-height: var(--scale-5-5);
   gap: var(--spacing-1-5);
   padding: var(--spacing-1-5) var(--spacing-2);
 }
@@ -68,7 +68,7 @@
 }
 
 .sm {
-  max-height: var(--control-input-sm);
+  max-height: var(--scale-4-5);
   gap: var(--spacing-1-5);
   padding: var(--spacing-1) var(--spacing-2);
 }
@@ -139,10 +139,10 @@
   border: 0;
   background: transparent;
   color: var(--text-base-primary);
-  font-family: var(--font-family-text);
-  font-size: var(--typography-body-small-size);
-  font-weight: var(--typography-body-small-weight);
-  line-height: var(--typography-body-small-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
   -webkit-appearance: none;
   appearance: none;
   outline: none;
@@ -188,10 +188,10 @@
 .unit {
   flex: 0 0 auto;
   color: var(--text-base-primary);
-  font-family: var(--font-family-text);
-  font-size: var(--typography-body-small-size);
-  font-weight: var(--typography-body-small-weight);
-  line-height: var(--typography-body-small-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
   white-space: nowrap;
 }
 
@@ -201,10 +201,10 @@
   left: var(--eds-input-unit-left, 0);
   transform: translateY(-50%);
   color: var(--text-base-primary);
-  font-family: var(--font-family-text);
-  font-size: var(--typography-body-small-size);
-  font-weight: var(--typography-body-small-weight);
-  line-height: var(--typography-body-small-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -257,8 +257,8 @@
   border-radius: var(--radius-full);
   background-color: var(--material-card-moderate);
   color: var(--text-base-primary);
-  font-family: var(--font-family-text);
-  font-weight: var(--typography-body-small-strong-weight);
+  font-family: var(--eds-family-sans);
+  font-weight: var(--eds-body-small-strong-weight);
   white-space: nowrap;
 }
 
@@ -273,18 +273,18 @@
 
 .lg .maxButton {
   padding: var(--spacing-1-5) var(--spacing-4);
-  font-size: var(--typography-body-small-size);
-  line-height: var(--typography-body-small-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .md .maxButton {
   padding: var(--spacing-05) var(--spacing-3);
-  font-size: var(--typography-body-small-size);
-  line-height: var(--typography-body-small-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .sm .maxButton {
   padding: var(--spacing-05) var(--spacing-2);
-  font-size: var(--typography-footnote-large-size);
-  line-height: var(--typography-footnote-large-line-height);
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
 }

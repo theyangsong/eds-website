@@ -55,14 +55,9 @@ const scaleBaseRows = computed(() => {
   const base = tokens.scaleBase as {
     scaleBase: number;
     resolved: Record<string, string>;
-    stroke: Record<string, string>;
   };
 
-  return [
-    { name: 'scale-base', value: `${base.scaleBase}px` },
-    ...entriesToRows(base.resolved),
-    ...entriesToRows(base.stroke),
-  ];
+  return [{ name: 'scale-base', value: `${base.scaleBase}px` }, ...entriesToRows(base.resolved)];
 });
 
 const scaleSemantic = tokens.scaleSemantic as Record<string, string>;

@@ -143,9 +143,9 @@
   border-radius: var(--radius-full);
   background-color: transparent;
   color: var(--text-base-primary);
-  font-size: var(--typography-footnote-large-size);
-  line-height: var(--typography-footnote-large-line-height);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
+  font-weight: var(--eds-footnote-large-strong-weight);
   white-space: nowrap;
   transition:
     background-color var(--eds-motion-hover-duration) ease,
@@ -161,7 +161,7 @@
 .link:focus-visible {
   background-color: var(--event-focus-secondary);
   color: var(--text-base-primary);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-weight: var(--eds-footnote-large-strong-weight);
   outline: none;
 }
 
@@ -169,9 +169,9 @@
   padding-block: var(--spacing-05);
   padding-inline: var(--spacing-3);
   color: var(--text-base-secondary);
-  font-size: var(--typography-footnote-large-size);
-  line-height: var(--typography-footnote-large-line-height);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .linkNested:hover:not(.linkActive) {
@@ -180,11 +180,11 @@
 
 .linkNested.linkActive {
   color: var(--text-base-primary);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .linkNested.linkActive:focus-visible {
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .linkNestedDeep {
@@ -193,7 +193,7 @@
 
 .linkActive {
   color: var(--text-base-primary);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .linkActive:hover {
@@ -204,7 +204,7 @@
 .linkActive:focus-visible {
   background-color: var(--event-focus-secondary);
   color: var(--text-base-primary);
-  font-weight: var(--typography-footnote-large-strong-weight);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .sectionLabel {
@@ -212,9 +212,9 @@
   padding-block: var(--spacing-2) var(--spacing-05);
   padding-inline: var(--spacing-3);
   color: var(--text-base-tertiary);
-  font-size: var(--typography-footnote-medium-size);
-  font-weight: var(--typography-footnote-medium-strong-weight);
-  line-height: var(--typography-footnote-medium-line-height);
+  font-size: var(--eds-footnote-medium-size);
+  font-weight: var(--eds-footnote-medium-strong-weight);
+  line-height: var(--eds-footnote-medium-line-height);
 }
 
 @media (max-width: 1100px) {

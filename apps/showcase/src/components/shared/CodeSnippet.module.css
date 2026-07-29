@@ -8,8 +8,8 @@
   word-break: break-word;
   color: var(--text-base-primary);
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: var(--typography-body-small-size);
-  line-height: var(--typography-body-small-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .hljsFence :global(code.hljs) {

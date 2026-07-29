@@ -36,11 +36,5 @@
     "scale-40": 40,
     "scale-50": 50,
     "scale-full": "888px"
-  },
-  "stroke": {
-    "stroke-xs": "0.5px",
-    "stroke-sm": "1px",
-    "stroke-md": "1.5px",
-    "stroke-lg": "2px"
   }
 }

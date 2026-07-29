@@ -15,8 +15,8 @@
 
 .title {
   margin: 0;
-  font-size: var(--typography-headline-small-size);
-  line-height: var(--typography-headline-small-line-height);
+  font-size: var(--eds-headline-small-size);
+  line-height: var(--eds-headline-small-line-height);
   font-weight: var(--weight-bold);
 }
 

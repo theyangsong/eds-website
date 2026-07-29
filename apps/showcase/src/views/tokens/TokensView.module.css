@@ -47,8 +47,8 @@
 .subsectionTitle {
   margin: 0;
   color: var(--text-base-secondary);
-  font-size: var(--typography-body-small-strong-size);
-  font-weight: var(--typography-body-small-strong-weight);
+  font-size: var(--eds-body-small-strong-size);
+  font-weight: var(--eds-body-small-strong-weight);
   scroll-margin-top: var(--showcase-page-header-offset);
 }
 

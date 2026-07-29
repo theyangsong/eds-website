@@ -30,8 +30,9 @@ export function formatTextStyleMetrics(
   typographySemantic: Record<string, string>,
   typographyBase: Record<string, string>,
 ): string {
-  const sizeRaw = typographySemantic[`${key}-size`] ?? '';
-  const lineHeightRaw = typographySemantic[`${key}-line-height`] ?? '';
+  const edsKey = key.replace(/^typography-/, 'eds-');
+  const sizeRaw = typographySemantic[`${edsKey}-size`] ?? '';
+  const lineHeightRaw = typographySemantic[`${edsKey}-line-height`] ?? '';
   const size = sizeRaw ? resolveTypographyToken(sizeRaw, typographyBase) : '';
   const lineHeight = lineHeightRaw
     ? resolveTypographyToken(lineHeightRaw, typographyBase)

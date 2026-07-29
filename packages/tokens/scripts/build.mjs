@@ -104,13 +104,11 @@ function buildScaleBaseVariables(baseSpec) {
     scaleVars.push({ name, value: entry });
   }
 
-  const strokeVars = Object.entries(baseSpec.stroke).map(([name, value]) => ({ name, value }));
-
-  return { unit, scaleVars, strokeVars };
+  return { unit, scaleVars };
 }
 
 function writeScaleBaseCssFile(destination, selector, baseSpec, headerLines = []) {
-  const { unit, scaleVars, strokeVars } = buildScaleBaseVariables(baseSpec);
+  const { unit, scaleVars } = buildScaleBaseVariables(baseSpec);
   const lines = [
     '/**',
     ' * Do not edit directly, this file was auto-generated from Figma tokens.',
@@ -133,13 +131,6 @@ function writeScaleBaseCssFile(destination, selector, baseSpec, headerLines = []
       continue;
     }
 
-    lines.push(`  --${token.name}: ${token.value};`);
-  }
-
-  lines.push('');
-  lines.push('  /* 描边系统（Stroke System）');
-  lines.push('     独立于 4px 体系，用于视觉精度 */');
-  for (const token of strokeVars) {
     lines.push(`  --${token.name}: ${token.value};`);
   }
 
@@ -1008,7 +999,7 @@ function buildScaleSystem() {
   writeScaleBaseCssFile(join(cssDir, 'scale/base.css'), ':root', baseSpec, [
     ' * Scale System — base primitives (基数).',
     ' * Source: spec/scale/base.json',
-    ' * Formula: scale(n) = n × var(--scale-base). Stroke is independent of the 4px grid.',
+    ' * Formula: scale(n) = n × var(--scale-base).',
   ]);
 
   writeScaleSemanticCssFile(
@@ -1062,18 +1053,15 @@ function buildTypographySystem() {
 
 function buildTextSystem() {
   const stylesSpec = loadJson('text/styles.json');
+  const showcaseTextCss = join(rootDir, '../../apps/showcase/src/styles/text-styles.css');
 
-  writeTextStylesCssFile(join(cssDir, 'text/styles.css'), stylesSpec, [
-    ' * Text System — semantic role classes (文本样式 → typography).',
+  writeTextStylesCssFile(showcaseTextCss, stylesSpec, [
+    ' * Text styles for showcase preview only (not shipped in @eds/website-tokens).',
     ' * Source: spec/text/styles.json',
     ' * Class names match Figma Text Styles.',
   ]);
 
-  writeImportAggregator(
-    join(cssDir, 'text/index.css'),
-    ['../typography/index.css', './styles.css'],
-    'Text System entry',
-  );
+  rmSync(join(cssDir, 'text'), { recursive: true, force: true });
 }
 
 function buildEffectSystem() {
@@ -1168,7 +1156,6 @@ function buildRootIndex() {
     [
       './scale/index.css',
       './typography/index.css',
-      './text/index.css',
       './color/index.css',
       './effect/index.css',
     ],
@@ -1208,7 +1195,6 @@ function buildJsonExport() {
     scaleBase: scaleUnit,
     multipliers: scaleMultipliers,
     literals: scaleLiterals,
-    stroke: scaleBaseSpec.stroke,
     formulas: scaleFormulas,
     resolved: scaleResolved,
   };
@@ -1229,7 +1215,6 @@ function buildJsonExport() {
     scale: {
       'scale-base': `${scaleUnit}px`,
       ...scaleFormulas,
-      ...scaleBaseSpec.stroke,
       ...scaleSemantic,
     },
     typographyBase,

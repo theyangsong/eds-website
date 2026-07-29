@@ -62,40 +62,39 @@
       ]
     },
     {
-      "comment": "图标尺寸（Icon Size）",
+      "comment": "描边（Stroke）",
+      "tokens": [
+        { "name": "stroke-xs", "value": "0.5px" },
+        { "name": "stroke-sm", "value": "1px" },
+        { "name": "stroke-md", "value": "1.5px" },
+        { "name": "stroke-lg", "value": "2px" }
+      ]
+    },
+    {
+      "comment": "图标（Icon）",
       "tokens": [
         { "name": "icon-sm", "value": "var(--scale-1-5)", "comment": "12px" },
         { "name": "icon-md", "value": "var(--scale-2)", "comment": "16px" },
-        { "name": "icon-lg", "value": "var(--scale-2-5)", "comment": "20px" },
-        { "name": "icon-xl", "value": "var(--scale-3)", "comment": "24px" }
+        { "name": "icon-lg", "value": "var(--scale-2-5)", "comment": "24px" },
+        { "name": "icon-xl", "value": "var(--scale-3)", "comment": "32px" }
       ]
     },
     {
-      "comment": "控件按钮（Control Button）",
+      "comment": "头像（Avatar）",
       "tokens": [
-        { "name": "control-button-xs", "value": "var(--scale-4)", "comment": "32px" },
-        { "name": "control-button-sm", "value": "var(--scale-5)", "comment": "40px" },
-        { "name": "control-button-md", "value": "var(--scale-6)", "comment": "48px" },
-        { "name": "control-button-lg", "value": "var(--scale-7)", "comment": "56px" },
-        { "name": "control-button-xl", "value": "var(--scale-7-5)", "comment": "60px" }
+        { "name": "avatar-sm", "value": "var(--scale-2)", "comment": "16px" },
+        { "name": "avatar-md", "value": "var(--scale-3)", "comment": "24px" },
+        { "name": "avatar-lg", "value": "var(--scale-4-5)", "comment": "36px" },
+        { "name": "avatar-xl", "value": "var(--scale-5)", "comment": "40px" }
       ]
     },
     {
-      "comment": "控件图标容器（Control Icon）",
+      "comment": "图形（Graphic）",
       "tokens": [
-        { "name": "control-icon-xs", "value": "var(--scale-4-5)", "comment": "36px" },
-        { "name": "control-icon-sm", "value": "var(--scale-5)", "comment": "40px" },
-        { "name": "control-icon-md", "value": "var(--scale-6)", "comment": "48px" },
-        { "name": "control-icon-lg", "value": "var(--scale-6-5)", "comment": "52px" },
-        { "name": "control-icon-xl", "value": "var(--scale-7)", "comment": "56px" }
-      ]
-    },
-    {
-      "comment": "控件输入框（Control Input）",
-      "tokens": [
-        { "name": "control-input-sm", "value": "var(--scale-4-5)", "comment": "36px" },
-        { "name": "control-input-md", "value": "var(--scale-5-5)", "comment": "44px" },
-        { "name": "control-input-lg", "value": "var(--scale-6-5)", "comment": "52px" }
+        { "name": "graphic-sm", "value": "var(--scale-7)", "comment": "56px" },
+        { "name": "graphic-md", "value": "var(--scale-8)", "comment": "64px" },
+        { "name": "graphic-lg", "value": "var(--scale-9)", "comment": "72px" },
+        { "name": "graphic-xl", "value": "var(--scale-10)", "comment": "80px" }
       ]
     }
   ]

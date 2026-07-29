@@ -12,8 +12,8 @@
 
 .title {
   margin: 0;
-  font-size: var(--typography-headline-small-size);
-  line-height: var(--typography-headline-small-line-height);
+  font-size: var(--eds-headline-small-size);
+  line-height: var(--eds-headline-small-line-height);
   font-weight: var(--weight-bold);
 }
 
@@ -47,13 +47,13 @@
 
 .cardTitle {
   margin: 0;
-  font-size: var(--typography-body-large-strong-size);
-  font-weight: var(--typography-body-large-strong-weight);
+  font-size: var(--eds-body-large-strong-size);
+  font-weight: var(--eds-body-large-strong-weight);
 }
 
 .cardText {
   margin: 0;
   color: var(--text-base-secondary);
-  font-size: var(--typography-body-small-size);
-  line-height: var(--typography-body-small-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }

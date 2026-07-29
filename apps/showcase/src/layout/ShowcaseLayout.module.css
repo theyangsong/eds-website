@@ -52,14 +52,14 @@
 
 .brandTitle {
   margin: 0;
-  font-size: var(--typography-body-medium-strong-size);
-  font-weight: var(--typography-body-medium-strong-weight);
+  font-size: var(--eds-body-medium-strong-size);
+  font-weight: var(--eds-body-medium-strong-weight);
 }
 
 .brandSub {
   margin: 0;
   color: var(--text-base-secondary);
-  font-size: var(--typography-footnote-medium-size);
+  font-size: var(--eds-footnote-medium-size);
 }
 
 .nav {

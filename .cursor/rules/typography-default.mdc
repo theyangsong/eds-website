@@ -10,9 +10,9 @@ For **EverGreen Website** (`@eds/website-*`), treat **Body/Small** as the defaul
 
 ## Tokens
 
-- Regular: `--typography-body-small-size`, `--typography-body-small-weight`, `--typography-body-small-line-height`
-- Emphasis (500): `--typography-body-small-strong-*`
-- CSS class: `.typography-body-small` / `.typography-body-small-strong`
+- Regular: `--eds-body-small-size`, `--eds-body-small-weight`, `--eds-body-small-line-height`
+- Emphasis (500): `--eds-body-small-strong-*`
+- CSS class: `.typography-body-small` / `.typography-body-small-strong` (showcase / docs preview only)
 
 Body/Small is **16px** with the Website line-height token (not Desktop body-medium).
 
@@ -26,13 +26,13 @@ Body/Small is **16px** with the Website line-height token (not Desktop body-medi
 
 ```css
 /* ✅ default control text */
-font-size: var(--typography-body-small-size);
-font-weight: var(--typography-body-small-weight);
-line-height: var(--typography-body-small-line-height);
+font-size: var(--eds-body-small-size);
+font-weight: var(--eds-body-small-weight);
+line-height: var(--eds-body-small-line-height);
 
 /* ✅ default emphasis (e.g. button label) */
-font-weight: var(--typography-body-small-strong-weight);
+font-weight: var(--eds-body-small-strong-weight);
 
 /* ❌ avoid as unnamed default */
-font-size: var(--typography-body-medium-size);
+font-size: var(--eds-body-medium-size);
 ```

@@ -13,7 +13,7 @@
 
 .sectionTitle {
   margin: 0;
-  font-size: var(--typography-title-small-size);
+  font-size: var(--eds-title-small-size);
   font-weight: var(--weight-bold);
   scroll-margin-top: var(--showcase-page-header-offset);
 }
@@ -27,8 +27,8 @@
 .groupTitle {
   margin: 0;
   color: var(--text-base-secondary);
-  font-size: var(--typography-body-small-strong-size);
-  font-weight: var(--typography-body-small-strong-weight);
+  font-size: var(--eds-body-small-strong-size);
+  font-weight: var(--eds-body-small-strong-weight);
 }
 
 .entries {
@@ -47,9 +47,9 @@
 .itemTitle {
   margin: 0;
   color: var(--text-base-primary);
-  font-size: var(--typography-body-large-size);
-  font-weight: var(--typography-body-large-strong-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--eds-body-large-size);
+  font-weight: var(--eds-body-large-strong-weight);
+  line-height: var(--eds-body-large-line-height);
   scroll-margin-top: var(--showcase-page-header-offset);
 }
 
@@ -71,7 +71,7 @@
   border: var(--stroke-xs) solid var(--stroke-divider-page);
   border-radius: var(--radius-sm);
   background: var(--material-card-shallow);
-  font-size: var(--typography-body-small-size);
+  font-size: var(--eds-body-small-size);
   scroll-margin-top: var(--showcase-page-header-offset);
 }
 
@@ -81,7 +81,7 @@
   border-radius: var(--radius-full);
   background: var(--material-card-moderate);
   color: var(--text-base-tertiary);
-  font-size: var(--typography-footnote-medium-size);
+  font-size: var(--eds-footnote-medium-size);
   text-transform: capitalize;
 }
 

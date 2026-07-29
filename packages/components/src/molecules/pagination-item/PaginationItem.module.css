@@ -28,10 +28,10 @@
 }
 
 .label {
-  font-family: var(--font-family-text);
-  font-size: var(--typography-footnote-strong-size);
-  font-weight: var(--typography-footnote-strong-weight);
-  line-height: var(--typography-footnote-strong-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-footnote-strong-size);
+  font-weight: var(--eds-footnote-strong-weight);
+  line-height: var(--eds-footnote-strong-line-height);
   color: var(--text-base-secondary);
 }
 

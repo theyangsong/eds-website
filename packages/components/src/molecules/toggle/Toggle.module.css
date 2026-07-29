@@ -186,27 +186,27 @@
 
 .label {
   color: var(--text-base-primary);
-  font-family: var(--font-family-text);
+  font-family: var(--eds-family-sans);
 }
 
 .labelBodyMedium {
-  font-size: var(--typography-body-medium-size);
-  line-height: var(--typography-body-medium-line-height);
+  font-size: var(--eds-body-medium-size);
+  line-height: var(--eds-body-medium-line-height);
 }
 
 .labelBodySmall {
-  font-size: var(--typography-body-small-size);
-  line-height: var(--typography-body-small-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .labelFootnoteLarge {
-  font-size: var(--typography-footnote-large-size);
-  line-height: var(--typography-footnote-large-line-height);
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
 }
 
 .labelFootnoteMedium {
-  font-size: var(--typography-footnote-medium-size);
-  line-height: var(--typography-footnote-medium-line-height);
+  font-size: var(--eds-footnote-medium-size);
+  line-height: var(--eds-footnote-medium-line-height);
 }
 
 .rootDisabled .label {

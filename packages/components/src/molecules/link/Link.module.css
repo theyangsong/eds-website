@@ -4,8 +4,8 @@
   border: none;
   background: none;
   padding: 0;
-  font-family: var(--font-family-text);
-  font-weight: var(--typography-body-small-strong-weight);
+  font-family: var(--eds-family-sans);
+  font-weight: var(--eds-body-small-strong-weight);
   text-decoration: none;
   cursor: pointer;
   transition: color var(--eds-motion-control-duration) var(--eds-motion-ease-in-out);
@@ -16,17 +16,17 @@
 }
 
 .lg {
-  font-size: var(--typography-body-small-strong-size);
+  font-size: var(--eds-body-small-strong-size);
   line-height: 1;
 }
 
 .md {
-  font-size: var(--typography-footnote-large-strong-size);
+  font-size: var(--eds-footnote-large-strong-size);
   line-height: 1;
 }
 
 .sm {
-  font-size: var(--typography-footnote-medium-strong-size);
+  font-size: var(--eds-footnote-medium-strong-size);
   line-height: 1;
 }
 

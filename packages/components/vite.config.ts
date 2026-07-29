@@ -18,6 +18,8 @@ export default defineConfig({
       formats: ['es'],
       fileName: 'index',
     },
+    // Avoid minified CSS-module binding names (e.g. `h`) colliding when Nuxt re-bundles dist.
+    minify: false,
     rollupOptions: {
       external: ['vue'],
       output: {

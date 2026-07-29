@@ -23,7 +23,7 @@
 
 .stateLabel {
   color: var(--text-base-secondary);
-  font-size: var(--typography-body-small-size);
+  font-size: var(--eds-body-small-size);
 }
 
 .iconGrid {

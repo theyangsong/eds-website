@@ -560,7 +560,7 @@ const typographyBase = {
     {
       comment: '字体家族',
       tokens: {
-        'font-family-text':
+        'eds-family-sans':
           '"EDS Text", "PingFang SC", "SourceHanSansSC", "Apple Color Emoji", "Segoe UI Emoji", sans-serif',
       },
     },

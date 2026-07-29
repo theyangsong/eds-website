@@ -52,10 +52,10 @@
 
 .label {
   margin-top: var(--spacing-05);
-  font-family: var(--font-family-text);
-  font-size: var(--typography-bar-size);
-  font-weight: var(--typography-bar-weight);
-  line-height: var(--typography-bar-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-bar-size);
+  font-weight: var(--eds-bar-weight);
+  line-height: var(--eds-bar-line-height);
   color: var(--text-base-secondary);
   text-align: center;
 }
@@ -76,10 +76,10 @@
   border-radius: var(--radius-full);
   background-color: var(--material-brand-primary);
   color: var(--text-same-white-primary);
-  font-family: var(--font-family-text);
-  font-size: var(--typography-bar-size);
-  font-weight: var(--typography-bar-weight);
-  line-height: var(--typography-bar-line-height);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-bar-size);
+  font-weight: var(--eds-bar-weight);
+  line-height: var(--eds-bar-line-height);
 }
 
 .reddot {
