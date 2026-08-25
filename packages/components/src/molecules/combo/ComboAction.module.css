@@ -1,0 +1,126 @@
+.divider {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.dividerAnimated {
+  transition: var(--motion-recipe-scroll-fade);
+  opacity: 1;
+}
+
+.dividerAnimatedHidden {
+  opacity: 0;
+}
+
+.dividerHidden {
+  opacity: 0;
+}
+
+.skidRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-1);
+  width: 100%;
+  padding-bottom: var(--spacing-2-5);
+  background: transparent;
+}
+
+.skidActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-inline: var(--spacing-2);
+  overflow: clip;
+}
+
+.fullWidth {
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+}
+
+.popupRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: var(--spacing-1);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-0) var(--spacing-2) var(--spacing-2);
+  background: var(--material-hide);
+}
+
+.flotationRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.flotationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-1-5);
+  width: 100%;
+  padding: var(--spacing-1-5) var(--spacing-2-5);
+  overflow: clip;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  background: transparent;
+}
+
+.flotationBarEnd {
+  justify-content: flex-end;
+}
+
+.flotationBarInset5 {
+  padding: var(--spacing-2-5);
+}
+
+.flotationActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-05);
+  overflow: clip;
+}
+
+.pageRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.pageRootAlignStart {
+  align-items: flex-start;
+}
+
+.pageRootAlignEnd {
+  align-items: flex-end;
+}
+
+.pageActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-05);
+  width: 100%;
+  padding: var(--spacing-1-5) var(--spacing-2);
+  box-sizing: border-box;
+}
+
+.pageActionsRight {
+  justify-content: flex-end;
+}
+
+.pageActionsLeft {
+  justify-content: flex-start;
+}

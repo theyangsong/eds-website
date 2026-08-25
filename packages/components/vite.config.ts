@@ -21,7 +21,7 @@ export default defineConfig({
     // Avoid minified CSS-module binding names (e.g. `h`) colliding when Nuxt re-bundles dist.
     minify: false,
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', '@eds/website-tokens/corner-smoothing', '@eds/website-animations'],
       output: {
         globals: {
           vue: 'Vue',

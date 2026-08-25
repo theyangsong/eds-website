@@ -1,3 +1,9 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
 .field {
   display: flex;
   align-items: center;
@@ -6,17 +12,22 @@
   border: 0;
   border-radius: var(--radius-sm);
   background-color: var(--material-card-moderate);
-  font-family: var(--eds-family-sans);
   cursor: text;
-  box-shadow: inset 0 0 0 var(--stroke-lg) transparent;
-  transition:
-    background-color var(--eds-motion-control-duration) var(--eds-motion-ease-in-out),
-    box-shadow var(--eds-motion-control-duration) var(--eds-motion-ease-in-out),
-    padding var(--eds-motion-control-duration) var(--eds-motion-ease-in-out),
-    gap var(--eds-motion-control-duration) var(--eds-motion-ease-in-out);
+  box-shadow: inset 0 0 0 var(--stroke-xl) transparent;
+  transition: var(--motion-recipe-hover), padding var(--motion-duration-shift) var(--motion-easing-standard);
+}
+
+/* Sm / Md / Lg — Body Medium；输入文字字重 regular (400) */
+.sm,
+.md,
+.lg {
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .widthFixed {
+  /* 固定宽度：不撑满父级；具体宽度由使用方通过 style/class 指定 */
   width: auto;
   max-width: 100%;
 }
@@ -25,9 +36,78 @@
   width: 100%;
 }
 
-.fieldFocused {
+/* 输入区（prefix + suffix）；无 Max 时占满 field padding 内 */
+.fieldBody,
+.fieldMain {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.lg .fieldBody,
+.fieldWithMax.lg .fieldMain {
+  gap: var(--spacing-1-5);
+}
+
+.md .fieldBody,
+.fieldWithMax.md .fieldMain {
+  gap: var(--spacing-1-5);
+}
+
+.sm .fieldBody,
+.fieldWithMax.sm .fieldMain {
+  gap: var(--spacing-1-5);
+}
+
+.amount:not(.fieldWithMax) .fieldBody,
+.fieldWithMax.amount .fieldMain {
+  gap: var(--spacing-05);
+}
+
+/* Max 在 field 内：高度仅由 padding-block 决定，Max 为并列 flex 子项 */
+.fieldWithMax {
+  gap: var(--spacing-1);
+}
+
+.fieldWithMax.lg {
+  gap: var(--spacing-1);
+  padding: var(--spacing-2);
+}
+
+.fieldWithMax.md {
+  padding: var(--spacing-1-5) var(--spacing-2);
+}
+
+.fieldWithMax.sm {
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+.fieldWithMax.lg.amount:focus-within:not(.fieldDisabled),
+.fieldWithMax.md.amount:focus-within:not(.fieldDisabled),
+.fieldWithMax.sm.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-2);
+}
+
+.fieldWithMax.md.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-1-5) var(--spacing-2);
+}
+
+.fieldWithMax.sm.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+.maxAttach {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: center;
+}
+
+.field:focus-within:not(.fieldDisabled) {
   background-color: var(--material-face-quaternary);
-  box-shadow: inset 0 0 0 var(--stroke-lg) var(--stroke-color-brand);
+  box-shadow: inset 0 0 0 var(--stroke-xl) var(--stroke-color-brand);
 }
 
 .fieldDisabled {
@@ -35,78 +115,80 @@
   cursor: not-allowed;
 }
 
-.fieldInvalid {
-  box-shadow: inset 0 0 0 var(--stroke-lg) var(--stroke-color-danger);
-}
-
-.fieldInvalid.fieldFocused {
-  box-shadow: inset 0 0 0 var(--stroke-lg) var(--stroke-color-danger);
-}
-
+/* Lg — Figma Website 2056:1209: p spacing-2, gap spacing-1-5; focus max-h 52px */
 .lg {
-  max-height: var(--scale-6-5);
+  --eds-input-field-size: calc(2 * var(--spacing-2) + var(--eds-body-small-line-height));
   gap: var(--spacing-1-5);
   padding: var(--spacing-2);
-}
-
-.lg.fieldFocused {
-  gap: var(--spacing-1);
-  padding: var(--spacing-2);
-  padding-inline: var(--spacing-2) var(--spacing-1);
-}
-
-.md {
-  max-height: var(--scale-5-5);
-  gap: var(--spacing-1-5);
-  padding: var(--spacing-1-5) var(--spacing-2);
-}
-
-.md.fieldFocused {
-  gap: var(--spacing-1);
-  padding: var(--spacing-1-5) var(--spacing-2);
-  padding-inline-end: var(--spacing-1);
-}
-
-.sm {
-  max-height: var(--scale-4-5);
-  gap: var(--spacing-1-5);
-  padding: var(--spacing-1) var(--spacing-2);
-}
-
-.sm.fieldFocused {
-  gap: var(--spacing-1);
-  padding: var(--spacing-1) var(--spacing-2);
-  padding-inline-end: var(--spacing-1);
+  min-height: var(--eds-input-field-size);
+  max-height: var(--eds-input-field-size);
+  box-sizing: border-box;
 }
 
 .amount {
   justify-content: flex-start;
-}
-
-.lg.amount {
   gap: var(--spacing-05);
 }
 
-.lg.amount.fieldFocused {
+.lg:focus-within:not(.fieldDisabled):not(.amount) {
+  gap: var(--spacing-1);
+  padding-block: var(--spacing-2);
   padding-inline: var(--spacing-2) var(--spacing-1);
+}
+
+.lg.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-2);
+}
+
+/* Md — Figma Website 2056:1207: px spacing-2 py spacing-1-5 */
+.md {
+  --eds-input-field-size: calc(2 * var(--spacing-1-5) + var(--eds-body-small-line-height));
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-1-5) var(--spacing-2);
+  min-height: var(--eds-input-field-size);
+  max-height: var(--eds-input-field-size);
+  box-sizing: border-box;
 }
 
 .md.amount {
   gap: var(--spacing-05);
 }
 
-.md.amount.fieldFocused {
+.md:focus-within:not(.fieldDisabled):not(.amount) {
+  gap: var(--spacing-1);
+  padding-block: var(--spacing-1-5);
   padding-inline: var(--spacing-2) var(--spacing-1);
+}
+
+.md.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-1-5) var(--spacing-2);
+}
+
+/* Sm — Figma Website 2056:1203: px spacing-2 py spacing-1 */
+.sm {
+  --eds-input-field-size: calc(2 * var(--spacing-1) + var(--eds-body-small-line-height));
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-1) var(--spacing-2);
+  min-height: var(--eds-input-field-size);
+  max-height: var(--eds-input-field-size);
+  box-sizing: border-box;
 }
 
 .sm.amount {
   gap: var(--spacing-05);
 }
 
-.sm.amount.fieldFocused {
+.sm:focus-within:not(.fieldDisabled):not(.amount) {
+  gap: var(--spacing-1);
+  padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2) var(--spacing-1);
 }
 
+.sm.amount:focus-within:not(.fieldDisabled) {
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+/* Left slot: input content */
 .prefix {
   display: flex;
   flex: 1 1 auto;
@@ -122,12 +204,25 @@
   min-width: 0;
 }
 
+/* Amount + unit: relative control; unit absolutely follows typed value */
 .amountControl {
   position: relative;
   display: inline-flex;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   align-items: center;
+  max-width: 100%;
+  transition: var(--motion-recipe-shift);
+}
+
+.amountControlEmptyFull {
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
+}
+
+.amountControlEmptyFull .input {
+  width: 100%;
+  flex: 1 1 auto;
 }
 
 .input {
@@ -139,13 +234,13 @@
   border: 0;
   background: transparent;
   color: var(--text-base-primary);
-  font-family: var(--eds-family-sans);
   font-size: var(--eds-body-small-size);
   font-weight: var(--eds-body-small-weight);
   line-height: var(--eds-body-small-line-height);
   -webkit-appearance: none;
   appearance: none;
   outline: none;
+  composes: motion-ease is-hover from global;
 }
 
 .amountInput {
@@ -158,14 +253,15 @@
   flex: 0 1 auto;
   width: auto;
   min-width: 1ch;
+  transition: var(--motion-recipe-shift);
 }
 
 .input::placeholder {
   color: var(--text-base-tertiary);
-  transition: color var(--eds-motion-control-duration) var(--eds-motion-ease-in-out);
+  transition: var(--motion-recipe-hover);
 }
 
-.fieldFocused .input::placeholder {
+.field:focus-within:not(.fieldDisabled) .input::placeholder {
   color: var(--text-base-quaternary);
 }
 
@@ -174,6 +270,7 @@
   color: var(--text-base-quaternary);
 }
 
+/* Right slot: variants */
 .suffix {
   display: flex;
   flex-shrink: 0;
@@ -182,13 +279,12 @@
 }
 
 .amount .suffix {
-  gap: var(--spacing-1);
+  gap: var(--spacing-05);
 }
 
 .unit {
   flex: 0 0 auto;
   color: var(--text-base-primary);
-  font-family: var(--eds-family-sans);
   font-size: var(--eds-body-small-size);
   font-weight: var(--eds-body-small-weight);
   line-height: var(--eds-body-small-line-height);
@@ -201,17 +297,16 @@
   left: var(--eds-input-unit-left, 0);
   transform: translateY(-50%);
   color: var(--text-base-primary);
-  font-family: var(--eds-family-sans);
   font-size: var(--eds-body-small-size);
   font-weight: var(--eds-body-small-weight);
   line-height: var(--eds-body-small-line-height);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+  transition: var(--motion-recipe-shift);
 }
 
-.clearButton,
-.maxButton {
+.clearButton {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -221,20 +316,19 @@
   border: 0;
   background: transparent;
   color: var(--text-base-secondary);
-  cursor: pointer;
-}
-
-.clearButton {
+  cursor: default;
   box-sizing: border-box;
-  width: calc(var(--icon-md) + 2 * var(--spacing-1));
-  height: calc(var(--icon-md) + 2 * var(--spacing-1));
-  padding: var(--spacing-1);
+  width: calc(var(--icon-sm) + 2 * var(--spacing-1));
+  height: calc(var(--icon-sm) + 2 * var(--spacing-1));
+  padding: 0;
   border-radius: var(--radius-sm);
-  background-color: var(--material-hide);
+  opacity: 1;
+  composes: motion-ease is-hover from global;
 }
 
 .clearButtonHidden {
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -249,42 +343,6 @@
 
 .clearIcon {
   display: block;
-  width: var(--icon-md);
-  height: var(--icon-md);
-}
-
-.maxButton {
-  border-radius: var(--radius-full);
-  background-color: var(--material-card-moderate);
-  color: var(--text-base-primary);
-  font-family: var(--eds-family-sans);
-  font-weight: var(--eds-body-small-strong-weight);
-  white-space: nowrap;
-}
-
-.maxButton:hover:not(:disabled) {
-  background-color: var(--material-base-secondary);
-}
-
-.maxButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.lg .maxButton {
-  padding: var(--spacing-1-5) var(--spacing-4);
-  font-size: var(--eds-body-small-size);
-  line-height: var(--eds-body-small-line-height);
-}
-
-.md .maxButton {
-  padding: var(--spacing-05) var(--spacing-3);
-  font-size: var(--eds-body-small-size);
-  line-height: var(--eds-body-small-line-height);
-}
-
-.sm .maxButton {
-  padding: var(--spacing-05) var(--spacing-2);
-  font-size: var(--eds-footnote-large-size);
-  line-height: var(--eds-footnote-large-line-height);
+  width: var(--icon-sm);
+  height: var(--icon-sm);
 }

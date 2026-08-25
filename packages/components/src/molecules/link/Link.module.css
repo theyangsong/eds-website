@@ -4,11 +4,10 @@
   border: none;
   background: none;
   padding: 0;
-  font-family: var(--eds-family-sans);
   font-weight: var(--eds-body-small-strong-weight);
   text-decoration: none;
-  cursor: pointer;
-  transition: color var(--eds-motion-control-duration) var(--eds-motion-ease-in-out);
+  cursor: default;
+  composes: motion-ease is-hover from global;
 }
 
 .link[aria-disabled='true'] {
@@ -17,17 +16,19 @@
 
 .lg {
   font-size: var(--eds-body-small-strong-size);
-  line-height: 1;
+  line-height: var(--eds-body-small-strong-line-height);
 }
 
 .md {
   font-size: var(--eds-footnote-large-strong-size);
-  line-height: 1;
+  line-height: var(--eds-footnote-large-strong-line-height);
+  font-weight: var(--eds-footnote-large-strong-weight);
 }
 
 .sm {
-  font-size: var(--eds-footnote-medium-strong-size);
-  line-height: 1;
+  font-size: var(--eds-footnote-strong-size);
+  line-height: var(--eds-footnote-strong-line-height);
+  font-weight: var(--eds-footnote-strong-weight);
 }
 
 .brand {
@@ -51,5 +52,17 @@
 }
 
 .theme[aria-disabled='true'] {
+  color: var(--text-base-quaternary);
+}
+
+.decor {
+  color: var(--material-decor-primary);
+}
+
+.decor:active:not([aria-disabled='true']) {
+  color: var(--text-base-secondary);
+}
+
+.decor[aria-disabled='true'] {
   color: var(--text-base-quaternary);
 }

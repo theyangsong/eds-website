@@ -1,0 +1,91 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2-5);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/** 自定义 shell 内铺满高度，footer 贴底；离屏预测量不在 deform 内，仍按内容自然高度。 */
+:global(.motion-layout-deform[data-miner-fee-screen='custom']) .root {
+  height: 100%;
+  min-height: 100%;
+}
+
+.customTopTool {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--spacing-0);
+  box-sizing: border-box;
+  min-width: 0;
+  padding-top: var(--spacing-1-5);
+  padding-bottom: var(--spacing-1-5);
+  padding-left: var(--spacing-1-5);
+  padding-right: calc(var(--spacing-05) * 2 + var(--icon-md) + var(--spacing-2));
+}
+
+.customTopToolTitleOnly {
+  padding-right: calc(var(--spacing-05) * 2 + var(--icon-md) + var(--spacing-2));
+}
+
+.customTopToolTitle {
+  color: var(--text-base-primary);
+  font-size: var(--eds-body-small-strong-size);
+  font-weight: var(--eds-body-small-strong-weight);
+  line-height: var(--eds-body-small-strong-line-height);
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-height: 0;
+  width: 100%;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  width: 100%;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-025);
+  width: 100%;
+}
+
+.previewLabel {
+  color: var(--text-base-primary);
+  font-size: var(--eds-body-small-strong-size);
+  font-weight: var(--eds-body-small-strong-weight);
+  line-height: var(--eds-body-small-strong-line-height);
+}
+
+.previewValue {
+  margin: 0;
+  color: var(--text-base-primary);
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
+}
+
+.footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--spacing-1);
+  width: 100%;
+  margin-top: auto;
+}
+
+.footerButton {
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+}

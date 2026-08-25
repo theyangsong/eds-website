@@ -1,0 +1,168 @@
+.segment {
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--spacing-025);
+  border-radius: var(--radius-full);
+  background: var(--material-card-moderate);
+}
+
+.segmentSquare {
+  border-radius: var(--radius-sm);
+}
+
+.segmentAdaptiveItemWidth {
+  display: inline-flex;
+}
+
+.segmentFixedItemWidth {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+}
+
+.track {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--spacing-0);
+}
+
+.trackFixedItemWidth {
+  display: flex;
+  width: 100%;
+}
+
+.segmentThumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: var(--radius-full);
+  background: var(--material-same-white-tertiary);
+  pointer-events: none;
+}
+
+.segmentThumbReady {
+  composes: motion-deform from global;
+}
+
+.square .segmentThumb {
+  border-radius: var(--radius-xs);
+}
+
+.item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  color: var(--text-base-primary);
+  cursor: default;
+  composes: motion-ease is-hover eds-footnote-medium-strong from global;
+}
+
+.itemSelected {
+  color: var(--text-base-primary);
+}
+
+.itemFixedWidth {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Segmented item — Website 8px grid (Desktop token names ×2 px intent) */
+.itemLg {
+  padding: var(--spacing-1-5) var(--spacing-3);
+  border-radius: var(--radius-full);
+}
+
+.itemMd {
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-full);
+}
+
+.itemSm {
+  padding: var(--spacing-05) var(--spacing-1-5);
+  border-radius: var(--radius-full);
+}
+
+.square .itemLg,
+.square .itemMd,
+.square .itemSm {
+  border-radius: var(--radius-xs);
+}
+
+.tabItem {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
+  color: var(--text-base-primary);
+  composes: motion-ease is-hover eds-body-small-strong from global;
+}
+
+.tabItemSelected {
+  color: var(--text-brand-primary);
+}
+
+.tabsRoot {
+  position: relative;
+  display: inline-block;
+}
+
+.tabsSlideIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: var(--stroke-xl);
+  border-radius: var(--radius-0);
+  background: var(--material-brand-primary);
+  pointer-events: none;
+}
+
+.tabsSlideIndicatorReady {
+  composes: motion-deform from global;
+}
+
+.tabs {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.tabsHorizontalGapXl {
+  gap: var(--spacing-5);
+}
+
+.tabsHorizontalGapMd {
+  gap: var(--spacing-4);
+}
+
+.tabsHorizontalGapSm {
+  gap: var(--spacing-3);
+}
+
+.tabsHorizontalGapXs {
+  gap: var(--spacing-2);
+}
+
+.tabsVerticalGapXl {
+  padding-bottom: calc(var(--stroke-xl) + var(--spacing-2-5));
+}
+
+.tabsVerticalGapMd {
+  padding-bottom: calc(var(--stroke-xl) + var(--spacing-2));
+}
+
+.tabsVerticalGapSm {
+  padding-bottom: calc(var(--stroke-xl) + var(--spacing-1-5));
+}
+
+.tabsVerticalGapXs {
+  padding-bottom: calc(var(--stroke-xl) + var(--spacing-1));
+}

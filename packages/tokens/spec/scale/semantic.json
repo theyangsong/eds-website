@@ -6,6 +6,7 @@
       "comment": "间距（Spacing）",
       "tokens": [
         { "name": "spacing-0", "value": "var(--scale-0)" },
+        { "name": "spacing-025", "value": "var(--scale-025)" },
         { "name": "spacing-05", "value": "var(--scale-05)" },
         { "name": "spacing-1", "value": "var(--scale-1)" },
         { "name": "spacing-1-5", "value": "var(--scale-1-5)" },
@@ -33,7 +34,8 @@
       "comment": "圆角（Radius）",
       "tokens": [
         { "name": "radius-0", "value": "var(--scale-0)" },
-        { "name": "radius-sm", "value": "var(--scale-0-75)", "comment": "6px" },
+        { "name": "radius-xs", "value": "var(--scale-05)", "comment": "4px — Desktop-compat alias for synced organisms" },
+        { "name": "radius-sm", "value": "var(--scale-1)", "comment": "8px" },
         { "name": "radius-md", "value": "var(--scale-2)", "comment": "16px" },
         { "name": "radius-lg", "value": "var(--scale-3)", "comment": "24px" },
         { "name": "radius-full", "value": "var(--scale-full)", "comment": "888px" }
@@ -67,7 +69,8 @@
         { "name": "stroke-xs", "value": "0.5px" },
         { "name": "stroke-sm", "value": "1px" },
         { "name": "stroke-md", "value": "1.5px" },
-        { "name": "stroke-lg", "value": "2px" }
+        { "name": "stroke-lg", "value": "2px" },
+        { "name": "stroke-xl", "value": "2px", "comment": "Focus ring — same px as stroke-lg on Website" }
       ]
     },
     {

@@ -1,2 +1,2 @@
-/** ToolBar — 工具栏。 */
-export {};
+export { default as EgToolBar } from './ToolBar.vue';
+export { default as EgToolBarTitle } from './ToolBarTitle.vue';

@@ -1,2 +1,2 @@
-/** DataTableEdit — 数据表格编辑。 */
+/** Data Table Edit — placeholder。 */
 export {};

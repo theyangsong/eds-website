@@ -12,6 +12,7 @@
     "dev:showcase": "pnpm --filter @eds/website-showcase dev",
     "dev:storybook": "pnpm --filter @eds/website-storybook dev",
     "sync:tokens": "pnpm --filter @eds/website-tokens sync:figma",
+    "sync:desktop": "node scripts/sync-from-desktop.mjs",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck"
   },

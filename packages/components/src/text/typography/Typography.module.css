@@ -32,8 +32,8 @@
   line-height: var(--eds-body-small-line-height);
 }
 .body {
-  font-size: var(--eds-body-medium-size);
-  line-height: var(--eds-body-medium-line-height);
+  font-size: var(--eds-body-small-size);
+  line-height: var(--eds-body-small-line-height);
 }
 
 .body-sm {

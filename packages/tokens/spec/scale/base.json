@@ -4,6 +4,7 @@
   "scaleBase": 8,
   "scale": {
     "scale-0": 0,
+    "scale-025": 0.25,
     "scale-05": 0.5,
     "scale-0-75": 0.75,
     "scale-1": 1,

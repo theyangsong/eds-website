@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue';
+import { EgIcon } from '../../atoms/icons';
+import { EgButton, type ButtonSize } from '../button';
+import { EgIconButton } from '../icon-button';
 import styles from './Input.module.css';
-import { inputVariantName } from '../../utils/edsVariantName';
 
 export type InputType = 'standard' | 'amount';
 export type InputSize = 'lg' | 'md' | 'sm';
 export type InputWidthMode = 'fixed' | 'full';
-export type InputControlType = 'text' | 'password' | 'email' | 'tel';
 
 const props = withDefaults(
   defineProps<{
@@ -20,31 +21,25 @@ const props = withDefaults(
     readonly?: boolean;
     unit?: string;
     clearable?: boolean;
+    secure?: boolean;
     showMax?: boolean;
     maxLabel?: string;
     inputmode?: 'text' | 'decimal' | 'numeric';
-    controlType?: InputControlType;
-    autocomplete?: string;
-    maxlength?: number;
-    invalid?: boolean;
   }>(),
   {
     modelValue: '',
     type: 'standard',
-    size: 'lg',
+    size: 'md',
     widthMode: 'fixed',
     placeholder: '请输入',
     amountPlaceholder: '0',
     disabled: false,
     readonly: false,
     clearable: true,
+    secure: false,
     showMax: false,
     maxLabel: 'Max',
     inputmode: undefined,
-    controlType: 'text',
-    autocomplete: undefined,
-    maxlength: undefined,
-    invalid: false,
   },
 );
 
@@ -58,11 +53,15 @@ const emit = defineEmits<{
 
 const slots = useSlots();
 const inputRef = ref<HTMLInputElement | null>(null);
-const focused = ref(false);
+const fieldRef = ref<HTMLElement | null>(null);
+const fieldFocused = ref(false);
+const suppressBlur = ref(false);
+const passwordVisible = ref(false);
 const unitLeftPx = ref(0);
 const valueWidthPx = ref(0);
 const unitWidthPx = ref(0);
 
+/** Inline — WebKit often omits stylesheet text-rendering on native inputs in Computed. */
 const inputRenderStyle = {
   textRendering: 'geometricPrecision',
   WebkitFontSmoothing: 'antialiased',
@@ -70,16 +69,21 @@ const inputRenderStyle = {
 } as const;
 
 const isAmount = computed(() => props.type === 'amount');
-const useGhostUnit = computed(() => isAmount.value && Boolean(props.unit));
 
-const variantName = computed(() =>
-  inputVariantName(props.type, props.size, {
-    disable: props.disabled,
-    readonly: props.readonly,
-    invalid: props.invalid,
-    full: props.widthMode === 'full',
-  }),
-);
+/** Max suffix: Input Lg/Md/Sm → Button Md/Sm/Xs (Subtle solid). */
+const maxButtonSize = computed<ButtonSize>(() => {
+  switch (props.size) {
+    case 'lg':
+      return 'md';
+    case 'md':
+      return 'sm';
+    default:
+      return 'xs';
+  }
+});
+
+/** Amount + unit: unit trails the typed value (follows caret), not right-aligned. */
+const useGhostUnit = computed(() => isAmount.value && Boolean(props.unit));
 
 const resolvedInputMode = computed(
   () => props.inputmode ?? (isAmount.value ? 'decimal' : 'text'),
@@ -93,10 +97,20 @@ const resolvedPlaceholder = computed(() => {
   return isAmount.value ? props.amountPlaceholder : props.placeholder;
 });
 
+const resolvedInputType = computed(() => {
+  if (!props.secure) {
+    return 'text';
+  }
+  return passwordVisible.value ? 'text' : 'password';
+});
+
+const showSecureToggle = computed(() => props.secure && !slots.suffix);
+
 const showClear = computed(
   () =>
+    !props.secure &&
     props.clearable &&
-    focused.value &&
+    fieldFocused.value &&
     !props.disabled &&
     !props.readonly &&
     props.modelValue.length > 0,
@@ -110,6 +124,7 @@ const showGhostUnit = computed(
   () => useGhostUnit.value && props.modelValue.length > 0,
 );
 
+/** Reserve clear width when suffix siblings (inline unit / Max / custom) may sit beside it. */
 const reserveClearSpace = computed(
   () =>
     props.clearable &&
@@ -121,11 +136,16 @@ const showDefaultSuffix = computed(
     showClear.value ||
     reserveClearSpace.value ||
     showInlineUnit.value ||
-    props.showMax,
+    showSecureToggle.value,
 );
 
 const showSuffix = computed(
   () => Boolean(slots.suffix) || showDefaultSuffix.value,
+);
+
+/** Max 预置：在 field 外单独挂载，不参与 field padding 计算 */
+const showAttachedMax = computed(
+  () => props.showMax && !slots.suffix,
 );
 
 const amountControlStyle = computed(() => {
@@ -134,19 +154,31 @@ const amountControlStyle = computed(() => {
   }
 
   const gap = 4;
-  const width =
-    props.modelValue.length > 0
-      ? valueWidthPx.value + gap + unitWidthPx.value
-      : valueWidthPx.value > 0
-        ? valueWidthPx.value
-        : undefined;
 
-  return {
-    '--eds-input-unit-left': `${unitLeftPx.value}px`,
-    width: width ? `${width}px` : undefined,
-  };
+  if (props.modelValue.length > 0) {
+    return {
+      '--eds-input-unit-left': `${unitLeftPx.value}px`,
+      width: `${valueWidthPx.value + gap + unitWidthPx.value}px`,
+    };
+  }
+
+  if (props.widthMode === 'full') {
+    return {
+      '--eds-input-unit-left': '0px',
+    };
+  }
+
+  if (valueWidthPx.value > 0) {
+    return {
+      '--eds-input-unit-left': '0px',
+      width: `${valueWidthPx.value}px`,
+    };
+  }
+
+  return undefined;
 });
 
+/** Ghost unit: size the native input to the typed value so the unit trails the caret. */
 const shrinkInputStyle = computed(() => {
   if (!useGhostUnit.value) {
     return undefined;
@@ -156,12 +188,23 @@ const shrinkInputStyle = computed(() => {
     return { width: `${Math.max(valueWidthPx.value, 1)}px` };
   }
 
+  if (props.widthMode === 'full') {
+    return undefined;
+  }
+
   if (valueWidthPx.value > 0) {
     return { width: `${valueWidthPx.value}px` };
   }
 
   return undefined;
 });
+
+const amountControlEmptyFull = computed(
+  () =>
+    useGhostUnit.value &&
+    props.widthMode === 'full' &&
+    props.modelValue.length === 0,
+);
 
 function measureTextWidth(text: string, source: HTMLElement) {
   const style = getComputedStyle(source);
@@ -201,25 +244,64 @@ function onInput(event: Event) {
   emit('update:modelValue', (event.target as HTMLInputElement).value);
 }
 
+function onFieldFocusIn() {
+  fieldFocused.value = true;
+}
+
+function onFieldFocusOut(event: FocusEvent) {
+  const field = event.currentTarget as HTMLElement;
+  if (field.contains(event.relatedTarget as Node)) {
+    return;
+  }
+
+  fieldFocused.value = false;
+}
+
 function onFocus(event: FocusEvent) {
-  focused.value = true;
   emit('focus', event);
 }
 
 function onBlur(event: FocusEvent) {
-  focused.value = false;
+  if (suppressBlur.value) {
+    return;
+  }
+
+  const field = fieldRef.value;
+  if (field?.contains(event.relatedTarget as Node)) {
+    return;
+  }
+
   emit('blur', event);
 }
 
 function onClear() {
+  suppressBlur.value = true;
   emit('update:modelValue', '');
   emit('clear');
-  inputRef.value?.focus();
+
+  void nextTick(() => {
+    inputRef.value?.focus({ preventScroll: true });
+    requestAnimationFrame(() => {
+      suppressBlur.value = false;
+    });
+  });
 }
 
 function onMax() {
   emit('max');
 }
+
+function togglePasswordVisible() {
+  passwordVisible.value = !passwordVisible.value;
+}
+
+function focusInput() {
+  inputRef.value?.focus();
+}
+
+defineExpose({
+  focus: focusInput,
+});
 
 function onFieldClick(event: MouseEvent) {
   if (props.disabled || props.readonly) {
@@ -251,104 +333,141 @@ onMounted(() => {
 <template>
   <div
     :class="[
-      variantName,
-      'eds-corner-smoothed',
-      styles.field,
+      styles.root,
       widthMode === 'full' ? styles.widthFull : styles.widthFixed,
-      styles[size],
-      isAmount && styles.amount,
-      focused && styles.fieldFocused,
-      disabled && styles.fieldDisabled,
-      invalid && styles.fieldInvalid,
     ]"
-    @click="onFieldClick"
   >
-    <div :class="styles.prefix">
-      <slot name="prefix">
-        <div
-          :class="[styles.valueGroup, useGhostUnit && styles.amountControl]"
-          :style="amountControlStyle"
-        >
-          <input
-            ref="inputRef"
-            :class="[
-              styles.input,
-              useGhostUnit && styles.shrinkInput,
-              useGhostUnit && styles.amountInput,
-            ]"
-            :style="[inputRenderStyle, shrinkInputStyle]"
-            :value="modelValue"
-            :type="controlType"
-            :inputmode="resolvedInputMode"
-            :placeholder="resolvedPlaceholder"
-            :disabled="disabled"
-            :readonly="readonly"
-            :autocomplete="autocomplete"
-            :maxlength="maxlength"
-            :aria-invalid="invalid || undefined"
-            spellcheck="false"
-            @input="onInput"
-            @focus="onFocus"
-            @blur="onBlur"
-          />
+    <div
+      ref="fieldRef"
+      :class="[
+        'eds-input-field',
+        styles.field,
+        styles[size],
+        isAmount && styles.amount,
+        showAttachedMax && styles.fieldWithMax,
+        disabled && styles.fieldDisabled,
+      ]"
+      @click="onFieldClick"
+      @focusin="onFieldFocusIn"
+      @focusout="onFieldFocusOut"
+    >
+      <div
+        :class="[showAttachedMax ? styles.fieldMain : styles.fieldBody]"
+      >
+        <!-- Left: input content. Default = native input -->
+        <div :class="styles.prefix">
+          <slot name="prefix">
+            <div
+              :class="[
+                styles.valueGroup,
+                useGhostUnit && styles.amountControl,
+                amountControlEmptyFull && styles.amountControlEmptyFull,
+              ]"
+              :style="amountControlStyle"
+            >
+              <input
+                ref="inputRef"
+                :class="[
+                  'eds-input-control',
+                  styles.input,
+                  useGhostUnit && styles.shrinkInput,
+                  useGhostUnit && styles.amountInput,
+                ]"
+                :style="[inputRenderStyle, shrinkInputStyle]"
+                :value="modelValue"
+                :type="resolvedInputType"
+                :inputmode="resolvedInputMode"
+                :placeholder="resolvedPlaceholder"
+                :disabled="disabled"
+                :readonly="readonly"
+                spellcheck="false"
+                @input="onInput"
+                @focus="onFocus"
+                @blur="onBlur"
+              />
 
-          <span
-            v-if="showGhostUnit"
-            :class="[styles.ghostUnit]"
-            aria-hidden="true"
-          >
-            {{ unit }}
-          </span>
+              <!-- Amount unit: trails value / caret -->
+              <span
+                v-if="showGhostUnit"
+                :class="['eds-input-unit', styles.ghostUnit]"
+                aria-hidden="true"
+              >
+                {{ unit }}
+              </span>
+            </div>
+          </slot>
         </div>
-      </slot>
-    </div>
 
-    <div v-if="showSuffix" :class="styles.suffix">
-      <slot name="suffix">
-        <button
-          v-if="clearable && (showClear || reserveClearSpace)"
-          type="button"
-          :class="[styles.clearButton, !showClear && styles.clearButtonHidden]"
-          aria-label="Clear"
-          :aria-hidden="!showClear"
-          :tabindex="showClear ? 0 : -1"
-          @mousedown.prevent
-          @click="onClear"
-        >
-          <svg
-            :class="styles.clearIcon"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <circle cx="8" cy="8" r="7" fill="currentColor" />
-            <path
-              d="M6 6l4 4m0-4-4 4"
-              stroke="var(--material-same-white-primary)"
-              stroke-width="1.2"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
+        <!-- Right: clear / inline unit（Max 在 field 内、不参与 padding 高度） -->
+        <div v-if="showSuffix" :class="styles.suffix">
+          <slot name="suffix">
+            <button
+              v-if="clearable && (showClear || reserveClearSpace)"
+              type="button"
+              :class="[styles.clearButton, !showClear && styles.clearButtonHidden]"
+              aria-label="Clear"
+              :aria-hidden="!showClear"
+              tabindex="-1"
+              @mousedown.prevent
+              @pointerdown.prevent
+              @click="onClear"
+            >
+              <svg
+                :class="styles.clearIcon"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="8" r="7" fill="currentColor" />
+                <path
+                  d="M6 6l4 4m0-4-4 4"
+                  stroke="var(--material-same-white-primary)"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
 
-        <span
-          v-if="showInlineUnit"
-          :class="[styles.unit]"
-        >
-          {{ unit }}
-        </span>
+            <span
+              v-if="showInlineUnit"
+              :class="['eds-input-unit', styles.unit]"
+            >
+              {{ unit }}
+            </span>
 
-        <button
-          v-if="showMax"
-          type="button"
-          :class="styles.maxButton"
+            <EgIconButton
+              v-if="showSecureToggle"
+              size="sm"
+              shape="square"
+              :label="passwordVisible ? '隐藏密码' : '显示密码'"
+              :disabled="disabled || readonly"
+              @mousedown.prevent
+              @click.stop="togglePasswordVisible"
+            >
+              <EgIcon
+                :name="passwordVisible ? 'eds-eye' : 'eds-uneye'"
+                fit
+                size="md"
+              />
+            </EgIconButton>
+          </slot>
+        </div>
+      </div>
+
+      <span v-if="showAttachedMax" :class="styles.maxAttach">
+        <EgButton
+          tone="subtle"
+          variant="solid"
+          :size="maxButtonSize"
           :disabled="disabled"
+          type="button"
+          @mousedown.prevent
           @click="onMax"
         >
           {{ maxLabel }}
-        </button>
-      </slot>
+        </EgButton>
+      </span>
     </div>
   </div>
 </template>

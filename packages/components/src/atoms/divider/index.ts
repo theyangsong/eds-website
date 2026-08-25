@@ -1,2 +1,2 @@
-/** Divider — 分割线。 */
-export {};
+export { default as EgDivider } from './Divider.vue';
+export type { DividerType, DividerDirection } from './Divider.vue';

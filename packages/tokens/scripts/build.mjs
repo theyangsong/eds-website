@@ -1,6 +1,7 @@
-import { mkdirSync, readFileSync, writeFileSync, rmSync, copyFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync, rmSync, copyFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { verifyColorSpecAgainstDist } from './verify-color-spec.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(__dirname, '..');
@@ -47,36 +48,52 @@ const COLOR_SEMANTIC_GROUP_ORDER = [
   { prefix: 'effect', comment: 'Effect（特效色）' },
 ];
 
-function groupColorSemanticTokens(tokens) {
+const TAG_SEMANTIC_GROUP_ORDER = [
+  { prefix: 'tag-status', comment: 'Tag Status' },
+  { prefix: 'tag-colorful', comment: 'Tag Colorful' },
+  { prefix: 'tag-custom', comment: 'Tag Custom' },
+];
+
+function groupTagSemanticTokens(tokens) {
+  return groupColorSemanticTokensWithOrder(tokens, TAG_SEMANTIC_GROUP_ORDER, 'Tag');
+}
+
+function groupColorSemanticTokensWithOrder(tokens, groupOrder, remainingComment = 'Status') {
   const assigned = new Set();
 
-  const groups = COLOR_SEMANTIC_GROUP_ORDER.map(({ prefix, comment }) => {
-    const groupTokens = tokens.filter((token) => {
-      if (assigned.has(token.name)) {
-        return false;
-      }
+  const groups = groupOrder
+    .map(({ prefix, comment }) => {
+      const groupTokens = tokens.filter((token) => {
+        if (assigned.has(token.name)) {
+          return false;
+        }
 
-      const matches =
-        prefix === 'data-table'
-          ? token.name.startsWith('data-table')
-          : token.name.startsWith(`${prefix}-`);
+        const matches =
+          prefix === 'data-table'
+            ? token.name.startsWith('data-table')
+            : token.name.startsWith(`${prefix}-`);
 
-      if (matches) {
-        assigned.add(token.name);
-      }
+        if (matches) {
+          assigned.add(token.name);
+        }
 
-      return matches;
-    });
+        return matches;
+      });
 
-    return { comment, tokens: groupTokens };
-  }).filter((group) => group.tokens.length > 0);
+      return { comment, tokens: groupTokens };
+    })
+    .filter((group) => group.tokens.length > 0);
 
   const remaining = tokens.filter((token) => !assigned.has(token.name));
   if (remaining.length > 0) {
-    groups.push({ comment: 'Other', tokens: remaining });
+    groups.push({ comment: remainingComment, tokens: remaining });
   }
 
   return groups;
+}
+
+function groupColorSemanticTokens(tokens) {
+  return groupColorSemanticTokensWithOrder(tokens, COLOR_SEMANTIC_GROUP_ORDER);
 }
 
 function flattenScaleSemanticTokens(semanticSpec) {
@@ -204,7 +221,13 @@ function writeTypographyBaseCssFile(destination, selector, baseSpec, headerLines
   writeFileSync(destination, lines.join('\n'));
 }
 
-function writeTypographySemanticCssFile(destination, selector, semanticSpec, headerLines = []) {
+function writeTypographySemanticCssFile(
+  destination,
+  selector,
+  semanticSpec,
+  textStylesSpec,
+  headerLines = [],
+) {
   const lines = [
     '/**',
     ' * Do not edit directly, this file was auto-generated from Figma tokens.',
@@ -212,19 +235,16 @@ function writeTypographySemanticCssFile(destination, selector, semanticSpec, hea
     ' */',
     '',
     `${selector} {`,
-    '',
-    '  /* ---- 语义角色令牌（Semantic Role Tokens） ---- */',
   ];
 
   for (const group of semanticSpec.groups) {
-    lines.push(`  /* ${group.comment} */`);
     for (const token of group.tokens) {
       lines.push(`  --${token.name}: ${token.value};`);
     }
-    lines.push('');
   }
 
   lines.push('}', '');
+  appendTextStyleClassLines(lines, textStylesSpec);
 
   mkdirSync(dirname(destination), { recursive: true });
   writeFileSync(destination, lines.join('\n'));
@@ -251,6 +271,41 @@ function writeTypographyGlobalCssFile(destination, globalSpec, headerLines = [])
   writeFileSync(destination, lines.join('\n'));
 }
 
+function writeBarSubpixelCssFile(destination, spec, headerLines = []) {
+  const lines = [
+    '/**',
+    ' * Do not edit directly, this file was auto-generated from Figma tokens.',
+    ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
+    ' */',
+    '',
+    `.${spec.className} {`,
+  ];
+
+  for (const [property, value] of Object.entries(spec.properties)) {
+    lines.push(`  ${property}: ${value};`);
+  }
+
+  lines.push('}', '');
+
+  mkdirSync(dirname(destination), { recursive: true });
+  writeFileSync(destination, lines.join('\n'));
+}
+
+function appendTextStyleClassLines(lines, stylesSpec) {
+  lines.push('/* ---- Text Styles（Figma Text Styles） ---- */');
+  lines.push('');
+
+  for (const style of stylesSpec.styles ?? []) {
+    lines.push(`.${style.className} {`);
+
+    for (const [property, value] of Object.entries(style.properties ?? {})) {
+      lines.push(`  ${property}: ${value};`);
+    }
+
+    lines.push('}', '');
+  }
+}
+
 function writeTextStylesCssFile(destination, stylesSpec, headerLines = []) {
   const lines = [
     '/**',
@@ -258,38 +313,16 @@ function writeTextStylesCssFile(destination, stylesSpec, headerLines = []) {
     ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
     ' */',
     '',
-    '/* ========================================',
-    '   语义角色类',
-    '   名称与 Figma Text Styles 完全一致',
-    '   ======================================== */',
-    '',
   ];
 
-  for (const style of stylesSpec.styles) {
-    if (style.title) {
-      lines.push(`/* ${style.title} */`);
-    }
-
-    lines.push(`.${style.className} {`);
-    for (const [property, value] of Object.entries(style.properties)) {
-      lines.push(`  ${property}: ${value};`);
-    }
-
-    appendCssCommentBlock(lines, style.notes ?? [], '  ');
-
-    lines.push('}', '');
-  }
+  appendTextStyleClassLines(lines, stylesSpec);
 
   mkdirSync(dirname(destination), { recursive: true });
   writeFileSync(destination, lines.join('\n'));
 }
 
 function formatEffectLayers(layers) {
-  if (layers.length === 1) {
-    return layers[0];
-  }
-
-  return `\n    ${layers.join(',\n    ')}`;
+  return layers.join(', ');
 }
 
 function appendEffectGroupTokens(lines, groups) {
@@ -356,7 +389,7 @@ function appendLiquidGlassTokens(lines, liquidGlassSpec) {
 
   const profiles = liquidGlassSpec.profiles ?? {
     glassBg: {
-      cssPrefix: 'effect-glass-bg',
+      cssPrefix: 'eds-glass-bg',
       backdrop: liquidGlassSpec.backdrop,
       shader: liquidGlassSpec.shader,
       surface: liquidGlassSpec.surface,
@@ -395,15 +428,6 @@ function appendLiquidGlassProfileTokens(lines, profile) {
   lines.push(`  --${prefix}-shader-rect-inset-x: ${shader.rectInsetX};`);
   lines.push(`  --${prefix}-shader-rect-inset-y: ${shader.rectInsetY};`);
   lines.push(`  --${prefix}-shader-corner-radius: ${shader.cornerRadius};`);
-  lines.push(
-    `  --${prefix}-shader-interior-refraction: ${shader.interiorRefraction ?? 0};`,
-  );
-  lines.push(
-    `  --${prefix}-shader-interior-frequency-x: ${shader.interiorFrequencyX ?? 1.2};`,
-  );
-  lines.push(
-    `  --${prefix}-shader-interior-frequency-y: ${shader.interiorFrequencyY ?? 0.8};`,
-  );
   lines.push(`  --${prefix}-refraction-scale: ${shader.refractionScale};`);
   lines.push(`  --${prefix}-surface: ${mapColorTokenValue(surface.background)};`);
   if (profile.tint) {
@@ -458,7 +482,7 @@ function writeEffectReadyCssFile(destination, headerLines = []) {
     ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
     ' */',
     '',
-    '.effect-flotation-box__glass[data-liquid-glass-ready], .effect-popup-box__glass[data-liquid-glass-ready] {',
+    '[data-liquid-glass-ready] {',
     '  /* backdrop-filter 由 initLiquidGlass() 按元素尺寸注入 SVG filter url */',
     '}',
     '',
@@ -849,12 +873,66 @@ function formatDisplayP3Component(value) {
   return Number(value.toFixed(4)).toString();
 }
 
+function hexToDisplayP3Components(hex) {
+  const normalized = hex.replace('#', '');
+  return [
+    parseInt(normalized.slice(0, 2), 16) / 255,
+    parseInt(normalized.slice(2, 4), 16) / 255,
+    parseInt(normalized.slice(4, 6), 16) / 255,
+  ];
+}
+
 function resolveColorBaseEntry(entry) {
   if (typeof entry === 'string') {
-    return { hex: entry, displayP3: null };
+    return { hex: entry, displayP3: hexToDisplayP3Components(entry) };
+  }
+
+  if (entry.displayP3 == null && entry.hex) {
+    return { ...entry, displayP3: hexToDisplayP3Components(entry.hex) };
   }
 
   return entry;
+}
+
+function buildTagBaseSpec(tagPalette) {
+  const light = {};
+  const dark = {};
+
+  for (const groupKey of ['status', 'colorful', 'custom']) {
+    for (const [key, themeValues] of Object.entries(tagPalette[groupKey] ?? {})) {
+      const roles = groupKey === 'custom' ? ['bg', 'text', 'bar'] : ['bg', 'text'];
+      for (const role of roles) {
+        const varName = `eds-tag-${groupKey}-${key}-${role}`;
+        light[varName] = {
+          hex: themeValues.light[role],
+          displayP3: hexToDisplayP3Components(themeValues.light[role]),
+        };
+        dark[varName] = {
+          hex: themeValues.dark[role],
+          displayP3: hexToDisplayP3Components(themeValues.dark[role]),
+        };
+      }
+    }
+  }
+
+  return { light, dark };
+}
+
+function expandTagPaletteSemanticTokens(tagPalette) {
+  const tokens = [];
+
+  for (const groupKey of ['status', 'colorful', 'custom']) {
+    for (const key of Object.keys(tagPalette[groupKey] ?? {})) {
+      const roles = groupKey === 'custom' ? ['bg', 'text', 'bar'] : ['bg', 'text'];
+      for (const role of roles) {
+        const name = `tag-${groupKey}-${key}-${role}`;
+        const reference = `color(var(--eds-${name}) / 1)`;
+        tokens.push({ name, light: reference, dark: reference });
+      }
+    }
+  }
+
+  return tokens;
 }
 
 function formatColorBaseCssDeclarations(name, entry) {
@@ -937,8 +1015,14 @@ function writeColorSemanticCssFile(destination, selector, groups, themeName, hea
   ];
 
   for (const group of groups) {
+    if (group.tokens.length === 0) {
+      continue;
+    }
+
     lines.push('');
-    lines.push(`  /* ${group.comment} */`);
+    if (group.comment) {
+      lines.push(`  /* ${group.comment} */`);
+    }
     for (const token of group.tokens) {
       const comment = token.comment ? ` /* ${token.comment} */` : '';
       const mappedValue = mapColorTokenValue(token[themeName]);
@@ -1019,23 +1103,316 @@ function buildScaleSystem() {
   );
 }
 
+function buildTypographyFonts() {
+  const srcFontsDir = join(rootDir, 'assets/fonts');
+  const distFontsDir = join(distDir, 'assets/fonts');
+  mkdirSync(distFontsDir, { recursive: true });
+
+  for (const fileName of readdirSync(srcFontsDir)) {
+    if (!fileName.endsWith('.ttf')) continue;
+    copyFileSync(join(srcFontsDir, fileName), join(distFontsDir, fileName));
+  }
+
+  const fontFamilies = [
+    {
+      name: 'EDS Text',
+      comment: 'UI font (Regular / Medium / SemiBold / Bold).',
+      faces: [
+        { weight: 400, file: 'EDSText-Regular.ttf' },
+        { weight: 500, file: 'EDSText-Medium.ttf' },
+        { weight: 600, file: 'EDSText-SemiBold.ttf' },
+        { weight: 700, file: 'EDSText-Bold.ttf' },
+      ],
+    },
+    {
+      name: 'IBM Plex Mono',
+      comment: 'Code font (Regular / Medium / SemiBold / Bold).',
+      faces: [
+        { weight: 400, file: 'IBMPlexMono-Regular.ttf' },
+        { weight: 500, file: 'IBMPlexMono-Medium.ttf' },
+        { weight: 600, file: 'IBMPlexMono-SemiBold.ttf' },
+        { weight: 700, file: 'IBMPlexMono-Bold.ttf' },
+      ],
+    },
+  ];
+
+  const lines = [
+    '/**',
+    ' * EverGreen Website — self-hosted UI + code fonts.',
+    ' * Bundled via @eds/website-tokens (typography/index.css).',
+    ' * Granular import: @eds/website-tokens/fonts',
+    ' * Source: assets/fonts/EDSText-*.ttf, IBMPlexMono-*.ttf',
+    ' */',
+    '',
+  ];
+
+  for (const family of fontFamilies) {
+    lines.push(`/* ${family.name} — ${family.comment} */`);
+    for (const face of family.faces) {
+      lines.push('@font-face {');
+      lines.push(`  font-family: '${family.name}';`);
+      lines.push('  font-style: normal;');
+      lines.push(`  font-weight: ${face.weight};`);
+      lines.push('  font-display: swap;');
+      lines.push(`  src: url('../../assets/fonts/${face.file}') format('truetype');`);
+      lines.push('}');
+      lines.push('');
+    }
+  }
+
+  mkdirSync(join(cssDir, 'typography'), { recursive: true });
+  writeFileSync(join(cssDir, 'typography/fonts.css'), `${lines.join('\n')}\n`, 'utf-8');
+}
+
+function formatMotionSemanticLine(token) {
+  const declaration = `  --${token.name}: ${token.value};`;
+  if (!token.comment) {
+    return declaration;
+  }
+
+  const padding = Math.max(1, 34 - declaration.length);
+  return `${declaration}${' '.repeat(padding)}/* ${token.comment} */`;
+}
+
+function writeMotionBaseCssFile(destination, selector, baseSpec, headerLines = []) {
+  const lines = [
+    '/**',
+    ' * Do not edit directly, this file was auto-generated from Figma tokens.',
+    ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
+    ' */',
+    '',
+    `${selector} {`,
+  ];
+
+  for (const group of baseSpec.groups) {
+    lines.push('');
+    lines.push(`  /* ${group.comment} */`);
+    if (group.tokenList?.length) {
+      for (const token of group.tokenList) {
+        lines.push(formatMotionSemanticLine(token));
+      }
+    } else if (group.tokens) {
+      for (const [name, value] of Object.entries(group.tokens)) {
+        lines.push(`  --${name}: ${value};`);
+      }
+    }
+    if (group.usageNotes?.length) {
+      appendCssCommentBlock(lines, group.usageNotes);
+    }
+  }
+
+  lines.push('}', '');
+
+  if (baseSpec.reducedMotionOverrides?.length) {
+    lines.push('@media (prefers-reduced-motion: reduce) {');
+    lines.push(`  ${selector} {`);
+    for (const token of baseSpec.reducedMotionOverrides) {
+      lines.push(`    --${token.name}: ${token.value};`);
+    }
+    lines.push('  }');
+    lines.push('}', '');
+  }
+
+  mkdirSync(dirname(destination), { recursive: true });
+  writeFileSync(destination, lines.join('\n'));
+}
+
+function appendMotionStyleBlock(lines, className, properties, notes = []) {
+  for (const note of notes) {
+    lines.push(`/* ${note} */`);
+  }
+  lines.push(`.${className} {`);
+  for (const [property, value] of Object.entries(properties)) {
+    lines.push(`  ${property}: ${value};`);
+  }
+  lines.push('}', '');
+}
+
+function appendMotionActiveStateBlock(lines, style) {
+  if (!style.activeState || !Object.keys(style.activeState).length) {
+    return;
+  }
+
+  const modifier = style.activeModifier ?? 'is-active';
+  const selectors = [
+    `.${style.className}.${modifier}`,
+    ...(style.parentActiveSelectors ?? []).map((parentSelector) => `${parentSelector} .${style.className}`),
+    ...(style.selfActiveSelectors ?? []).map((selfSelector) => `${selfSelector}.${style.className}`),
+  ].join(',\n');
+
+  lines.push(`${selectors} {`);
+  for (const [property, value] of Object.entries(style.activeState)) {
+    lines.push(`  ${property}: ${value};`);
+  }
+  lines.push('}', '');
+}
+
+function writeMotionSemanticCssFile(destination, semanticSpec, headerLines = []) {
+  const lines = [
+    '/**',
+    ' * Do not edit directly, this file was auto-generated from Figma tokens.',
+    ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
+    ' * Motion semantic — Ease / Layout / Flotation / Deform / Page (.motion-ease + state · .motion-layout · .motion-flotation · .motion-deform · .motion-page).',
+    ' * Recipes: @eds/desktop-tokens/motion/recipe',
+    ' */',
+    '',
+  ];
+
+  for (const group of semanticSpec.groups ?? []) {
+    lines.push('/* ========================================');
+    lines.push(`   ${group.comment}`);
+    lines.push('   ======================================== */');
+    lines.push('');
+
+    for (const style of group.styles ?? []) {
+      if (style.title) {
+        lines.push(`/* ${style.title} */`);
+      }
+
+      appendMotionStyleBlock(lines, style.className, style.properties ?? {}, style.notes ?? []);
+
+      for (const pseudo of style.pseudoStyles ?? []) {
+        const selectors = pseudo.selector
+          .split(',')
+          .map((part) => `.${style.className}${part.trim()}`)
+          .join(',\n');
+        lines.push(`${selectors} {`);
+        for (const [property, value] of Object.entries(pseudo.properties)) {
+          lines.push(`  ${property}: ${value};`);
+        }
+        lines.push('}', '');
+      }
+
+      appendMotionActiveStateBlock(lines, style);
+
+      for (const stateStyle of style.stateStyles ?? []) {
+        if (stateStyle.title) {
+          lines.push(`/* ${stateStyle.title} */`);
+        }
+
+        appendMotionStyleBlock(
+          lines,
+          stateStyle.hostClass,
+          stateStyle.properties ?? {},
+          stateStyle.notes ?? [],
+        );
+
+        for (const pseudo of stateStyle.pseudoStyles ?? []) {
+          const selectors = pseudo.selector
+            .split(',')
+            .map((part) => `.${stateStyle.hostClass}${part.trim()}`)
+            .join(',\n');
+          lines.push(`${selectors} {`);
+          for (const [property, value] of Object.entries(pseudo.properties)) {
+            lines.push(`  ${property}: ${value};`);
+          }
+          lines.push('}', '');
+        }
+      }
+    }
+  }
+
+  const reducedClasses = semanticSpec.reducedMotionScenarioClasses ?? [];
+  if (reducedClasses.length) {
+    lines.push('/* ========================================');
+    lines.push('   Reduced Motion');
+    lines.push('   ======================================== */');
+    lines.push('');
+    lines.push('@media (prefers-reduced-motion: reduce) {');
+    lines.push(`  ${reducedClasses.map((className) => `.${className}`).join(',\n  ')} {`);
+    lines.push('    transition: none !important;');
+    lines.push('  }');
+    lines.push('}', '');
+  }
+
+  mkdirSync(dirname(destination), { recursive: true });
+  writeFileSync(destination, lines.join('\n'));
+}
+
+function writeMotionUtilitiesCssFile(destination, semanticSpec, headerLines = []) {
+  const lines = [
+    '/**',
+    ' * Do not edit directly, this file was auto-generated from Figma tokens.',
+    ...headerLines.map((line) => (line.startsWith(' *') ? line : ` * ${line}`)),
+    ' */',
+    '',
+    '/* ========================================',
+    '   Motion Utility Classes',
+    '   ======================================== */',
+    '',
+  ];
+
+  for (const utility of semanticSpec.utilityClasses ?? []) {
+    if (utility.title) {
+      lines.push(`/* ${utility.title} */`);
+    }
+    for (const note of utility.notes ?? []) {
+      lines.push(`/* ${note} */`);
+    }
+    lines.push(`.${utility.className} {`);
+    lines.push(`  transition: ${utility.standaloneTransition ?? 'none'};`);
+    lines.push('}', '');
+  }
+
+  mkdirSync(dirname(destination), { recursive: true });
+  writeFileSync(destination, lines.join('\n'));
+}
+
+function buildMotionSystem() {
+  const baseSpec = loadJson('motion/base.json');
+  const recipeSpec = loadJson('motion/recipe.json');
+  const semanticSpec = loadJson('motion/semantic.json');
+  const selector = ':root';
+
+  writeMotionBaseCssFile(join(cssDir, 'motion/base.css'), selector, baseSpec, [
+    ' * Motion System — base primitives (duration, easing, physical state).',
+    ' * Source: spec/motion/base.json',
+  ]);
+
+  writeMotionBaseCssFile(join(cssDir, 'motion/recipe.css'), selector, recipeSpec, [
+    ' * Motion System — recipes (duration + easing + property).',
+    ' * Source: spec/motion/recipe.json',
+  ]);
+
+  writeMotionSemanticCssFile(join(cssDir, 'motion/semantic.css'), semanticSpec, [
+    ' * Motion System — semantic scenario classes.',
+    ' * Source: spec/motion/semantic.json',
+  ]);
+
+  writeMotionUtilitiesCssFile(join(cssDir, 'motion/utilities.css'), semanticSpec, [
+    ' * Motion System — utility classes.',
+    ' * Source: spec/motion/semantic.json',
+  ]);
+
+  writeImportAggregator(
+    join(cssDir, 'motion/index.css'),
+    ['./base.css', './recipe.css', './semantic.css', './utilities.css'],
+    'Motion System entry',
+  );
+}
+
 function buildTypographySystem() {
+  buildTypographyFonts();
   const baseSpec = loadJson('typography/base.json');
   const semanticSpec = loadJson('typography/semantic.json');
   const globalSpec = loadJson('typography/global.json');
+  const codeGlobalSpec = loadJson('typography/code-global.json');
 
   writeTypographyBaseCssFile(join(cssDir, 'typography/base.css'), ':root', baseSpec, [
     ' * Typography System — base primitives (原始字体排印令牌).',
     ' * Source: spec/typography/base.json',
   ]);
 
+  const textStylesSpec = loadJson('text/styles.json');
+
   writeTypographySemanticCssFile(
     join(cssDir, 'typography/semantic.css'),
     ':root',
     semanticSpec,
+    textStylesSpec,
     [
-      ' * Typography System — semantic role tokens (语义角色令牌 → base).',
-      ' * Source: spec/typography/semantic.json',
+      ' * Typography System — semantic role tokens + Text Style classes.',
+      ' * Source: spec/typography/semantic.json, spec/text/styles.json',
     ],
   );
 
@@ -1044,24 +1421,29 @@ function buildTypographySystem() {
     ' * Source: spec/typography/global.json',
   ]);
 
-  writeImportAggregator(
-    join(cssDir, 'typography/index.css'),
-    ['./base.css', './semantic.css', './global.css'],
-    'Typography System entry',
-  );
-}
-
-function buildTextSystem() {
-  const stylesSpec = loadJson('text/styles.json');
-  const showcaseTextCss = join(rootDir, '../../apps/showcase/src/styles/text-styles.css');
-
-  writeTextStylesCssFile(showcaseTextCss, stylesSpec, [
-    ' * Text styles for showcase preview only (not shipped in @eds/website-tokens).',
-    ' * Source: spec/text/styles.json',
-    ' * Class names match Figma Text Styles.',
+  writeTypographyGlobalCssFile(join(cssDir, 'typography/code-global.css'), codeGlobalSpec, [
+    ' * Typography System — code / monospace defaults.',
+    ' * Source: spec/typography/code-global.json',
   ]);
 
-  rmSync(join(cssDir, 'text'), { recursive: true, force: true });
+  writeTextStylesCssFile(join(cssDir, 'text/styles.css'), textStylesSpec, [
+    ' * Text Styles — Figma Text Style classes (subset of typography/semantic.css).',
+    ' * Source: spec/text/styles.json',
+  ]);
+
+  writeImportAggregator(
+    join(cssDir, 'typography/index.css'),
+    [
+      './fonts.css',
+      './base.css',
+      './semantic.css',
+      './global.css',
+      './code-global.css',
+    ],
+    'Typography System entry',
+  );
+
+  writeImportAggregator(join(cssDir, 'text/index.css'), ['./styles.css'], 'Text Styles entry');
 }
 
 function buildEffectSystem() {
@@ -1117,12 +1499,11 @@ function buildEffectSystem() {
 function buildColorSystem() {
   const baseSpec = loadJson('color/base.json');
   const semanticSpec = loadJson('color/semantic.json');
+  const semanticGroups = groupColorSemanticTokens(semanticSpec.tokens);
 
   for (const themeName of ['light', 'dark']) {
     const selector = themeSelector(themeName);
     const themeDir = join(cssDir, 'color/themes', themeName);
-
-    const semanticGroups = groupColorSemanticTokens(semanticSpec.tokens);
 
     writeColorBaseCssFile(join(themeDir, 'base.css'), selector, themeName, baseSpec, [
       ` * Color System — base palette (${themeName}).`,
@@ -1150,12 +1531,48 @@ function buildColorSystem() {
   );
 }
 
+function buildTagColorSystem() {
+  const tagPalette = loadJson('color/tag-palette.json');
+  const tagBaseSpec = buildTagBaseSpec(tagPalette);
+  const tagSemanticTokens = expandTagPaletteSemanticTokens(tagPalette);
+  const semanticGroups = groupTagSemanticTokens(tagSemanticTokens);
+
+  for (const themeName of ['light', 'dark']) {
+    const selector = themeSelector(themeName);
+    const themeDir = join(cssDir, 'color/tag/themes', themeName);
+
+    writeColorBaseCssFile(join(themeDir, 'base.css'), selector, themeName, tagBaseSpec, [
+      ` * Tag Color System — base palette (${themeName}).`,
+      ' * Source: spec/color/tag-palette.json',
+      ' * Figma: Status / Colorful / Custom tag nodes in tag-palette.json',
+    ]);
+
+    writeColorSemanticCssFile(join(themeDir, 'semantic.css'), selector, semanticGroups, themeName, [
+      ` * Tag Color System — semantic colors referencing tag base (${themeName}).`,
+      ' * Source: spec/color/tag-palette.json',
+    ]);
+
+    writeImportAggregator(
+      join(cssDir, 'color/tag/themes', `${themeName}.css`),
+      [`./${themeName}/base.css`, `./${themeName}/semantic.css`],
+      `Tag Color System entry (${themeName})`,
+    );
+  }
+
+  writeImportAggregator(
+    join(cssDir, 'color/tag/index.css'),
+    ['./themes/light.css', './themes/dark.css'],
+    'Tag Color System entry (all themes)',
+  );
+}
+
 function buildRootIndex() {
   writeImportAggregator(
     join(cssDir, 'index.css'),
     [
       './scale/index.css',
       './typography/index.css',
+      './motion/index.css',
       './color/index.css',
       './effect/index.css',
     ],
@@ -1171,6 +1588,9 @@ function buildJsonExport() {
   const textStylesSpec = loadJson('text/styles.json');
   const effectBaseSpec = loadJson('effect/base.json');
   const effectSemanticSpec = loadJson('effect/semantic.json');
+  const motionBaseSpec = loadJson('motion/base.json');
+  const motionRecipeSpec = loadJson('motion/recipe.json');
+  const motionSemanticSpec = loadJson('motion/semantic.json');
 
   const scaleUnit = resolveScaleBaseUnit(scaleBaseSpec);
   const scaleMultipliers = {};
@@ -1244,6 +1664,48 @@ function buildJsonExport() {
         group.styles.map((style) => [style.className, style.properties ?? {}]),
       ),
     ),
+    motionBase: Object.fromEntries(
+      motionBaseSpec.groups.flatMap((group) => {
+        if (group.tokenList?.length) {
+          return group.tokenList.map((token) => [token.name, token.value]);
+        }
+        if (group.tokens) {
+          return Object.entries(group.tokens);
+        }
+        return [];
+      }),
+    ),
+    motionRecipe: Object.fromEntries(
+      motionRecipeSpec.groups.flatMap((group) => {
+        if (group.tokenList?.length) {
+          return group.tokenList.map((token) => [token.name, token.value]);
+        }
+        return [];
+      }),
+    ),
+    motionSemantic: Object.fromEntries(
+      motionSemanticSpec.groups.flatMap((group) =>
+        (group.styles ?? []).flatMap((style) => {
+          const entries = [];
+          if (style.properties !== undefined) {
+            entries.push([style.className, style.properties]);
+          }
+          for (const stateStyle of style.stateStyles ?? []) {
+            entries.push([stateStyle.hostClass, stateStyle.properties ?? {}]);
+          }
+          if (style.activeState) {
+            entries.push([`${style.className}.${style.activeModifier ?? 'is-active'}`, style.activeState]);
+          }
+          return entries;
+        }),
+      ),
+    ),
+    motionUtilities: Object.fromEntries(
+      (motionSemanticSpec.utilityClasses ?? []).map((utility) => [
+        utility.className,
+        { transition: utility.standaloneTransition ?? 'none' },
+      ]),
+    ),
   };
 
   const baseSpec = loadJson('color/base.json');
@@ -1266,12 +1728,17 @@ async function buildAll() {
 
   buildScaleSystem();
   buildTypographySystem();
-  buildTextSystem();
+  buildMotionSystem();
   buildEffectSystem();
   buildColorSystem();
   buildRootIndex();
   buildJsonExport();
   await buildCornerSmoothingAssets();
+
+  const colorErrors = verifyColorSpecAgainstDist();
+  if (colorErrors.length > 0) {
+    throw new Error(`Color spec verification failed:\n${colorErrors.join('\n')}`);
+  }
 
   console.log('✓ Tokens built with layered CSS architecture');
 }

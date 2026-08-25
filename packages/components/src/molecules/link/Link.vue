@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import styles from './Link.module.css';
-import { linkVariantName } from '../../utils/edsVariantName';
 
-export type LinkTone = 'brand' | 'theme';
+export type LinkTone = 'brand' | 'theme' | 'decor';
 export type LinkSize = 'lg' | 'md' | 'sm';
 
 const props = withDefaults(
@@ -20,15 +18,16 @@ const props = withDefaults(
     disabled: false,
   },
 );
-
-const variantName = computed(() =>
-  linkVariantName(props.tone, props.size, props.disabled),
-);
 </script>
 
 <template>
   <a
-    :class="[variantName, styles.link, styles[props.tone], styles[props.size]]"
+    :class="[
+      'eds-link',
+      styles.link,
+      styles[props.tone],
+      styles[props.size],
+    ]"
     :href="disabled ? undefined : href"
     :aria-disabled="disabled || undefined"
     :tabindex="disabled ? -1 : undefined"

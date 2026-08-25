@@ -8,7 +8,7 @@ export type {
 } from './button';
 
 export { EgIconButton } from './icon-button';
-export type { IconButtonShape, IconButtonSize } from './icon-button';
+export type { IconButtonShape, IconButtonSize, IconButtonMotion } from './icon-button';
 
 export { EgIconButtonPro } from './icon-button-pro';
 
@@ -23,15 +23,24 @@ export type { SwitchSize } from './switch';
 export type { ToggleControlSize } from '../utils/toggleVariantName';
 
 export { EgInput } from './input';
-export type { InputType, InputSize, InputWidthMode, InputControlType } from './input';
+export type { InputType, InputSize, InputWidthMode } from './input';
 
 export * from './menu-box';
+export * from './textarea';
+export * from './search';
+export * from './verify-input';
+export * from '@eds/website-animations';
+export * from './combo';
+export * from './tooltip';
 export * from './flotation';
 export * from './tag';
 export * from './tab';
 export * from './feedback';
 export * from './popovers';
+export * from './miner-fee';
 export * from './countdown';
 export * from './progress';
 export * from './skeleton';
 export * from './upload';
+export * from './crypto-combo';
+export * from './list-field';

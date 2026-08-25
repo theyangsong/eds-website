@@ -153,10 +153,10 @@
 }
 
 .root[data-size='lg'] .surface:global([class*='toggle_checkbox_']) {
-  width: var(--scale-2-5);
-  height: var(--scale-2-5);
-  max-width: var(--scale-2-5);
-  max-height: var(--scale-2-5);
+  width: var(--spacing-2-5);
+  height: var(--spacing-2-5);
+  max-width: var(--spacing-2-5);
+  max-height: var(--spacing-2-5);
 }
 
 .root[data-size='md'] .surface:global([class*='toggle_checkbox_']) {
@@ -167,10 +167,10 @@
 }
 
 .root[data-size='sm'] .surface:global([class*='toggle_checkbox_']) {
-  width: var(--scale-2);
-  height: var(--scale-2);
-  max-width: var(--scale-2);
-  max-height: var(--scale-2);
+  width: var(--spacing-2);
+  height: var(--spacing-2);
+  max-width: var(--spacing-2);
+  max-height: var(--spacing-2);
 }
 
 .surface:global(.toggle_checkbox_lg_checked),
@@ -286,10 +286,10 @@
 }
 
 .root[data-size='lg'] .surface:global([class*='toggle_radio_']) {
-  width: var(--scale-2-5);
-  height: var(--scale-2-5);
-  max-width: var(--scale-2-5);
-  max-height: var(--scale-2-5);
+  width: var(--spacing-2-5);
+  height: var(--spacing-2-5);
+  max-width: var(--spacing-2-5);
+  max-height: var(--spacing-2-5);
 }
 
 .root[data-size='md'] .surface:global([class*='toggle_radio_']) {
@@ -300,10 +300,10 @@
 }
 
 .root[data-size='sm'] .surface:global([class*='toggle_radio_']) {
-  width: var(--scale-2);
-  height: var(--scale-2);
-  max-width: var(--scale-2);
-  max-height: var(--scale-2);
+  width: var(--spacing-2);
+  height: var(--spacing-2);
+  max-width: var(--spacing-2);
+  max-height: var(--spacing-2);
 }
 
 .surface:global(.toggle_radio_lg_checked),
@@ -372,10 +372,10 @@
 }
 
 .root[data-size='lg'] .surface:global([class*='toggle_decide_']) {
-  width: var(--scale-2-5);
-  height: var(--scale-2-5);
-  max-width: var(--scale-2-5);
-  max-height: var(--scale-2-5);
+  width: var(--spacing-2-5);
+  height: var(--spacing-2-5);
+  max-width: var(--spacing-2-5);
+  max-height: var(--spacing-2-5);
 }
 
 .root[data-size='md'] .surface:global([class*='toggle_decide_']) {
@@ -386,10 +386,10 @@
 }
 
 .root[data-size='sm'] .surface:global([class*='toggle_decide_']) {
-  width: var(--scale-2);
-  height: var(--scale-2);
-  max-width: var(--scale-2);
-  max-height: var(--scale-2);
+  width: var(--spacing-2);
+  height: var(--spacing-2);
+  max-width: var(--spacing-2);
+  max-height: var(--spacing-2);
 }
 
 .surface:global(.toggle_decide_lg_decided),

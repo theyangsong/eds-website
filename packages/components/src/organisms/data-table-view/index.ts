@@ -1,2 +1,2 @@
-/** DataTableView — 数据表格视图。 */
+/** Data Table View — placeholder。 */
 export {};

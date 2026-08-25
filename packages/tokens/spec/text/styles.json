@@ -1,6 +1,6 @@
 {
   "$figma": "https://www.figma.com/design/RSjA0dgInAwyPjE1MIinH7/EverGreen-Design-System--WebSite-?node-id=2-22945",
-  "$description": "Text styles from Figma Text Styles (Website). 样式层：class 引用 eds 语义变量（--eds-*-size/weight/line-height）；CSS 仅输出到 showcase text-styles.css。",
+  "$description": "Text styles from Figma Text Styles (Website). 样式层：class 引用 eds 语义变量（--eds-*-size/weight/line-height）；CSS 输出到 dist/css/text/styles.css（@eds/website-tokens/text/styles）。",
   "styles": [
     {
       "title": "Display/Large",

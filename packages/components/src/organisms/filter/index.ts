@@ -1,2 +1,2 @@
-/** Filter — 过滤。 */
+/** Filter — placeholder。 */
 export {};

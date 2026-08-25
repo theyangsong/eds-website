@@ -1,2 +1,1 @@
-/** Skid — 滑轨 / 侧滑模板。 */
-export {};
+export { default as EgSkid } from './Skid.vue';

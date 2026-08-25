@@ -1,0 +1,14 @@
+/* 对齐 Tooltip flotation slotDemo（body-medium 15px + primary 100%）。 */
+.tooltipLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--spacing-05) var(--spacing-1);
+  font-family: var(--eds-family-sans);
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
+  color: var(--text-base-primary);
+  white-space: nowrap;
+}
