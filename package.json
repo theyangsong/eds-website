@@ -6,6 +6,7 @@
   "scripts": {
     "build": "pnpm -r build",
     "build:tokens": "pnpm --filter @eds/website-tokens build",
+    "build:animations": "pnpm --filter @eds/website-animations build",
     "build:components": "pnpm --filter @eds/website-components build",
     "build:scenes": "pnpm --filter @eds/website-scenes build",
     "dev": "pnpm --filter @eds/website-showcase dev",
