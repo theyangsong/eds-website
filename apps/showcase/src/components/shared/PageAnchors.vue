@@ -7,11 +7,12 @@ import {
   ref,
   watch,
 } from 'vue';
+import type { AnchorItem } from '@/data/types';
 import { useScrollSpy } from '@/composables/useScrollSpy';
 import styles from './PageAnchors.module.css';
 
 const props = defineProps<{
-  items: Array<{ id: string; label: string; depth?: 1 | 2 | 3 }>;
+  items: AnchorItem[];
 }>();
 
 const sectionIds = computed(() => props.items.map((item) => item.id));

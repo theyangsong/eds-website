@@ -1,41 +1,34 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 import styles from './ShowcaseLayout.module.css';
-import { navItems } from './nav';
+import ShowcaseNav from './ShowcaseNav.vue';
 import ThemeToggle from '@/components/shared/ThemeToggle.vue';
+import { provideShowcaseContentTheme } from '@/composables/useShowcaseContentTheme';
+
+const { contentRef, theme } = provideShowcaseContentTheme();
 </script>
 
 <template>
   <div :class="styles.shell">
     <aside :class="styles.sidebar">
-      <div :class="styles.sidebarBody">
-        <div :class="styles.brand">
-          <span :class="styles.brandMark">W</span>
-          <div>
-            <p :class="styles.brandTitle">ShowCase</p>
-            <p :class="styles.brandSub">Website</p>
-          </div>
-        </div>
+      <div :class="styles.brand">
+        <p :class="styles.brandTitle">EvergreenDesignSystem</p>
+        <p :class="styles.brandSub">@Website</p>
+      </div>
 
-        <nav :class="styles.nav">
-          <RouterLink
-            v-for="item in navItems"
-            :key="item.to"
-            :to="item.to"
-            :class="styles.navLink"
-          >
-            {{ item.label }}
-          </RouterLink>
-        </nav>
+      <div :class="styles.sidebarScroll">
+        <ShowcaseNav />
       </div>
 
       <div :class="styles.sidebarFooter">
-        <ThemeToggle />
+        <ThemeToggle :class="styles.themeToggle" />
       </div>
     </aside>
 
-    <main :class="styles.content">
-      <RouterView />
+    <main ref="contentRef" :class="styles.content" :data-theme="theme">
+      <div :class="styles.contentScroll">
+        <RouterView />
+      </div>
     </main>
   </div>
 </template>

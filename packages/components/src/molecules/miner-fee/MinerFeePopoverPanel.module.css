@@ -410,7 +410,7 @@
 
 .minerFeeOption,
 .minerFeeCustomOption {
-  composes: motion-ease is-hover-enter-only from global;
+  composes: motion-ease is-enter-only from global;
   width: 100%;
   padding: var(--spacing-1) var(--spacing-1-5);
   border: none;

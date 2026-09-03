@@ -1,0 +1,8 @@
+/**
+ * Motion utilities for Teleport / organism previews (aligned with Desktop desktop-motion-global.css).
+ * Uses Website motion tokens so modifiers work outside .showcaseTokens.
+ */
+@import '@eds/website-tokens/motion/base';
+@import '@eds/website-tokens/motion/recipe';
+@import '@eds/website-tokens/motion/semantic';
+@import '@eds/website-tokens/motion/utilities';

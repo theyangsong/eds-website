@@ -9,6 +9,7 @@ export function entriesToRows(record: Record<string, string>): TokenRow[] {
 export function formatStyleLabel(key: string): string {
   return key
     .replace(/^typography-/, '')
+    .replace(/^eds-/, '')
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
@@ -16,27 +17,28 @@ export function formatStyleLabel(key: string): string {
 
 function resolveTypographyToken(
   value: string,
+  typographySemantic: Record<string, string>,
   typographyBase: Record<string, string>,
 ): string {
   const match = value.match(/^var\(--([^)]+)\)$/);
   if (!match) return value;
-  const resolved = typographyBase[match[1]];
+  const tokenName = match[1];
+  const resolved = typographySemantic[tokenName] ?? typographyBase[tokenName];
   if (!resolved) return value;
-  return resolveTypographyToken(resolved, typographyBase);
+  return resolveTypographyToken(resolved, typographySemantic, typographyBase);
 }
 
 export function formatTextStyleMetrics(
-  key: string,
+  style: { 'font-size': string; 'line-height': string },
   typographySemantic: Record<string, string>,
   typographyBase: Record<string, string>,
 ): string {
-  const edsKey = key.replace(/^typography-/, 'eds-');
-  const sizeRaw = typographySemantic[`${edsKey}-size`] ?? '';
-  const lineHeightRaw = typographySemantic[`${edsKey}-line-height`] ?? '';
-  const size = sizeRaw ? resolveTypographyToken(sizeRaw, typographyBase) : '';
-  const lineHeight = lineHeightRaw
-    ? resolveTypographyToken(lineHeightRaw, typographyBase)
-    : '';
+  const size = resolveTypographyToken(style['font-size'], typographySemantic, typographyBase);
+  const lineHeight = resolveTypographyToken(
+    style['line-height'],
+    typographySemantic,
+    typographyBase,
+  );
   return `${size} / ${lineHeight}`;
 }
 

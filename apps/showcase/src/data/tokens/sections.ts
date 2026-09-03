@@ -24,6 +24,9 @@ export const tokenAnchorItems: AnchorItem[] = [
   { id: 'typography-base', label: 'Typography Base' },
   { id: 'typography-semantic', label: 'Typography Semantic' },
   { id: 'text-style', label: 'Text Style' },
+  { id: 'motion-base', label: 'Motion Base' },
+  { id: 'motion-recipe', label: 'Motion Recipe' },
+  { id: 'motion-semantic', label: 'Motion Semantic' },
   { id: 'effect-base', label: 'Effect Base' },
   { id: 'effect-semantic', label: 'Effect Semantic' },
 ];
@@ -36,6 +39,9 @@ export const tokenSections = [
   { id: 'typography-base', title: 'Typography Base' },
   { id: 'typography-semantic', title: 'Typography Semantic' },
   { id: 'text-style', title: 'Text Style' },
+  { id: 'motion-base', title: 'Motion Base' },
+  { id: 'motion-recipe', title: 'Motion Recipe' },
+  { id: 'motion-semantic', title: 'Motion Semantic' },
   { id: 'effect-base', title: 'Effect Base' },
   { id: 'effect-semantic', title: 'Effect Semantic' },
 ] as const;

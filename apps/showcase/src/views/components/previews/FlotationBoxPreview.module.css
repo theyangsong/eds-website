@@ -1,0 +1,16 @@
+/* Box 文档页（/components/flotation-box）：外壳 padding 清零，内层 menuBody 继承原 spacing-1 inset */
+:global(.eds-flotation-menu--box-doc.showcaseTokens.effect-flotation-box) {
+  padding: 0;
+}
+
+:global(html[data-theme='light'])
+  :global(.eds-flotation-menu--box-doc.showcaseTokens.effect-flotation-box),
+:global(html[data-theme='dark'])
+  :global(.eds-flotation-menu--box-doc.showcaseTokens.effect-flotation-box) {
+  padding: 0;
+}
+
+:global(.eds-flotation-menu--box-doc) :global(.eds-flotation-menu-body) {
+  padding: var(--spacing-05);
+  box-sizing: border-box;
+}

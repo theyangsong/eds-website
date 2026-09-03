@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, nextTick, watch } from 'vue';
+import { computed, provide, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { findCatalogItem } from '@/data/components/navigation';
-import { componentPreviewBySlug } from './previews';
+import { findCatalogChildPage, findCatalogItem, getComponentRouteSlug } from '@/data/components/navigation';
+import { componentPreviewBySlug, usesAvatarComponentPreview, usesCompactComponentPreview, usesTagComponentPreview } from './previews';
+import ShowcasePlaceholderPreview from './previews/ShowcasePlaceholderPreview.vue';
 import shared from '@/views/shared/showcase.module.css';
 
 const props = defineProps<{
@@ -11,8 +12,22 @@ const props = defineProps<{
 
 const route = useRoute();
 
-const location = computed(() => findCatalogItem(props.slug));
-const preview = computed(() => componentPreviewBySlug[props.slug]);
+const pageSlug = computed(() => getComponentRouteSlug(route.path, props.slug));
+
+const childLocation = computed(() => findCatalogChildPage(pageSlug.value));
+const familyLocation = computed(() => {
+  if (childLocation.value) return childLocation.value.parent;
+  return findCatalogItem(pageSlug.value);
+});
+const preview = computed(() => componentPreviewBySlug[pageSlug.value]);
+
+const compactPreview = computed(() => usesCompactComponentPreview(pageSlug.value));
+const tagPreview = computed(() => usesTagComponentPreview(pageSlug.value));
+const avatarPreview = computed(() => usesAvatarComponentPreview(pageSlug.value));
+
+provide('componentDocCompactPreview', compactPreview);
+provide('componentDocTagPreview', tagPreview);
+provide('componentDocAvatarPreview', avatarPreview);
 
 async function scrollToHash(hash: string) {
   if (!hash.startsWith('#')) {
@@ -36,7 +51,7 @@ async function scrollToHash(hash: string) {
 }
 
 watch(
-  () => route.params.slug,
+  pageSlug,
   () => {
     if (!route.hash) {
       window.scrollTo(0, 0);
@@ -56,8 +71,14 @@ watch(
 </script>
 
 <template>
-  <component :is="preview.component" v-if="preview" />
-  <section v-else-if="location" :class="shared.section">
+  <component :is="preview.component" v-if="preview" :key="pageSlug" />
+  <template v-else-if="childLocation?.child.emptyScenesPlaceholder" />
+  <ShowcasePlaceholderPreview
+    v-else-if="childLocation"
+    :key="pageSlug"
+    :title="childLocation.child.label"
+  />
+  <section v-else-if="familyLocation" :class="shared.section">
     <p :class="shared.bodyText">Preview coming soon.</p>
   </section>
 </template>

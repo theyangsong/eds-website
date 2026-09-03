@@ -8,6 +8,7 @@
     "dev": "vite",
     "prebuild": "pnpm --dir ../.. build:tokens && pnpm --dir ../.. build:components && pnpm --dir ../.. build:scenes",
     "build": "vue-tsc --noEmit && vite build",
+    "build:pages": "vite build && cp dist/index.html dist/404.html && touch dist/.nojekyll",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit"
   },

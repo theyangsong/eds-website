@@ -17,12 +17,20 @@
   margin: 0;
   font-size: var(--eds-headline-small-size);
   line-height: var(--eds-headline-small-line-height);
-  font-weight: var(--weight-bold);
+  font-weight: var(--eds-headline-small-weight);
 }
 
 .lead {
   margin: 0;
-  color: var(--text-base-secondary);
+  color: var(--text-base-primary);
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
+  font-weight: var(--eds-footnote-large-weight);
+}
+
+.afterLead {
+  width: 100%;
+  margin-top: var(--spacing-1);
 }
 
 .header::after {

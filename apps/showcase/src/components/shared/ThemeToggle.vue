@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useThemeProvider } from '@eds/website-components';
+import { useShowcaseContentTheme } from '@/composables/useShowcaseContentTheme';
 import styles from './ThemeToggle.module.css';
 
-const { theme, toggleTheme } = useThemeProvider();
+const { theme, toggleTheme } = useShowcaseContentTheme();
 </script>
 
 <template>

@@ -12,6 +12,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
+  min-width: 0;
+  max-width: 100%;
   scroll-margin-top: var(--showcase-page-header-offset);
 }
 
@@ -19,7 +21,7 @@
   margin: 0;
   font-size: var(--eds-title-small-size);
   line-height: var(--eds-title-small-line-height);
-  font-weight: var(--weight-bold);
+  font-weight: var(--eds-title-small-weight);
 }
 
 .grid {
@@ -35,8 +37,15 @@
   align-items: center;
 }
 
+.tableWrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
 }
 
@@ -45,29 +54,48 @@
   padding: var(--spacing-2) var(--spacing-3);
   border-bottom: var(--stroke-xs) solid var(--stroke-divider-page);
   text-align: left;
-  font-size: var(--eds-body-small-size);
+  vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .table th {
   background: var(--material-card-shallow);
-  font-weight: var(--eds-body-medium-strong-weight);
+  font-size: var(--eds-footnote-medium-size);
+  font-weight: var(--eds-footnote-medium-strong-weight);
+  line-height: var(--eds-footnote-medium-line-height);
+}
+
+.table td {
+  font-size: var(--eds-footnote-large-size);
+  line-height: var(--eds-footnote-large-line-height);
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 22%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 18%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 20%;
 }
 
 .bodyText {
-  font-size: var(--eds-body-small-size);
-  line-height: var(--eds-body-small-line-height);
+  color: inherit;
 }
 
 .codeText {
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: var(--eds-body-small-size);
-  line-height: var(--eds-body-small-line-height);
+  font-family: var(--eds-family-mono);
   color: var(--text-base-secondary);
 }
 
 .mono {
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: var(--eds-body-small-size);
-  line-height: var(--eds-body-small-line-height);
+  font-family: var(--eds-family-mono);
   color: var(--text-base-secondary);
 }

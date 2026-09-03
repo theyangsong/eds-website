@@ -62,7 +62,7 @@
   background: transparent;
   color: var(--text-base-primary);
   cursor: default;
-  composes: motion-ease is-hover eds-footnote-medium-strong from global;
+  composes: motion-ease is-paint eds-footnote-medium-strong from global;
 }
 
 .itemSelected {
@@ -104,7 +104,7 @@
   background: transparent;
   cursor: default;
   color: var(--text-base-primary);
-  composes: motion-ease is-hover eds-body-small-strong from global;
+  composes: motion-ease is-paint eds-body-small-strong from global;
 }
 
 .tabItemSelected {

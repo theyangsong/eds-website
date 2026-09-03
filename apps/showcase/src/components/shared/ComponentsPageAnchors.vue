@@ -1,24 +1,53 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type ComponentPublicInstance } from 'vue';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import { componentAnchorItems } from '@/data/components';
-import { getCatalogChildAnchorIds } from '@/data/components/navigation';
+import { anchorItemsForFamily } from '@/data/components/anchorItemsForFamily';
+import { findComponentsSidebarFamilyId } from '@/layout/buildComponentsSidebarSections';
+import {
+  findCatalogChildPage,
+  findCatalogItem,
+  getCatalogChildAnchorIds,
+  getComponentRouteSlug,
+  moleculeUsesChildPages,
+} from '@/data/components/navigation';
 import { useScrollSpy } from '@/composables/useScrollSpy';
-import { useNavScrollFade } from '@/composables/useNavScrollFade';
-import { usePreventScrollChaining } from '@/composables/usePreventScrollChaining';
-import styles from './ComponentsPageAnchors.module.css';
+import styles from './PageAnchors.module.css';
 
 const route = useRoute();
-const router = useRouter();
 
-const activeSlug = computed(() =>
-  typeof route.params.slug === 'string' ? route.params.slug : '',
+const activeSlug = computed(() => getComponentRouteSlug(route.path, route.params.slug));
+
+const activeFamilySlug = computed(() => findComponentsSidebarFamilyId(activeSlug.value));
+
+const scopedAnchorItems = computed(() =>
+  anchorItemsForFamily(activeFamilySlug.value, componentAnchorItems),
 );
 
-const childAnchorIds = computed(() => getCatalogChildAnchorIds(activeSlug.value));
+const childPage = computed(() => findCatalogChildPage(activeSlug.value));
+
+const scrollSpyMoleculeSlug = computed(() => {
+  if (childPage.value) return '';
+  const entry = findCatalogItem(activeSlug.value);
+  if (entry && moleculeUsesChildPages(entry.item)) return '';
+  return activeSlug.value;
+});
+
+const childAnchorIds = computed(() =>
+  scrollSpyMoleculeSlug.value ? getCatalogChildAnchorIds(scrollSpyMoleculeSlug.value) : [],
+);
+
 const { activeId: scrollActiveId, refresh: refreshScrollSpy } = useScrollSpy(childAnchorIds);
 
 const activeNavId = computed(() => {
+  if (childPage.value) {
+    const { parent, child } = childPage.value;
+    if (child.hideSidebarBody) {
+      return parent.item.slug;
+    }
+    return `${parent.item.slug}:${child.id}`;
+  }
+
   if (childAnchorIds.value.length && scrollActiveId.value) {
     return `${activeSlug.value}:${scrollActiveId.value}`;
   }
@@ -27,17 +56,12 @@ const activeNavId = computed(() => {
 });
 
 const listRef = ref<HTMLElement | null>(null);
-const scrollRef = ref<HTMLElement | null>(null);
 const linkRefs = new Map<string, HTMLElement>();
 const indicatorTop = ref(0);
 const indicatorHeight = ref(0);
 const indicatorVisible = ref(false);
 const indicatorMoveTransition = ref(true);
 let resizeObserver: ResizeObserver | undefined;
-
-const { fadeTop, fadeBottom, updateFade } = useNavScrollFade(scrollRef);
-
-usePreventScrollChaining(scrollRef);
 
 function setLinkRef(navId: string, element: Element | ComponentPublicInstance | null) {
   const node =
@@ -79,41 +103,12 @@ function syncIndicatorWithAnimation(previousNavId = '') {
   indicatorVisible.value = true;
 }
 
-async function scrollToAnchor(anchorId: string, behavior: ScrollBehavior = 'smooth') {
-  for (let attempt = 0; attempt < 12; attempt += 1) {
-    await nextTick();
-    await new Promise<void>((resolve) => {
-      requestAnimationFrame(() => resolve());
-    });
-
-    const element = document.getElementById(anchorId);
-    if (element) {
-      element.scrollIntoView({ behavior, block: 'start' });
-      return true;
-    }
-  }
-
-  return false;
+function isHiddenSidebarBody(item: (typeof componentAnchorItems)[number]) {
+  return Boolean(item.hideSidebarBody);
 }
 
-async function scrollToChildSection(event: MouseEvent, parentSlug: string, anchorId: string) {
-  event.preventDefault();
-
-  if (activeSlug.value !== parentSlug) {
-    await router.push({
-      name: 'component-detail',
-      params: { slug: parentSlug },
-      hash: `#${anchorId}`,
-    });
-    return;
-  }
-
-  await router.replace({ hash: `#${anchorId}` });
-  await scrollToAnchor(anchorId);
-}
-
-function isLinkActive(item: (typeof componentAnchorItems)[number]) {
-  if (item.depth === 3) {
+function isLinkActive(item: (typeof scopedAnchorItems.value)[number]) {
+  if (item.depth && item.depth >= 2 && item.depth <= 5 && item.standalonePage) {
     return activeNavId.value === item.id;
   }
 
@@ -124,16 +119,24 @@ function isLinkActive(item: (typeof componentAnchorItems)[number]) {
   return activeNavId.value === item.id;
 }
 
+function isNavLabel(item: (typeof scopedAnchorItems.value)[number]) {
+  return item.kind === 'navGroup' || item.kind === 'navSection' || item.kind === 'navSubgroup';
+}
+
+function anchorNavLabel(item: (typeof scopedAnchorItems.value)[number]) {
+  if (item.kind === 'navSection') return '场景化';
+  return item.label;
+}
+
 watch(activeNavId, (_nextId, previousId) => {
   nextTick(() => {
     syncIndicatorWithAnimation(previousId);
   });
-}, { flush: 'post' });
+});
 
 watch(activeSlug, () => {
   nextTick(() => {
     void refreshScrollSpy();
-    syncIndicatorWithAnimation('');
   });
 });
 
@@ -150,8 +153,6 @@ onMounted(() => {
   if (listRef.value) {
     resizeObserver.observe(listRef.value);
   }
-
-  updateFade();
 });
 
 onBeforeUnmount(() => {
@@ -160,20 +161,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <aside
-    :class="[
-      styles.anchors,
-      fadeTop && styles.anchorsFadeTop,
-      fadeBottom && styles.anchorsFadeBottom,
-    ]"
-    aria-label="Components navigation"
-  >
-    <div
-      ref="scrollRef"
-      :class="styles.navScroll"
-      @scroll="updateFade"
-    >
-      <nav ref="listRef" :class="styles.nav">
+  <aside :class="[styles.anchors, styles.componentsAnchors]" aria-label="Components navigation">
+    <span :class="styles.anchorsHeading">本体</span>
+    <nav ref="listRef" :class="styles.nav">
       <div
         :class="[
           styles.activeIndicator,
@@ -187,43 +177,33 @@ onBeforeUnmount(() => {
         aria-hidden="true"
       />
 
-      <template v-for="item in componentAnchorItems" :key="item.id">
+      <template v-for="item in scopedAnchorItems" :key="item.id">
         <span
-          v-if="item.depth === 1"
-          :class="styles.sectionLabel"
+          v-if="isNavLabel(item)"
+          :class="[
+            styles.navLabel,
+            item.kind === 'navSection' && styles.navSectionLabel,
+          ]"
         >
-          {{ item.label }}
+          {{ anchorNavLabel(item) }}
         </span>
 
         <RouterLink
-          v-else-if="item.depth === 2"
+          v-else-if="
+            item.standalonePage &&
+            item.pageSlug &&
+            !isHiddenSidebarBody(item)
+          "
           :ref="(element) => setLinkRef(item.id, element)"
-          :to="{ name: 'component-detail', params: { slug: item.id } }"
+          :to="`/components/${item.pageSlug}`"
           :class="[
             styles.link,
-            styles.linkNested,
             isLinkActive(item) && styles.linkActive,
           ]"
         >
           {{ item.label }}
         </RouterLink>
-
-        <a
-          v-else-if="item.depth === 3 && item.parentSlug && item.anchorId"
-          :ref="(element) => setLinkRef(item.id, element as Element | null)"
-          :href="`/components/${item.parentSlug}#${item.anchorId}`"
-          :class="[
-            styles.link,
-            styles.linkNested,
-            styles.linkNestedDeep,
-            isLinkActive(item) && styles.linkActive,
-          ]"
-          @click="scrollToChildSection($event, item.parentSlug, item.anchorId)"
-        >
-          {{ item.label }}
-        </a>
       </template>
-      </nav>
-    </div>
+    </nav>
   </aside>
 </template>

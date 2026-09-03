@@ -2,7 +2,20 @@ export type { AnchorItem, CatalogItem, CatalogSection, ScaleSemanticGroup } from
 
 export * from './tokens';
 export * from './components';
-export * from './scenes';
+export {
+  scenesCatalog,
+  listFieldSceneSlugs,
+  isListFieldSceneSlug,
+  legacyListFieldsSlug,
+  sceneAnchorItems,
+  defaultSceneSlug,
+  findSceneCatalogChildPage,
+  findSceneCatalogItem,
+  getSceneRouteSlug,
+  isValidSceneSlug,
+  iterSceneCatalogItems,
+} from './scenes';
+export type { ListFieldSceneSlug } from './scenes';
 
 import { componentCatalog } from './components';
 import { scenesCatalog } from './scenes';

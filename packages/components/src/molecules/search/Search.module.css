@@ -75,7 +75,7 @@
   -webkit-appearance: none;
   appearance: none;
   outline: none;
-  composes: motion-ease is-hover from global;
+  composes: motion-ease is-paint from global;
 }
 
 .input::placeholder {
@@ -115,7 +115,7 @@
   height: calc(var(--icon-sm) + 2 * var(--spacing-1));
   border-radius: var(--radius-sm);
   opacity: 1;
-  composes: motion-ease is-hover from global;
+  composes: motion-ease is-paint from global;
 }
 
 .clearButton:hover {

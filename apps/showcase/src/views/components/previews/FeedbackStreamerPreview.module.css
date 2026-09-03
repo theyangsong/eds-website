@@ -1,0 +1,9 @@
+.streamerHost {
+  align-items: stretch;
+  padding-inline: var(--spacing-3);
+  box-sizing: border-box;
+}
+
+.streamerHost > :global(.eds-streamer) {
+  width: 100%;
+}

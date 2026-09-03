@@ -1,20 +1,20 @@
 .previewStack {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-2);
 }
 
 .stateRow {
   display: grid;
-  grid-template-columns: 256px auto;
-  gap: var(--spacing-4);
+  grid-template-columns: 512px auto;
+  gap: var(--spacing-2);
   align-items: center;
 }
 
 .switchRow {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-2);
 }
 
 .sizeLabel {

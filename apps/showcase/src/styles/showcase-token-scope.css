@@ -1,0 +1,10 @@
+/**
+ * Preview subtree typography baseline (aligned with Desktop .desktopTokens).
+ * Website tokens are global; this scopes doc/preview rows to Body/Small.
+ */
+.showcaseTokens {
+  font-size: var(--eds-body-small-size);
+  font-weight: var(--eds-body-small-weight);
+  line-height: var(--eds-body-small-line-height);
+  color: var(--text-base-primary);
+}

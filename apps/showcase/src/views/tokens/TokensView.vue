@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import tokens from '@eds/website-tokens/json';
+import '@/styles/text-style-preview.css';
 import PageHeader from '@/components/shared/PageHeader.vue';
 import PageAnchors from '@/components/shared/PageAnchors.vue';
 import TokenParamRows from '@/components/tokens/TokenParamRows.vue';
@@ -92,13 +93,34 @@ const textStyleItems = textStyleOrder
   .map((key) => ({
     key,
     label: formatStyleLabel(key),
-    metrics: formatTextStyleMetrics(key, typographySemantic, typographyBase),
-    style: {
-      fontSize: textStyles[key]['font-size'],
-      fontWeight: textStyles[key]['font-weight'],
-      lineHeight: textStyles[key]['line-height'],
-    },
+    metrics: formatTextStyleMetrics(textStyles[key], typographySemantic, typographyBase),
   }));
+
+const motionRecipeRows = computed(() =>
+  entriesToRows(tokens.motionRecipe as Record<string, string>),
+);
+
+const motionBaseRows = computed(() =>
+  entriesToRows(tokens.motionBase as Record<string, string>),
+);
+
+const motionSemanticRows = computed(() =>
+  Object.entries(tokens.motionSemantic as Record<string, Record<string, string>>).map(
+    ([name, value]) => ({
+      name: `.${name}`,
+      value: formatEffectSemantic(value),
+    }),
+  ),
+);
+
+const motionUtilityRows = computed(() =>
+  Object.entries(tokens.motionUtilities as Record<string, Record<string, string>>).map(
+    ([name, value]) => ({
+      name: `.${name}`,
+      value: value.transition ?? JSON.stringify(value),
+    }),
+  ),
+);
 
 const effectBaseRows = computed(() =>
   entriesToRows((tokens.effectBase as { tokens: Record<string, string> }).tokens),
@@ -187,12 +209,29 @@ const effectSemanticRows = computed(() =>
         <h2 :class="shared.sectionTitle">Text Style</h2>
         <div :class="styles.typeStack">
           <div v-for="item in textStyleItems" :key="item.key" :class="styles.typeRow">
-            <div :class="styles.typeSample" :style="item.style">
+            <div :class="[styles.typeSample, item.key]">
               {{ item.label }}
             </div>
             <span :class="[shared.codeText, styles.typeMetrics]">{{ item.metrics }}</span>
           </div>
         </div>
+      </section>
+
+      <section id="motion-base" :class="shared.section">
+        <h2 :class="shared.sectionTitle">Motion Base</h2>
+        <TokenParamRows :rows="motionBaseRows" />
+      </section>
+
+      <section id="motion-recipe" :class="shared.section">
+        <h2 :class="shared.sectionTitle">Motion Recipe</h2>
+        <TokenParamRows :rows="motionRecipeRows" />
+      </section>
+
+      <section id="motion-semantic" :class="shared.section">
+        <h2 :class="shared.sectionTitle">Motion Semantic</h2>
+        <TokenParamRows :rows="motionSemanticRows" />
+        <h3 :class="styles.subsectionTitle">Utility Classes</h3>
+        <TokenParamRows :rows="motionUtilityRows" />
       </section>
 
       <section id="effect-base" :class="shared.section">
